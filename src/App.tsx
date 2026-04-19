@@ -30,7 +30,7 @@ import WritingPractice from './components/WritingPractice';
 import Lektion22Exercises from './components/Lektion22Exercises';
 import Lektion22GrammarEx from './components/Lektion22GrammarEx';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 const VOICES = [
   { id: 'Kore', name: 'Nữ 1 (Kore)', gender: 'Female' },
