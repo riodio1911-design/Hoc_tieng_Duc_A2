@@ -13,10 +13,11 @@ import {
   AlertCircle,
   RotateCcw,
   Gamepad2,
-  MonitorPlay
+  MonitorPlay,
+  Download
 } from 'lucide-react';
 import { GoogleGenAI, Modality } from "@google/genai";
-import { VOCABULARY_DATA, Lesson, VocabularyItem } from './constants';
+import { VOCABULARY_DATA, Lesson, VocabularyItem, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT } from './constants';
 import AlibiGame from './components/AlibiGame';
 import Kartenspiel from './components/Kartenspiel';
 import Lektion21Slides from './components/Lektion21Slides';
@@ -29,8 +30,10 @@ import SpeakingPractice from './components/SpeakingPractice';
 import WritingPractice from './components/WritingPractice';
 import Lektion22Exercises from './components/Lektion22Exercises';
 import Lektion22GrammarEx from './components/Lektion22GrammarEx';
+import Lektion23Exercises from './components/Lektion23Exercises';
+import Lektion23GrammarEx from './components/Lektion23GrammarEx';
 
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const VOICES = [
   { id: 'Kore', name: 'Nữ 1 (Kore)', gender: 'Female' },
@@ -56,6 +59,9 @@ export default function App() {
   const [activeSubTab, setActiveSubTab] = useState<'flashcard' | 'alibi' | 'exercises'>('flashcard');
   const [grammarSubTab, setGrammarSubTab] = useState<'theory' | 'exercises'>('theory');
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const [isDownloadingL21, setIsDownloadingL21] = useState(false);
+  const [isDownloadingL23, setIsDownloadingL23] = useState(false);
+
   const [voiceName, setVoiceName] = useState('Kore');
   const [voiceGender, setVoiceGender] = useState<'Male' | 'Female'>('Female');
   const [voiceEffect, setVoiceEffect] = useState('natural');
@@ -80,11 +86,153 @@ export default function App() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
+  const downloadL21Intro = async () => {
+    if (isDownloadingL21) return;
+    setIsDownloadingL21(true);
+    try {
+      const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
+      const response = await ai.models.generateContent({
+        model: "gemini-3.1-flash-tts-preview",
+        contents: [{ parts: [{ text: `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${L21_INTRO_SCRIPT}` }] }],
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voiceName as any } } },
+        },
+      });
+      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      if (base64Audio) {
+        const binaryString = atob(base64Audio);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Convert to WAV
+        const sampleRate = 24000;
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const blockAlign = numChannels * bitsPerSample / 8;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = bytes.length;
+        
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+        
+        const writeString = (v: DataView, offset: number, str: string) => {
+          for (let i = 0; i < str.length; i++) v.setUint8(offset + i, str.charCodeAt(i));
+        };
+        
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+        
+        const dataView = new Uint8Array(buffer, 44);
+        dataView.set(bytes);
+        
+        const blob = new Blob([buffer], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Lektion21_Intro_${voiceName}.wav`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
+    } finally {
+      setIsDownloadingL21(false);
+    }
+  };
+
+  const downloadL23Intro = async () => {
+    if (isDownloadingL23) return;
+    setIsDownloadingL23(true);
+    try {
+      const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
+      const response = await ai.models.generateContent({
+        model: "gemini-3.1-flash-tts-preview",
+        contents: [{ parts: [{ text: `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${L23_INTRO_SCRIPT}` }] }],
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voiceName as any } } },
+        },
+      });
+      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      if (base64Audio) {
+        const binaryString = atob(base64Audio);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Convert to WAV
+        const sampleRate = 24000;
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const blockAlign = numChannels * bitsPerSample / 8;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = bytes.length;
+        
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+        
+        const writeString = (v: DataView, offset: number, str: string) => {
+          for (let i = 0; i < str.length; i++) v.setUint8(offset + i, str.charCodeAt(i));
+        };
+        
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+        
+        const dataView = new Uint8Array(buffer, 44);
+        dataView.set(bytes);
+        
+        const blob = new Blob([buffer], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Lektion23_Intro_${voiceName}.wav`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
+    } finally {
+      setIsDownloadingL23(false);
+    }
+  };
+
   const playAudio = useCallback(async (text: string, id: string, lang: 'de-DE' | 'vi-VN' = 'de-DE', overrideVoiceName?: string) => {
     if (playingId === id || isFetchingAudio.current) return;
     
     const currentVoiceName = overrideVoiceName || voiceName;
-    const cacheKey = `${id}-${voiceEffect}-${text}-${lang}`;
+    const cacheKey = `${id}-${voiceEffect}-${text}-${lang}-v5`;
 
     const useSystemTTS = () => {
       try {
@@ -139,11 +287,13 @@ export default function App() {
       if (!pcmData && !isQuotaLimited) {
         isFetchingAudio.current = true;
         const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
-        const promptLang = lang === 'vi-VN' ? 'Vietnamese' : 'German';
+        const promptText = lang === 'vi-VN' 
+          ? `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${text}`
+          : `${effectPrompt} in German: ${text}`;
         
         const response = await ai.models.generateContent({
           model: "gemini-3.1-flash-tts-preview",
-          contents: [{ parts: [{ text: `${effectPrompt} in ${promptLang}: ${text}` }] }],
+          contents: [{ parts: [{ text: promptText }] }],
           config: {
             responseModalities: [Modality.AUDIO],
             speechConfig: {
@@ -676,6 +826,50 @@ Return a JSON object with:
                         <span className="text-[11px] font-black text-theme-primary uppercase tracking-widest leading-none pt-0.5">
                           Audio giới thiệu bài 21
                         </span>
+                        <button 
+                          onClick={downloadL21Intro} 
+                          disabled={isDownloadingL21}
+                          className="ml-2 w-8 h-8 rounded-full bg-theme-primary/20 hover:bg-theme-primary hover:text-white text-theme-primary flex items-center justify-center transition-all disabled:opacity-50"
+                          title="Tải audio về máy (.wav)"
+                        >
+                          {isDownloadingL21 ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+                        </button>
+                      </div>
+                    )}
+                    {selectedLesson.id === 'l22' && (
+                      <div className="flex items-center gap-2 bg-theme-primary/10 pl-1 pr-4 py-1 rounded-full border border-theme-primary/20">
+                        <button 
+                          onClick={() => playAudio(L22_INTRO_SCRIPT, 'l22-intro', 'vi-VN')} 
+                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${playingId === 'l22-intro' ? 'bg-theme-primary text-white shadow-lg animate-pulse' : 'bg-white text-theme-primary hover:bg-theme-primary hover:text-white'}`}
+                          title="Nghe Giới thiệu Bài 22"
+                        >
+                          {playingId === 'l22-intro' ? <Loader2 size={16} className="animate-spin" /> : <Volume2 size={16} />}
+                        </button>
+                        <span className="text-[11px] font-black text-theme-primary uppercase tracking-widest leading-none pt-0.5">
+                          Audio giới thiệu bài 22
+                        </span>
+                      </div>
+                    )}
+                    {selectedLesson.id === 'l23' && (
+                      <div className="flex items-center gap-2 bg-theme-primary/10 pl-1 pr-4 py-1 rounded-full border border-theme-primary/20">
+                        <button 
+                          onClick={() => playAudio(L23_INTRO_SCRIPT, 'l23-intro', 'vi-VN')} 
+                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${playingId === 'l23-intro' ? 'bg-theme-primary text-white shadow-lg animate-pulse' : 'bg-white text-theme-primary hover:bg-theme-primary hover:text-white'}`}
+                          title="Nghe Giới thiệu Bài 23"
+                        >
+                          {playingId === 'l23-intro' ? <Loader2 size={16} className="animate-spin" /> : <Volume2 size={16} />}
+                        </button>
+                        <span className="text-[11px] font-black text-theme-primary uppercase tracking-widest leading-none pt-0.5">
+                          Audio giới thiệu bài 23
+                        </span>
+                        <button 
+                          onClick={downloadL23Intro} 
+                          disabled={isDownloadingL23}
+                          className="ml-2 w-8 h-8 rounded-full bg-theme-primary/20 hover:bg-theme-primary hover:text-white text-theme-primary flex items-center justify-center transition-all disabled:opacity-50"
+                          title="Tải audio về máy (.wav)"
+                        >
+                          {isDownloadingL23 ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+                        </button>
                       </div>
                     )}
                   </h2>
@@ -789,7 +983,7 @@ Return a JSON object with:
                 ) : (
                   activeTab === 'vocabulary' ? (
                     <div>
-                      {selectedLesson.id === 'l22' && (
+                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l23') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -810,6 +1004,8 @@ Return a JSON object with:
                       
                       {selectedLesson.id === 'l22' && activeSubTab === 'exercises' ? (
                         <Lektion22Exercises />
+                      ) : selectedLesson.id === 'l23' && activeSubTab === 'exercises' ? (
+                        <Lektion23Exercises playAudio={playAudio} playingId={playingId} />
                       ) : (
                         <FlashcardGrid 
                           items={selectedLesson.items}
@@ -826,7 +1022,7 @@ Return a JSON object with:
                     </div>
                   ) : (
                     <div>
-                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l21') && (
+                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -839,7 +1035,7 @@ Return a JSON object with:
                               onClick={() => setGrammarSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-secondary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : 'Bài tập Ngữ pháp'}
+                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : 'Bài tập Ngữ pháp'}
                             </button>
                           </div>
                         </div>
@@ -847,16 +1043,35 @@ Return a JSON object with:
 
                       {selectedLesson.id === 'l22' && grammarSubTab === 'exercises' ? (
                         <Lektion22GrammarEx />
+                      ) : selectedLesson.id === 'l23' && grammarSubTab === 'exercises' ? (
+                        <Lektion23GrammarEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l21' && grammarSubTab === 'theory' ? (
                         <Lektion21GrammarTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l21' && grammarSubTab === 'exercises' ? (
                         <Lektion21GrammarEx />
                       ) : (
-                        <GrammarTable 
-                          items={selectedLesson.grammar || []} 
-                          playAudio={playAudio}
-                          playingId={playingId}
-                        />
+                        <div>
+                          {(selectedLesson.id === 'l23' || selectedLesson.id === 'l22') && (
+                            <div className="flex justify-center mb-8">
+                              <button
+                                onClick={() => playAudio(selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT, `${selectedLesson.id}_grammar_intro`, 'vi-VN')}
+                                className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-black shadow-xl transition-all ${
+                                  playingId === `${selectedLesson.id}_grammar_intro` 
+                                    ? 'bg-theme-secondary text-white shadow-theme-secondary/30 scale-95' 
+                                    : 'bg-white text-theme-secondary shadow-theme-dark/5 hover:scale-105 active:scale-95 border-2 border-theme-secondary/10'
+                                }`}
+                              >
+                                {playingId === `${selectedLesson.id}_grammar_intro` ? <Loader2 className="w-5 h-5 animate-spin" /> : <Volume2 className="w-5 h-5" />}
+                                <span>AUDIO GIỚI THIỆU NGỮ PHÁP</span>
+                              </button>
+                            </div>
+                          )}
+                          <GrammarTable 
+                            items={selectedLesson.grammar || []} 
+                            playAudio={playAudio}
+                            playingId={playingId}
+                          />
+                        </div>
                       )}
                     </div>
                   )

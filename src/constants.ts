@@ -21,6 +21,54 @@ export interface Lesson {
   grammar?: GrammarItem[];
 }
 
+export const L22_GRAMMAR_SCRIPT = `Xin chào các bạn. Trong bài 22 giáo trình Menschen A2, chúng ta sẽ học về Câu phụ (Nebensatz) chỉ thời gian với các liên từ "seit", "seitdem", và "bis".
+Điểm quan trọng nhất của Câu phụ là động từ luôn đứng ở cuối câu.
+
+Thứ nhất, "seit" và "seitdem" dùng cho hành động bắt đầu trong quá khứ và vẫn tiếp diễn ở hiện tại. 
+Ví dụ: "Seit ich hier wohne, fahre ich mit dem Bus" (Từ khi tôi sống ở đây, tôi đi làm bằng xe buýt).
+
+Thứ hai, "bis" dùng cho hành động kéo dài đến một thời điểm xác định. 
+Ví dụ: "Ich warte, bis der Bus kommt" (Tôi chờ cho đến khi xe buýt tới).
+
+Việc sử dụng các cấu trúc này giúp bạn nối các câu đơn thành câu phức, qua đó diễn đạt thời gian và quy trình tự nhiên hơn. Đừng quên quy tắc: liên từ đứng đầu câu phụ, và động từ nằm ở cuối cùng nhé. Chúc các bạn học tốt!`;
+
+export const L23_GRAMMAR_SCRIPT = `Xin chào các bạn. Ngữ pháp trọng tâm của bài 23 Menschen A2 là Mệnh đề quan hệ (Relativsatz) và Đại từ quan hệ (Relativpronomen). 
+Đây là bước tiến lớn giúp bạn nối câu và bổ sung thông tin chi tiết mà không bị lặp từ.
+
+Mệnh đề quan hệ luôn đứng sau danh từ mà nó bổ nghĩa, và đặc biệt: động từ luôn phải đẩy xuống cuối câu.
+Đại từ quan hệ "der, die, das" và "den, die, das" phụ thuộc vào giống của danh từ và vai trò của nó trong câu phụ.
+
+Nếu là Chủ ngữ (Nominativ), ta dùng "der, die, das". Ví dụ: "Das ist der Beruf, der zu mir passt" (Đó là nghề nghiệp mà phù hợp với tôi).
+Nếu là Tân ngữ (Akkusativ), giống đực "der" sẽ đổi thành "den". Ví dụ: "Das ist der Mann, den ich kenne" (Đó là người đàn ông mà tôi biết).
+
+Mệnh đề quan hệ giúp câu nói của bạn tự nhiên và giống người bản xứ hơn rất nhiều. Chúc các bạn áp dụng thành công!`;
+
+export const L23_INTRO_SCRIPT = `Xin chào các bạn. Hôm nay chúng ta cùng khám phá Bài 23 giáo trình Menschen A2 với chủ đề rất thực tế: Nghề nghiệp và Sự hài lòng trong công việc.
+Nếu bài 22 giúp bạn di chuyển độc lập, thì bài 23 giúp bạn nói về định hướng cuộc sống.
+
+Về Kỹ năng Nói, bạn sẽ học cách giới thiệu công việc như "Ich bin Ingenieur", cũng như diễn đạt cảm xúc: "Ich bin sehr zufrieden" (Tôi rất hài lòng) hoặc "Ich bin unzufrieden" (Tôi không hài lòng). Quan trọng hơn, bạn sẽ biết giải thích lý do "Tại sao" bằng các câu phụ, và nói về những dự định, kế hoạch học tập.
+
+Về Nghe và Đọc, bài học cung cấp các đoạn hội thoại phỏng vấn và bài tư vấn nghề nghiệp, luyện cho bạn cách nắm bắt ý chính và thái độ của người nói.
+
+Ngữ pháp trung tâm là Mệnh đề quan hệ định ngữ "Relativsatz" giúp nối câu mượt mà: "Das ist der Beruf, der zu mir passt".
+
+Từ vựng xoay quanh nghề nghiệp ("Beruf"), đào tạo ("Ausbildung"), và quá trình ứng tuyển ("Bewerbung").
+
+Tóm lại, bài 23 đánh dấu bước chuyển mình quan trọng từ A2 lên B1, giúp bạn giao tiếp như một người đi làm thực sự tại Đức. Chúc các bạn học tốt!`;
+
+export const L22_INTRO_SCRIPT = `Xin chào các bạn. Hôm nay chúng ta cùng tìm hiểu bài 22 giáo trình Menschen A2.
+Khác với những bài trước, bài 22 giúp nâng cao sự tự lập trong cuộc sống khi tập trung vào cách di chuyển, so sánh phương tiện và giải thích một quy trình hay dịch vụ.
+
+Về Kỹ năng Nói, bạn sẽ học cách diễn đạt sự thay đổi thói quen di chuyển: "trước đây tôi có ô tô, bây giờ tôi đi xe buýt". Và đặc biệt là cách hướng dẫn người khác từng bước một, ví dụ như cách đặt vé tàu hay thuê xe với các từ nối: "đầu tiên... sau đó... tiếp theo... cuối cùng".
+
+Về Kỹ năng Nghe và Đọc, bạn sẽ luyện nghe các đoạn hội thoại về Carsharing, phân biệt ưu nhược điểm. Kỹ năng đọc chú trọng vào việc hiểu hướng dẫn sử dụng dịch vụ (Anleitung) để có thể tự thao tác mà không cần người khác giúp.
+
+Trọng tâm Ngữ pháp của bài là Câu phụ (Nebensatz) với động từ đứng cuối câu, được bắt đầu bởi các liên từ chỉ thời gian: "seit", "seitdem" và "bis". Chẳng hạn: "cho đến khi tìm được chỗ đỗ xe". Cấu trúc này giúp câu nói tự nhiên và logic hơn.
+
+Từ vựng xoay quanh các khái niệm thiết thực: phương tiện giao thông, dịch vụ thuê xe, và đăng ký internet.
+
+Tóm lại, bài 22 là bước tiến quan trọng giúp bạn giao tiếp và sống độc lập hơn bằng tiếng Đức. Chúc các bạn học tốt!`;
+
 export const VOCABULARY_DATA: Lesson[] = [
   {
     id: "l21",
@@ -270,7 +318,47 @@ export const VOCABULARY_DATA: Lesson[] = [
       { id: "23-62", word: "das Betriebsklima (số ít)", ipa: "das bəˈtʁiːpsˌkliːma", meaning: "Bầu không khí công ty", example: "Wir haben ein sehr gutes Betriebsklima.", exampleTranslation: "Chúng tôi có một bầu không khí công ty rất tốt.", category: "Nơi làm việc & khái niệm khác" },
       { id: "23-63", word: "die Gleitzeit (số ít)", ipa: "diː ˈɡlaɪ̯tˌ͡tsaɪ̯t", meaning: "Thời gian làm việc linh hoạt", example: "Ich habe Gleitzeit und kann spät anfangen.", exampleTranslation: "Tôi có thời gian linh hoạt và có thể bắt đầu muộn.", category: "Nơi làm việc & khái niệm khác" },
       { id: "23-64", word: "die Überstunde (số ít)", ipa: "diː ˈyːbɐˌʃtʊndə", meaning: "Giờ làm thêm", example: "Ich muss heute eine Überstunde machen.", exampleTranslation: "Hôm nay tôi phải làm thêm một giờ.", category: "Nơi làm việc & khái niệm khác" },
-      { id: "23-65", word: "die Überstunden (số nhiều)", ipa: "diː ˈyːbɐˌʃtʊndn̩", meaning: "Nhiều giờ làm thêm", example: "Gestern musste ich zwei Überstunden machen.", exampleTranslation: "Hôm qua tôi đã phải làm thêm hai giờ.", category: "Nơi làm việc & khái niệm khác" }
+      { id: "23-65", word: "die Überstunden (số nhiều)", ipa: "diː ˈyːbɐˌʃtʊndn̩", meaning: "Nhiều giờ làm thêm", example: "Gestern musste ich zwei Überstunden machen.", exampleTranslation: "Hôm qua tôi đã phải làm thêm hai giờ.", category: "Nơi làm việc & khái niệm khác" },
+
+      // NHÓM 5: DANH TỪ (NOMEN - TỪ PDF)
+      { id: "23-pdf-1", word: "das Abitur (kein Plural)", ipa: "das abɪˈtuːɐ̯", meaning: "Bằng tốt nghiệp THPT", example: "Ich mache dieses Jahr mein Abitur.", exampleTranslation: "Tôi thi tốt nghiệp năm nay.", category: "Danh từ" },
+      { id: "23-pdf-2", word: "die Berufsschule", ipa: "diː bəˈʁuːfsˌʃuːlə", meaning: "Trường nghề", example: "Ich gehe in die Berufsschule.", exampleTranslation: "Tôi học trường nghề.", category: "Danh từ" },
+      { id: "23-pdf-3", word: "die Fachhochschule", ipa: "diː ˈfaxhoːxˌʃuːlə", meaning: "Đại học ứng dụng", example: "Er studiert an einer Fachhochschule.", exampleTranslation: "Anh ấy học ở đại học ứng dụng.", category: "Danh từ" },
+      { id: "23-pdf-4", word: "die Gesamtschule", ipa: "diː ɡəˈzamtˌʃuːlə", meaning: "Trường tổng hợp", example: "Mein Kind geht auf eine Gesamtschule.", exampleTranslation: "Con tôi học trường tổng hợp.", category: "Danh từ" },
+      { id: "23-pdf-5", word: "die Grundschule", ipa: "diː ˈɡʁʊntˌʃuːlə", meaning: "Trường tiểu học", example: "Ich war in der Grundschule hier.", exampleTranslation: "Tôi học tiểu học ở đây.", category: "Danh từ" },
+      { id: "23-pdf-6", word: "das Gymnasium", ipa: "das ɡʏmˈnaːzi̯ʊm", meaning: "Trường cấp 3 (thi Abitur)", example: "Er geht aufs Gymnasium.", exampleTranslation: "Anh ấy học cấp 3.", category: "Danh từ" },
+      { id: "23-pdf-7", word: "die Hauptschule", ipa: "diː ˈhaʊ̯ptˌʃuːlə", meaning: "Trường trung học cơ bản", example: "Sie besucht die Hauptschule.", exampleTranslation: "Cô ấy học trường Hauptschule.", category: "Danh từ" },
+      { id: "23-pdf-8", word: "die Lehre", ipa: "diː ˈleːʁə", meaning: "Học nghề", example: "Er macht eine Lehre.", exampleTranslation: "Anh ấy học nghề.", category: "Danh từ" },
+      { id: "23-pdf-9", word: "die Note", ipa: "diː ˈnoːtə", meaning: "Điểm số", example: "Ich habe gute Noten.", exampleTranslation: "Tôi có điểm tốt.", category: "Danh từ" },
+      { id: "23-pdf-10", word: "die Realschule", ipa: "diː ʁeˈaːlˌʃuːlə", meaning: "Trường trung học", example: "Ich war in der Realschule.", exampleTranslation: "Tôi học Realschule.", category: "Danh từ" },
+      { id: "23-pdf-11", word: "das Zeugnis", ipa: "das ˈ͡tsɔɪ̯knɪs", meaning: "Học bạ / bảng điểm", example: "Ich bekomme mein Zeugnis.", exampleTranslation: "Tôi nhận bảng điểm.", category: "Danh từ" },
+      { id: "23-pdf-12", word: "die Bewerbung", ipa: "diː bəˈvɛʁbʊŋ", meaning: "Đơn xin việc", example: "Ich schreibe eine Bewerbung.", exampleTranslation: "Tôi viết đơn xin việc.", category: "Danh từ" },
+      { id: "23-pdf-13", word: "das Einkommen", ipa: "das ˈaɪ̯nˌkɔmən", meaning: "Thu nhập", example: "Mein Einkommen ist nicht hoch.", exampleTranslation: "Thu nhập của tôi không cao.", category: "Danh từ" },
+      { id: "23-pdf-14", word: "die Kündigung", ipa: "diː ˈkʏndɪɡʊŋ", meaning: "Đơn nghỉ việc", example: "Ich bekomme eine Kündigung.", exampleTranslation: "Tôi nhận quyết định nghỉ việc.", category: "Danh từ" },
+      { id: "23-pdf-15", word: "der Praktikant", ipa: "deːɐ̯ pʁaktiˈkant", meaning: "Thực tập sinh", example: "Ich bin Praktikant.", exampleTranslation: "Tôi là thực tập sinh.", category: "Danh từ" },
+      { id: "23-pdf-16", word: "die Tätigkeit", ipa: "diː ˈtɛːtɪçkaɪ̯t", meaning: "Công việc / hoạt động", example: "Meine Tätigkeit ist interessant.", exampleTranslation: "Công việc của tôi thú vị.", category: "Danh từ" },
+      { id: "23-pdf-17", word: "der Elektroinstallateur", ipa: "deːɐ̯ eˈlɛktʁoɪnstalatuːɐ̯", meaning: "Thợ điện", example: "Er ist Elektroinstallateur.", exampleTranslation: "Anh ấy là thợ điện.", category: "Danh từ" },
+      { id: "23-pdf-18", word: "die Laune", ipa: "diː ˈlaʊ̯nə", meaning: "Tâm trạng", example: "Ich habe gute Laune.", exampleTranslation: "Tôi có tâm trạng tốt.", category: "Danh từ" },
+      { id: "23-pdf-19", word: "das Thema", ipa: "das ˈteːma", meaning: "Chủ đề", example: "Das Thema ist interessant.", exampleTranslation: "Chủ đề thú vị.", category: "Danh từ" },
+
+      // NHÓM 6: ĐỘNG TỪ (VERBEN - TỪ PDF)
+      { id: "23-pdf-20", word: "sich bewerben (um)", ipa: "zɪç bəˈvɛʁbn̩", meaning: "Nộp đơn", example: "Ich bewerbe mich um eine Stelle.", exampleTranslation: "Tôi nộp đơn xin việc.", category: "Động từ" },
+      { id: "23-pdf-21", word: "kündigen", ipa: "ˈkʏndɪɡn̩", meaning: "Nghỉ việc", example: "Ich kündige meinen Job.", exampleTranslation: "Tôi nghỉ việc.", category: "Động từ" },
+      { id: "23-pdf-22", word: "kopieren", ipa: "koˈpiːʁən", meaning: "Sao chép", example: "Ich kopiere das Dokument.", exampleTranslation: "Tôi sao chép tài liệu.", category: "Động từ" },
+      { id: "23-pdf-23", word: "stören", ipa: "ˈʃtøːʁən", meaning: "Làm phiền", example: "Das stört mich.", exampleTranslation: "Điều đó làm tôi khó chịu.", category: "Động từ" },
+      { id: "23-pdf-24", word: "vorhaben", ipa: "ˈfoːɐ̯ˌhaːbn̩", meaning: "Dự định", example: "Ich habe viel vor.", exampleTranslation: "Tôi có nhiều kế hoạch.", category: "Động từ" },
+
+      // NHÓM 7: TÍNH TỪ & TRẠNG TỪ (ADJEKTIVE & ADVERBIEN - TỪ PDF)
+      { id: "23-pdf-25", word: "mündlich", ipa: "ˈmʏntlɪç", meaning: "Bằng miệng", example: "Die Prüfung ist mündlich.", exampleTranslation: "Bài thi nói.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-26", word: "schriftlich", ipa: "ˈʃʁɪftlɪç", meaning: "Bằng viết", example: "Ich schreibe eine schriftliche Prüfung.", exampleTranslation: "Tôi làm bài thi viết.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-27", word: "eigentlich", ipa: "ˈaɪ̯ɡn̩tlɪç", meaning: "Thực ra", example: "Eigentlich bin ich müde.", exampleTranslation: "Thực ra tôi mệt.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-28", word: "freiwillig", ipa: "ˈfʁaɪ̯ˌvɪlɪç", meaning: "Tự nguyện", example: "Ich mache das freiwillig.", exampleTranslation: "Tôi làm tự nguyện.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-29", word: "genug", ipa: "ɡəˈnuːk", meaning: "Đủ", example: "Ich habe genug Geld.", exampleTranslation: "Tôi có đủ tiền.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-30", word: "neulich", ipa: "ˈnɔɪ̯lɪç", meaning: "Gần đây", example: "Ich habe ihn neulich gesehen.", exampleTranslation: "Tôi gặp anh ấy gần đây.", category: "Tính từ & Trạng từ" },
+      { id: "23-pdf-31", word: "vorgestern", ipa: "ˈfoːɐ̯ˌɡɛstɐn", meaning: "Hôm kia", example: "Ich war vorgestern krank.", exampleTranslation: "Hôm kia tôi bị ốm.", category: "Tính từ & Trạng từ" },
+
+      // NHÓM 8: CÂU CỐ ĐỊNH (PHRASEN - TỪ PDF)
+      { id: "23-pdf-32", word: "Das habe ich vor.", ipa: "das ˈhaːbə ɪç ˈfoːɐ̯", meaning: "Tôi dự định làm điều đó", example: "Das habe ich vor.", exampleTranslation: "Tôi định làm vậy.", category: "Câu cố định" }
     ],
     grammar: [
       { id: "g23-1", word: "der", ipa: "deːɐ̯", meaning: "Người mà/Cái mà (Làm chủ ngữ - Giống đực)", example: "Ein Koch ist ein Mann, der gut kochen kann.", exampleTranslation: "Đầu bếp là người (mà) có thể nấu ăn ngon.", rule: "Mệnh đề quan hệ (Relativsatz) - Nominativ", note: "Động từ luôn đứng cuối câu mệnh đề quan hệ." },
