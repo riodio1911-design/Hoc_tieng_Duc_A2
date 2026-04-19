@@ -1,0 +1,8 @@
+{
+  "name": "Học tiếng Đức: Luyện Nghe và Phát Âm",
+  "description": "Ứng dụng hỗ trợ học từ vựng tiếng Đức qua các ví dụ thực tế, tích hợp chuyển đổi văn bản thành giọng nói (TTS) để luyện nghe và phát âm chuyên sâu.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": []
+}
