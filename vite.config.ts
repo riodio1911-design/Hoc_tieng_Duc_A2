@@ -11,7 +11,6 @@ export default defineConfig(({mode}) => {
       react(), 
       tailwindcss(),
       VitePWA({
-// ... (Giữ y nguyên bên dưới y như lúc đầu)
         registerType: 'autoUpdate',
         manifest: {
           name: 'Học tiếng Đức (PWA)',

@@ -33,7 +33,7 @@ import Lektion22GrammarEx from './components/Lektion22GrammarEx';
 import Lektion23Exercises from './components/Lektion23Exercises';
 import Lektion23GrammarEx from './components/Lektion23GrammarEx';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 const VOICES = [
   { id: 'Kore', name: 'Nữ 1 (Kore)', gender: 'Female' },
@@ -61,6 +61,7 @@ export default function App() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [isDownloadingL21, setIsDownloadingL21] = useState(false);
   const [isDownloadingL23, setIsDownloadingL23] = useState(false);
+  const [isDownloadingGrammar, setIsDownloadingGrammar] = useState(false);
 
   const [voiceName, setVoiceName] = useState('Kore');
   const [voiceGender, setVoiceGender] = useState<'Male' | 'Female'>('Female');
@@ -85,6 +86,84 @@ export default function App() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+
+  const downloadGrammarIntro = async (lessonId: string, script: string) => {
+    if (isDownloadingGrammar) return;
+    setIsDownloadingGrammar(true);
+    try {
+      const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
+      const promptText = `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${script}`;
+      
+      const response = await ai.models.generateContent({
+        model: "gemini-3.1-flash-tts-preview",
+        contents: [{ parts: [{ text: promptText }] }],
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: voiceName as any },
+            },
+          },
+        },
+      });
+
+      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      if (base64Audio) {
+        const binaryString = atob(base64Audio);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Convert to WAV
+        const sampleRate = 24000;
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const blockAlign = numChannels * bitsPerSample / 8;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = bytes.length;
+        
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+        
+        const writeString = (v: DataView, offset: number, str: string) => {
+          for (let i = 0; i < str.length; i++) v.setUint8(offset + i, str.charCodeAt(i));
+        };
+        
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+        
+        const dataView = new Uint8Array(buffer, 44);
+        dataView.set(bytes);
+        
+        const blob = new Blob([buffer], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${lessonId}_Grammar_Intro_${voiceName}.wav`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
+    } finally {
+      setIsDownloadingGrammar(false);
+    }
+  };
 
   const downloadL21Intro = async () => {
     if (isDownloadingL21) return;
@@ -1052,7 +1131,7 @@ Return a JSON object with:
                       ) : (
                         <div>
                           {(selectedLesson.id === 'l23' || selectedLesson.id === 'l22') && (
-                            <div className="flex justify-center mb-8">
+                            <div className="flex justify-center mb-8 gap-3">
                               <button
                                 onClick={() => playAudio(selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT, `${selectedLesson.id}_grammar_intro`, 'vi-VN')}
                                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-black shadow-xl transition-all ${
@@ -1063,6 +1142,15 @@ Return a JSON object with:
                               >
                                 {playingId === `${selectedLesson.id}_grammar_intro` ? <Loader2 className="w-5 h-5 animate-spin" /> : <Volume2 className="w-5 h-5" />}
                                 <span>AUDIO GIỚI THIỆU NGỮ PHÁP</span>
+                              </button>
+                              <button
+                                onClick={() => downloadGrammarIntro(selectedLesson.id, selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT)}
+                                disabled={isDownloadingGrammar}
+                                className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-theme-secondary/10 hover:bg-theme-secondary hover:text-white text-theme-secondary font-black shadow-sm transition-all disabled:opacity-50 border border-theme-secondary/20"
+                                title="Tải audio về máy (.wav)"
+                              >
+                                {isDownloadingGrammar ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+                                <span>TẢI VỀ</span>
                               </button>
                             </div>
                           )}
