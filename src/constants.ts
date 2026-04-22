@@ -69,6 +69,18 @@ Từ vựng xoay quanh các khái niệm thiết thực: phương tiện giao th
 
 Tóm lại, bài 22 là bước tiến quan trọng giúp bạn giao tiếp và sống độc lập hơn bằng tiếng Đức. Chúc các bạn học tốt!`;
 
+export const L24_INTRO_SCRIPT = `Xin chào các bạn. Hôm nay chúng ta cùng tìm hiểu bài 24 giáo trình Menschen A2 với chủ đề: "Wie sah dein Alltag aus?". Lektion này sẽ tập trung vào việc kể lại những trải nghiệm trong quá khứ, những chuyến đi nước ngoài và cách thể hiện cảm xúc cá nhân. Ngữ pháp trọng tâm của bài là thì Quá khứ đơn (Präteritum) của các động từ thường, bất quy tắc và động từ khuyết thiếu.`;
+
+export const L24_GRAMMAR_SCRIPT = `Xin chào các bạn. Ngữ pháp bài 24 tập trung vào Präteritum (Thì quá khứ đơn).
+Thì này chủ yếu dùng trong văn viết, kể chuyện hoặc các báo cáo.
+
+Với động từ có quy tắc (Regular), ta thêm đuôi -te vào thân động từ. Ví dụ: machen -> machte, sagen -> sagte.
+Với động từ bất quy tắc (Irregular), thân động từ sẽ bị biến đổi và bạn bắt buộc phải học thuộc. Ví dụ: kommen -> kam, gehen -> ging, finden -> fand.
+
+Đặc biệt, nhóm động từ khuyết thiếu (Modalverben) như können, müssen, wollen... khi chuyển sang Präteritum, chúng ta bỏ Umlaut (nếu có) và thêm đuôi -te. Ví dụ: müssen -> musste, können -> konnte.
+
+Lưu ý quan trọng: Ngôi "ich" và ngôi "er/sie/es" trong thì Präteritum luôn được chia giống hệt nhau! Chúc các bạn luyện tập tốt!`;
+
 export const VOCABULARY_DATA: Lesson[] = [
   {
     id: "l21",
@@ -373,6 +385,70 @@ export const VOCABULARY_DATA: Lesson[] = [
       { id: "g23-10", word: "Warum möchten Sie...?", ipa: "vaˈʁʊm ˈmœçtn̩ ziː", meaning: "Tại sao bạn muốn...?", example: "Warum möchten Sie als Programmierer arbeiten?", exampleTranslation: "Tại sao bạn muốn làm lập trình viên?", rule: "Hội thoại mẫu (Tìm việc làm)" },
       { id: "g23-11", word: "kreativ ist", ipa: "kʁeaˈtif ɪst", meaning: "(Mà) rất sáng tạo", example: "Das ist ein Beruf, der sehr kreativ ist.", exampleTranslation: "Đó là một nghề (cái mà) rất sáng tạo.", rule: "Hội thoại mẫu (Tìm việc làm)" },
       { id: "g23-12", word: "đó là cái Job...", ipa: "das ɪst deːɐ̯ dʒɔp", meaning: "Đó là công việc...", example: "Ich weiß. Aber das ist der Job, den ich schon immer machen wollte.", exampleTranslation: "Tôi biết. Nhưng đó là công việc (cái mà) tôi luôn muốn làm.", rule: "Hội thoại mẫu (Tìm việc làm)" }
+    ]
+  },
+  {
+    id: "l24",
+    title: "Lektion 24",
+    subtitle: "Wie sah dein Alltag aus?",
+    items: [
+      { id: "24-pdf-1", word: "der Abflug - die Abflüge", ipa: "deːɐ̯ ˈapˌfluːk", meaning: "chuyến bay khởi hành", example: "Der Abflug ist um 10 Uhr.", exampleTranslation: "Chuyến bay khởi hành lúc 10 giờ.", category: "Danh từ" },
+      { id: "24-pdf-2", word: "die Ankunft", ipa: "diː ˈankʊnft", meaning: "sự đến nơi", example: "Die Ankunft ist um 18 Uhr.", exampleTranslation: "Sự đến nơi là lúc 18 giờ.", category: "Danh từ" },
+      { id: "24-pdf-3", word: "der Anschluss - die Anschlüsse", ipa: "deːɐ̯ ˈanʃlʊs", meaning: "chuyến nối", example: "Ich habe keinen Anschluss.", exampleTranslation: "Tôi không có chuyến bay/tàu nối.", category: "Danh từ" },
+      { id: "24-pdf-4", word: "der Pass - die Pässe", ipa: "deːɐ̯ pas", meaning: "hộ chiếu", example: "Ich habe meinen Pass dabei.", exampleTranslation: "Tôi mang theo hộ chiếu.", category: "Danh từ" },
+      { id: "24-pdf-5", word: "das Visum - die Visa", ipa: "das ˈviːzʊm", meaning: "visa", example: "Ich brauche ein Visum.", exampleTranslation: "Tôi cần một visa.", category: "Danh từ" },
+      { id: "24-pdf-6", word: "der Zoll", ipa: "deːɐ̯ tsɔl", meaning: "hải quan", example: "Ich gehe durch den Zoll.", exampleTranslation: "Tôi đi qua hải quan.", category: "Danh từ" },
+      { id: "24-pdf-7", word: "das Ausland", ipa: "das ˈaʊ̯slant", meaning: "nước ngoài", example: "Ich arbeite im Ausland.", exampleTranslation: "Tôi làm việc ở nước ngoài.", category: "Danh từ" },
+      { id: "24-pdf-8", word: "die Erfahrung - die Erfahrungen", ipa: "diː ɛɐ̯ˈfaːʁʊŋ", meaning: "trải nghiệm", example: "Ich habe viele Erfahrungen.", exampleTranslation: "Tôi có nhiều trải nghiệm.", category: "Danh từ" },
+      { id: "24-pdf-9", word: "der Alltag", ipa: "deːɐ̯ ˈaltak", meaning: "cuộc sống hàng ngày", example: "Mein Alltag ist stressig.", exampleTranslation: "Cuộc sống hàng ngày của tôi áp lực.", category: "Danh từ" },
+      { id: "24-pdf-10", word: "die Geburt - die Geburten", ipa: "diː ɡəˈbuːɐ̯t", meaning: "ca sinh", example: "Die Geburt war schwer.", exampleTranslation: "Ca sinh rất khó khăn.", category: "Danh từ" },
+      { id: "24-pdf-11", word: "die Kollegin - die Kolleginnen", ipa: "diː kɔˈleːɡɪn", meaning: "đồng nghiệp nữ", example: "Meine Kollegin ist nett.", exampleTranslation: "Đồng nghiệp nữ của tôi rất thân thiện.", category: "Danh từ" },
+      { id: "24-pdf-12", word: "die Familie - die Familien", ipa: "diː faˈmiːli̯ə", meaning: "gia đình", example: "Meine Familie ist wichtig.", exampleTranslation: "Gia đình tôi rất quan trọng.", category: "Danh từ" },
+      { id: "24-pdf-13", word: "abholen", ipa: "ˈapˌhoːlən", meaning: "đón", example: "Ich hole dich ab.", exampleTranslation: "Tôi đến đón bạn.", category: "Động từ" },
+      { id: "24-pdf-14", word: "beantragen", ipa: "bəˈʔantʁaːɡn̩", meaning: "xin", example: "Ich beantrage ein Visum.", exampleTranslation: "Tôi xin visa.", category: "Động từ" },
+      { id: "24-pdf-15", word: "verlängern", ipa: "fɛɐ̯ˈlɛŋɐn", meaning: "gia hạn", example: "Ich verlängere meinen Pass.", exampleTranslation: "Tôi gia hạn hộ chiếu của mình.", category: "Động từ" },
+      { id: "24-pdf-16", word: "arbeiten", ipa: "ˈaʁbaɪ̯tn̩", meaning: "làm việc", example: "Ich arbeite viel.", exampleTranslation: "Tôi làm việc nhiều.", category: "Động từ" },
+      { id: "24-pdf-17", word: "leiten", ipa: "ˈlaɪ̯tn̩", meaning: "quản lý", example: "Er leitet ein Team.", exampleTranslation: "Anh ấy quản lý một nhóm.", category: "Động từ" },
+      { id: "24-pdf-18", word: "vermissen", ipa: "fɛɐ̯ˈmɪsn̩", meaning: "nhớ", example: "Ich vermisse dich.", exampleTranslation: "Tôi nhớ bạn.", category: "Động từ" },
+      { id: "24-pdf-19", word: "gefallen", ipa: "ɡəˈfalən", meaning: "thích", example: "Das gefällt mir.", exampleTranslation: "Điều đó làm tôi thích.", category: "Động từ" },
+      { id: "24-pdf-20", word: "passieren", ipa: "paˈsiːʁən", meaning: "xảy ra", example: "Was passiert?", exampleTranslation: "Chuyện gì xảy ra vậy?", category: "Động từ" },
+      { id: "24-pdf-21", word: "kompliziert", ipa: "kɔmpliˈt͡siːɐ̯t", meaning: "phức tạp", example: "Das ist kompliziert.", exampleTranslation: "Cái này phức tạp.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-22", word: "schön", ipa: "ʃøːn", meaning: "đẹp", example: "Das war schön.", exampleTranslation: "Điều đó từng rất đẹp.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-23", word: "schwierig", ipa: "ˈʃviːʁɪç", meaning: "khó", example: "Das ist schwierig.", exampleTranslation: "Cái này khó.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-24", word: "wichtig", ipa: "ˈvɪçtɪç", meaning: "quan trọng", example: "Das ist wichtig.", exampleTranslation: "Điều đó quan trọng.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-25", word: "besonders", ipa: "bəˈzɔndɐs", meaning: "đặc biệt", example: "Das gefällt mir besonders.", exampleTranslation: "Tôi đặc biệt thích nó.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-26", word: "leider", ipa: "ˈlaɪ̯dɐ", meaning: "tiếc là", example: "Leider habe ich keine Zeit.", exampleTranslation: "Tiếc là tôi không có thời gian.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-27", word: "oft", ipa: "ɔft", meaning: "thường xuyên", example: "Ich arbeite oft.", exampleTranslation: "Tôi thường xuyên làm việc.", category: "Tính từ & Trạng từ" },
+      { id: "24-pdf-28", word: "am besten", ipa: "am ˈbɛstn̩", meaning: "tốt nhất", example: "Am besten ist das Essen.", exampleTranslation: "Tốt nhất là đồ ăn.", category: "Câu cố định" },
+      { id: "24-pdf-33", word: "eine schöne Zeit", ipa: "aɪ̯nə ʃøːnə t͡saɪ̯t", meaning: "thời gian đẹp", example: "Das war eine schöne Zeit.", exampleTranslation: "Đó đã là một thời gian đẹp.", category: "Câu cố định" },
+      { id: "24-pdf-34", word: "viel lernen", ipa: "fiːl ˈlɛʁnən", meaning: "học nhiều", example: "Ich lerne viel.", exampleTranslation: "Tôi học nhiều.", category: "Câu cố định" },
+      { id: "24-pdf-35", word: "nicht einfach", ipa: "nɪçt ˈaɪ̯nfax", meaning: "không dễ", example: "Das ist nicht einfach.", exampleTranslation: "Điều đó không dễ.", category: "Câu cố định" },
+      { id: "24-pdf-36", word: "oft müssen", ipa: "ɔft ˈmʏsn̩", meaning: "thường phải", example: "Ich muss oft arbeiten.", exampleTranslation: "Tôi thường phải làm việc.", category: "Câu cố định" }
+    ],
+    grammar: [
+      { id: "g24-1", word: "ich / er / sie sagte", ipa: "ˈzaːktə", meaning: "tôi / anh ấy / cô ấy đã nói", example: "Er sagte, dass er gestern keine Zeit hatte.", exampleTranslation: "Anh ấy đã nói rằng hôm qua anh ấy không có thời gian.", rule: "Präteritum: Động từ có quy tắc (sagen)", note: "Thêm đuôi -te cho ngôi ich, er/es/sie" },
+      { id: "g24-2", word: "du sagtest", ipa: "ˈzaːktəst", meaning: "bạn đã nói", example: "Was sagtest du gerade?", exampleTranslation: "Bạn vừa mới nói gì cơ?", rule: "Präteritum: Động từ có quy tắc (sagen)", note: "Thêm đuôi -test" },
+      { id: "g24-3", word: "wir / sie / Sie sagten", ipa: "ˈzaːktn̩", meaning: "chúng tôi / họ / Ngài đã nói", example: "Wir sagten ihm die Wahrheit.", exampleTranslation: "Chúng tôi đã nói cho anh ấy sự thật.", rule: "Präteritum: Động từ có quy tắc (sagen)", note: "Thêm đuôi -ten" },
+      { id: "g24-4", word: "ihr sagtet", ipa: "ˈzaːktət", meaning: "các bạn đã nói", example: "Sagtet ihr etwas?", exampleTranslation: "Các bạn đã nói gì à?", rule: "Präteritum: Động từ có quy tắc (sagen)", note: "Thêm đuôi -tet" },
+
+      // unregelmäßige Verben
+      { id: "g24-5", word: "ich / er / sie kam", ipa: "kaːm", meaning: "tôi / anh ấy / cô ấy đã đến", example: "Ich kam gestern spät nach Hause.", exampleTranslation: "Hôm qua tôi đã về nhà muộn.", rule: "Präteritum: Động từ bất quy tắc (kommen)", note: "Không có đuôi ở ngôi ich & er/es/sie" },
+      { id: "g24-6", word: "wir / sie / Sie kamen", ipa: "ˈkaːmən", meaning: "chúng tôi / họ / Ngài đã đến", example: "Sie kamen pünktlich an.", exampleTranslation: "Họ đã đến đúng giờ.", rule: "Präteritum: Động từ bất quy tắc (kommen)", note: "Các ngôi khác chia như bình thường: kamst, kamt, kamen" },
+      { id: "g24-7", word: "ich / er / sie gab", ipa: "ɡaːp", meaning: "tôi / anh ấy / cô ấy đã đưa/cho", example: "Er gab mir ein Buch.", exampleTranslation: "Anh ấy đã đưa cho tôi một cuốn sách.", rule: "Präteritum: Động từ bất quy tắc (geben)", note: "Các ngôi khác: gabst, gabt, gaben" },
+      { id: "g24-8", word: "ich / er / sie fand", ipa: "fant", meaning: "tôi / anh ấy / cô ấy đã thấy (cảm nhận)", example: "Ich fand den Film sehr interessant.", exampleTranslation: "Tôi nhận thấy bộ phim rất thú vị.", rule: "Präteritum: Động từ bất quy tắc (finden)", note: "Đuôi có thêm 'e' để phân cách (du fandest, ihr fandet)" },
+      { id: "g24-9", word: "ich / er / sie sah", ipa: "zaː", meaning: "tôi / anh ấy / cô ấy đã nhìn thấy", example: "Ich sah ein schönes Auto.", exampleTranslation: "Tôi đã nhìn thấy một chiếc ô tô đẹp.", rule: "Präteritum: Động từ bất quy tắc (sehen)", note: "Các ngôi khác: sahst, saht, sahen" },
+
+      // KOMMUNIKATION - Begeisterung ausdrücken
+      { id: "g24-10", word: "Das war eine tolle Zeit mit vielen schönen Erlebnissen/Erfahrungen.", ipa: "", meaning: "Đó là một khoảng thời gian tuyệt vời với nhiều trải nghiệm đẹp.", example: "Letztes Jahr war ich in der Schweiz. Das war eine tolle Zeit mit vielen schönen Erlebnissen.", exampleTranslation: "Năm ngoái tôi ở Thụy Sĩ. Đó là một khoảng thời gian tuyệt vời với nhiều trải nghiệm đẹp.", rule: "Mẫu câu Giao tiếp: Thể hiện sự hào hứng (Begeisterung)" },
+      { id: "g24-11", word: "Ich konnte viele neue/schöne/… Erfahrungen machen.", ipa: "", meaning: "Tôi đã có thể có được nhiều kinh nghiệm/trải nghiệm mới.", example: "Während des Praktikums konnte ich viele neue Erfahrungen machen.", exampleTranslation: "Trong kỳ thực tập tôi đã có thể thu được nhiều kinh nghiệm mới.", rule: "Mẫu câu Giao tiếp: Thể hiện sự hào hứng (Begeisterung)" },
+      { id: "g24-12", word: "Es hat mir super gefallen, dass...", ipa: "", meaning: "Tôi cực kỳ thích việc...", example: "Es hat mir super gefallen, dass die Kollegen nett waren.", exampleTranslation: "Tôi cực kỳ thích việc các đồng nghiệp đều thân thiện.", rule: "Mẫu câu Giao tiếp: Thể hiện sự hào hứng (Begeisterung)" },
+      { id: "g24-13", word: "Das würde ich jedem empfehlen.", ipa: "", meaning: "Tôi sẽ khuyên mọi người nên làm thế (rất đề cử).", example: "Die Reise war fantastisch. Das würde ich jedem empfehlen.", exampleTranslation: "Chuyến đi thật tuyệt vời. Tôi rất đề cử cho mọi người.", rule: "Mẫu câu Giao tiếp: Thể hiện sự hào hứng (Begeisterung)" },
+
+      // KOMMUNIKATION - Enttäuschung ausdrücken
+      { id: "g24-14", word: "Ich fand es traurig, dass...", ipa: "", meaning: "Tôi thấy buồn (thất vọng) về việc...", example: "Ich fand es traurig, dass das Wetter schlecht war.", exampleTranslation: "Tôi thấy buồn vì thời tiết quá xấu.", rule: "Mẫu câu Giao tiếp: Thể hiện sự thất vọng (Enttäuschung)" },
+      { id: "g24-15", word: "Leider hat das nicht so gut geklappt.", ipa: "", meaning: "Rất tiếc điều đó diễn ra không suôn sẻ/tốt lắm.", example: "Ich wollte nach Berlin fahren, aber leider hat das nicht so gut geklappt.", exampleTranslation: "Tôi muốn đi Berlin, nhưng rất tiếc việc đó diễn ra không suôn sẻ lắm.", rule: "Mẫu câu Giao tiếp: Thể hiện sự thất vọng (Enttäuschung)" },
+      { id: "g24-16", word: "Ich musste immer... Das hat mir nicht so gut gefallen.", ipa: "", meaning: "Tôi đã luôn phải... Điều đó làm tôi không hài lòng lắm.", example: "Ich musste immer am Wochenende arbeiten. Das hat mir nicht so gut gefallen.", exampleTranslation: "Tôi luôn phải làm việc cuối tuần. Điều này làm tôi không thích tý nào.", rule: "Mẫu câu Giao tiếp: Thể hiện sự thất vọng (Enttäuschung)" },
+      { id: "g24-17", word: "Es war keine schöne Zeit. Das würde ich niemandem empfehlen.", ipa: "", meaning: "Đó không phải là thời gian tốt đẹp. Tôi sẽ không khuyên ai làm thế cả.", example: "Der Job war furchtbar. Es war keine schöne Zeit. Das würde ich niemandem empfehlen.", exampleTranslation: "Công việc thật khủng khiếp. Đó không phải là khoảng thời gian đẹp. Tôi không khuyên ai nhận việc ấy.", rule: "Mẫu câu Giao tiếp: Thể hiện sự thất vọng (Enttäuschung)" }
     ]
   }
 ];

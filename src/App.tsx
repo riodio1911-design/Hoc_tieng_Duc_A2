@@ -14,15 +14,20 @@ import {
   RotateCcw,
   Gamepad2,
   MonitorPlay,
-  Download
+  Download,
+  Bot
 } from 'lucide-react';
 import { GoogleGenAI, Modality } from "@google/genai";
-import { VOCABULARY_DATA, Lesson, VocabularyItem, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT } from './constants';
+import { VOCABULARY_DATA, Lesson, VocabularyItem, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT, L24_GRAMMAR_SCRIPT, L24_INTRO_SCRIPT } from './constants';
 import AlibiGame from './components/AlibiGame';
 import Kartenspiel from './components/Kartenspiel';
 import Lektion21Slides from './components/Lektion21Slides';
 import Lektion21GrammarTheory from './components/Lektion21GrammarTheory';
 import Lektion21GrammarEx from './components/Lektion21GrammarEx';
+import Lektion22Slides from './components/Lektion22Slides';
+import Lektion23Slides from './components/Lektion23Slides';
+import Lektion24Slides from './components/Lektion24Slides';
+import Lektion24Exercises from './components/Lektion24Exercises';
 import FlashcardGrid from './components/FlashcardGrid';
 import GrammarTable from './components/GrammarTable';
 import FeedbackDisplay, { Feedback } from './components/FeedbackDisplay';
@@ -32,6 +37,12 @@ import Lektion22Exercises from './components/Lektion22Exercises';
 import Lektion22GrammarEx from './components/Lektion22GrammarEx';
 import Lektion23Exercises from './components/Lektion23Exercises';
 import Lektion23GrammarEx from './components/Lektion23GrammarEx';
+import Lektion24GrammarEx from './components/Lektion24GrammarEx';
+import Lektion24WordGuessingGame from './components/Lektion24WordGuessingGame';
+import Lektion24DACHQuiz from './components/Lektion24DACHQuiz';
+
+import ReviewAIRoleplay from './components/ReviewAIRoleplay';
+import ReviewDailyMix from './components/ReviewDailyMix';
 
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
@@ -55,12 +66,13 @@ const L21_INTRO_SCRIPT = `Xin chào các bạn. Trong bài 21 của giáo trình
 
 export default function App() {
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
-  const [activeTab, setActiveTab] = useState<'vocabulary' | 'grammar' | 'game' | 'lecture' | 'speaking' | 'writing'>('vocabulary');
-  const [activeSubTab, setActiveSubTab] = useState<'flashcard' | 'alibi' | 'exercises'>('flashcard');
+  const [activeTab, setActiveTab] = useState<'vocabulary' | 'grammar' | 'game' | 'lecture' | 'speaking' | 'writing' | 'review'>('vocabulary');
+  const [activeSubTab, setActiveSubTab] = useState<'flashcard' | 'alibi' | 'exercises' | 'ai_roleplay' | 'daily_mix'>('flashcard');
   const [grammarSubTab, setGrammarSubTab] = useState<'theory' | 'exercises'>('theory');
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [isDownloadingL21, setIsDownloadingL21] = useState(false);
   const [isDownloadingL23, setIsDownloadingL23] = useState(false);
+  const [isDownloadingL24, setIsDownloadingL24] = useState(false);
   const [isDownloadingGrammar, setIsDownloadingGrammar] = useState(false);
 
   const [voiceName, setVoiceName] = useState('Kore');
@@ -304,6 +316,54 @@ export default function App() {
       alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
     } finally {
       setIsDownloadingL23(false);
+    }
+  };
+
+  const downloadL24Intro = async () => {
+    if (isDownloadingL24) return;
+    setIsDownloadingL24(true);
+    try {
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) throw new Error("Missing Gemini API Key");
+      
+      const effectPrompt = voiceEffect === 'gentle' ? 'Use a very gentle, calm, and soothing tone' 
+                        : voiceEffect === 'energetic' ? 'Use a highly energetic, enthusiastic, and fast-paced tone'
+                        : 'Use a natural, clear, and professional tone';
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1alpha/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${L24_INTRO_SCRIPT}` }] }],
+          targetAudioLanguage: 'vi-VN',
+        })
+      });
+
+      const data = await response.json();
+      const base64Audio = data.candidates?.[0]?.content?.parts?.find((p: any) => p.inlineData?.mimeType?.startsWith('audio/'))?.inlineData?.data;
+
+      if (base64Audio) {
+        const binaryString = window.atob(base64Audio);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        const blob = new Blob([bytes.buffer], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Lektion24-Intro-${voiceEffect}.wav`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
+    } finally {
+      setIsDownloadingL24(false);
     }
   };
 
@@ -834,6 +894,44 @@ Return a JSON object with:
                     </div>
                   </button>
                 ))}
+
+                {/* Review Module Button */}
+                <button
+                    onClick={() => {
+                      setSelectedLesson({
+                        id: 'review',
+                        title: 'Ôn tập Menschen A2',
+                        subtitle: 'Luyện giao tiếp AI & Trắc nghiệm tổng hợp',
+                        items: [],
+                        grammar: []
+                      });
+                      setActiveTab('review');
+                      setActiveSubTab('ai_roleplay');
+                    }}
+                    className="md:col-span-2 group relative flex items-start gap-4 p-8 slide-card border-theme-primary/30 hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-xl hover:shadow-theme-primary/10 bg-gradient-to-br from-theme-cream to-white"
+                  >
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-theme-primary">
+                      <MonitorPlay size={150} />
+                    </div>
+                    <div className="p-4 bg-theme-primary/10 rounded-2xl group-hover:bg-theme-primary group-hover:text-white transition-all">
+                      <Gamepad2 className="w-8 h-8 text-theme-primary group-hover:text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-display font-black text-3xl text-theme-primary transition-colors">Bài Ôn tập giáo trình Menschen A2</h3>
+                      <p className="text-base text-theme-dark/80 font-bold line-clamp-2 mt-1">Phòng luyện giao tiếp AI, Trạm ôn tập tổng hợp hàng ngày (Spaced Repetition).</p>
+                      <div className="flex items-center gap-3 mt-6">
+                        <div className="flex items-center text-[11px] font-black text-emerald-600 bg-emerald-100 px-4 py-1.5 rounded-full uppercase tracking-wider">
+                          AI Roleplay
+                        </div>
+                        <div className="flex items-center text-[11px] font-black text-amber-600 bg-amber-100 px-4 py-1.5 rounded-full uppercase tracking-wider">
+                          Daily Mix
+                        </div>
+                        <div className="ml-auto flex items-center text-sm font-black text-theme-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                          Khám phá ngay <ChevronRight className="w-5 h-5 ml-1" />
+                        </div>
+                      </div>
+                    </div>
+                  </button>
               </div>
 
               {/* Offline Usage Tip for the Home Screen */}
@@ -951,12 +1049,54 @@ Return a JSON object with:
                         </button>
                       </div>
                     )}
+                    {selectedLesson.id === 'l24' && (
+                      <div className="flex items-center gap-2 bg-theme-primary/10 pl-1 pr-4 py-1 rounded-full border border-theme-primary/20">
+                        <button 
+                          onClick={() => playAudio(L24_INTRO_SCRIPT, 'l24-intro', 'vi-VN')} 
+                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${playingId === 'l24-intro' ? 'bg-theme-primary text-white shadow-lg animate-pulse' : 'bg-white text-theme-primary hover:bg-theme-primary hover:text-white'}`}
+                          title="Nghe Giới thiệu Bài 24"
+                        >
+                          {playingId === 'l24-intro' ? <Loader2 size={16} className="animate-spin" /> : <Volume2 size={16} />}
+                        </button>
+                        <span className="text-[11px] font-black text-theme-primary uppercase tracking-widest leading-none pt-0.5">
+                          Audio giới thiệu bài 24
+                        </span>
+                        <button 
+                          onClick={downloadL24Intro} 
+                          disabled={isDownloadingL24}
+                          className="ml-2 w-8 h-8 rounded-full bg-theme-primary/20 hover:bg-theme-primary hover:text-white text-theme-primary flex items-center justify-center transition-all disabled:opacity-50"
+                          title="Tải audio về máy (.wav)"
+                        >
+                          {isDownloadingL24 ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+                        </button>
+                      </div>
+                    )}
                   </h2>
                   <p className="text-theme-dark/80 font-black text-sm uppercase tracking-widest">{selectedLesson.subtitle}</p>
                 </div>
               </div>
 
               {/* Tab Bar */}
+              {selectedLesson.id === 'review' ? (
+                <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x">
+                  <button
+                    onClick={() => setActiveSubTab('ai_roleplay')}
+                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                      activeSubTab === 'ai_roleplay' ? 'bg-white shadow-xl shadow-theme-dark/10 text-emerald-600' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
+                    }`}
+                  >
+                    <Bot className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">AI Roleplay</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveSubTab('daily_mix')}
+                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                      activeSubTab === 'daily_mix' ? 'bg-white shadow-xl shadow-theme-dark/10 text-amber-600' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
+                    }`}
+                  >
+                    <Gamepad2 className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Daily Mix</span>
+                  </button>
+                </div>
+              ) : (
               <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x">
                 <button
                   onClick={() => setActiveTab('vocabulary')}
@@ -974,7 +1114,7 @@ Return a JSON object with:
                 >
                   <Languages className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Ngữ pháp</span>
                 </button>
-                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22') && (
+                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                   <button
                     onClick={() => setActiveTab('lecture')}
                     className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
@@ -984,7 +1124,7 @@ Return a JSON object with:
                     <MonitorPlay className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Bài giảng</span>
                   </button>
                 )}
-                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23') && (
+                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                   <button
                     onClick={() => setActiveTab('game')}
                     className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
@@ -994,7 +1134,7 @@ Return a JSON object with:
                     <Gamepad2 className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Trò chơi</span>
                   </button>
                 )}
-                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23') && (
+                {(selectedLesson.id === 'l21' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                   <button
                     onClick={() => setActiveTab('speaking')}
                     className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
@@ -1015,10 +1155,19 @@ Return a JSON object with:
                   </button>
                 )}
               </div>
+              )}
 
               <div className="space-y-4 pb-20">
-                {activeTab === 'lecture' && selectedLesson.id === 'l21' ? (
+                {selectedLesson.id === 'review' || activeTab === 'review' ? (
+                   activeSubTab === 'ai_roleplay' ? <ReviewAIRoleplay /> : <ReviewDailyMix />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l21' ? (
                   <Lektion21Slides playAudio={playAudio} playingId={playingId} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l22' ? (
+                  <Lektion22Slides playAudio={playAudio} playingId={playingId} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l23' ? (
+                  <Lektion23Slides playAudio={playAudio} playingId={playingId} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l24' ? (
+                  <Lektion24Slides playAudio={playAudio} playingId={playingId} />
                 ) : activeTab === 'speaking' ? (
                   <SpeakingPractice lessonId={selectedLesson.id} playAudio={playAudio} playingId={playingId} />
                 ) : activeTab === 'writing' && selectedLesson.id === 'l21' ? (
@@ -1043,10 +1192,45 @@ Return a JSON object with:
                         </div>
                       </div>
                     )}
+                    
+                    {selectedLesson.id === 'l24' && (
+                      <div className="flex justify-center mb-6">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                          <button 
+                            onClick={() => setActiveSubTab('kartenspiel')}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === 'kartenspiel' || !activeSubTab ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
+                          >
+                            Lật thẻ ghép chữ
+                          </button>
+                          <button 
+                            onClick={() => setActiveSubTab('wordguess')}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === 'wordguess' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
+                          >
+                            Đoán từ (Was passt?)
+                          </button>
+                          <button 
+                            onClick={() => setActiveSubTab('dachquiz')}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === 'dachquiz' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
+                          >
+                            D-A-CH Quiz
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {selectedLesson.id === 'l21' && activeSubTab === 'alibi' ? (
                       <AlibiGame 
                         onBack={() => setActiveTab('vocabulary')} 
+                        playAudio={playAudio}
+                        playingId={playingId}
+                      />
+                    ) : selectedLesson.id === 'l24' && activeSubTab === 'wordguess' ? (
+                      <Lektion24WordGuessingGame 
+                        playAudio={playAudio}
+                        playingId={playingId}
+                      />
+                    ) : selectedLesson.id === 'l24' && activeSubTab === 'dachquiz' ? (
+                      <Lektion24DACHQuiz 
                         playAudio={playAudio}
                         playingId={playingId}
                       />
@@ -1062,7 +1246,7 @@ Return a JSON object with:
                 ) : (
                   activeTab === 'vocabulary' ? (
                     <div>
-                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l23') && (
+                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -1075,7 +1259,7 @@ Return a JSON object with:
                               onClick={() => setActiveSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              Bài tập đại trà (10 bài)
+                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : 'Bài tập đại trà (10 bài)'}
                             </button>
                           </div>
                         </div>
@@ -1085,6 +1269,8 @@ Return a JSON object with:
                         <Lektion22Exercises />
                       ) : selectedLesson.id === 'l23' && activeSubTab === 'exercises' ? (
                         <Lektion23Exercises playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l24' && activeSubTab === 'exercises' ? (
+                        <Lektion24Exercises playAudio={playAudio} playingId={playingId} />
                       ) : (
                         <FlashcardGrid 
                           items={selectedLesson.items}
@@ -1101,7 +1287,7 @@ Return a JSON object with:
                     </div>
                   ) : (
                     <div>
-                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23') && (
+                      {(selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -1114,7 +1300,7 @@ Return a JSON object with:
                               onClick={() => setGrammarSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-secondary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : 'Bài tập Ngữ pháp'}
+                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : 'Bài tập Ngữ pháp'}
                             </button>
                           </div>
                         </div>
@@ -1124,16 +1310,18 @@ Return a JSON object with:
                         <Lektion22GrammarEx />
                       ) : selectedLesson.id === 'l23' && grammarSubTab === 'exercises' ? (
                         <Lektion23GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l24' && grammarSubTab === 'exercises' ? (
+                        <Lektion24GrammarEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l21' && grammarSubTab === 'theory' ? (
                         <Lektion21GrammarTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l21' && grammarSubTab === 'exercises' ? (
                         <Lektion21GrammarEx />
                       ) : (
                         <div>
-                          {(selectedLesson.id === 'l23' || selectedLesson.id === 'l22') && (
+                          {(selectedLesson.id === 'l23' || selectedLesson.id === 'l22' || selectedLesson.id === 'l24') && (
                             <div className="flex justify-center mb-8 gap-3">
                               <button
-                                onClick={() => playAudio(selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT, `${selectedLesson.id}_grammar_intro`, 'vi-VN')}
+                                onClick={() => playAudio(selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : selectedLesson.id === 'l24' ? L24_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT, `${selectedLesson.id}_grammar_intro`, 'vi-VN')}
                                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-black shadow-xl transition-all ${
                                   playingId === `${selectedLesson.id}_grammar_intro` 
                                     ? 'bg-theme-secondary text-white shadow-theme-secondary/30 scale-95' 
@@ -1144,7 +1332,7 @@ Return a JSON object with:
                                 <span>AUDIO GIỚI THIỆU NGỮ PHÁP</span>
                               </button>
                               <button
-                                onClick={() => downloadGrammarIntro(selectedLesson.id, selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT)}
+                                onClick={() => downloadGrammarIntro(selectedLesson.id, selectedLesson.id === 'l23' ? L23_GRAMMAR_SCRIPT : selectedLesson.id === 'l24' ? L24_GRAMMAR_SCRIPT : L22_GRAMMAR_SCRIPT)}
                                 disabled={isDownloadingGrammar}
                                 className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-theme-secondary/10 hover:bg-theme-secondary hover:text-white text-theme-secondary font-black shadow-sm transition-all disabled:opacity-50 border border-theme-secondary/20"
                                 title="Tải audio về máy (.wav)"
