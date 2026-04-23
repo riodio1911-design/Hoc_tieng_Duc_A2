@@ -64,7 +64,16 @@ export default defineConfig(({mode}) => {
       },
     },
     build: {
-      chunkSizeWarningLimit: 1500 // Tăng giới hạn cảnh báo chunkSize
+      chunkSizeWarningLimit: 3000, // Tăng giới hạn cảnh báo chunkSize lên 3MB
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'ui-vendor': ['lucide-react', 'recharts', 'motion'],
+            'ai-vendor': ['@google/genai']
+          }
+        }
+      }
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
