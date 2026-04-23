@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mic, Volume2, Loader2, PlayCircle, BarChart3, ChevronRight, CheckCircle2, RotateCcw, AlertCircle } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { GoogleGenAI } from "@google/genai";
+import { getAI } from '../ai';
 
-// Sử dụng trực tiếp VITE_GEMINI_API_KEY
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = getAI();
 
 interface PracticeItem {
   id: string;

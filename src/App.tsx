@@ -43,9 +43,9 @@ import Lektion24DACHQuiz from './components/Lektion24DACHQuiz';
 
 import ReviewAIRoleplay from './components/ReviewAIRoleplay';
 import ReviewDailyMix from './components/ReviewDailyMix';
+import { getAI } from './ai';
 
-// Sử dụng trực tiếp VITE_GEMINI_API_KEY cho tương thích Vercel/Github
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = getAI();
 
 const VOICES = [
   { id: 'Kore', name: 'Nữ 1 (Kore)', gender: 'Female' },

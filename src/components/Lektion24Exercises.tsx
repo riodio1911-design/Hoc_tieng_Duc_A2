@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, ChevronLeft, CheckCircle2, Lock, FileEdit, Type, CheckSquare, List, AlertCircle, RefreshCw } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
+import { getAI } from '../ai';
 
-// Sử dụng trực tiếp VITE_GEMINI_API_KEY
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = getAI();
 
 interface Props {
   playAudio: (text: string, id: string, lang?: 'de-DE' | 'vi-VN') => void;

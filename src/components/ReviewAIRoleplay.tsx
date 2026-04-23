@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2, PlayCircle, RefreshCw, Mic } from 'lucide-react';
-import { GoogleGenAI, Chat } from "@google/genai";
+import { Chat } from "@google/genai";
+import { getAI } from '../ai';
 
-// Sử dụng trực tiếp VITE_GEMINI_API_KEY
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = getAI();
 
 type Message = {
   id: string;
