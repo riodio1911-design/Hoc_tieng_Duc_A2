@@ -63,6 +63,24 @@ export default defineConfig(({mode}) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    build: {
+      chunkSizeWarningLimit: 1500, // Tăng giới hạn cảnh báo chunkSize
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            // Tách các module lớn thành các file nhỏ hơn để tối ưu
+            if (id.includes('node_modules')) {
+              if (id.includes('@google/genai')) return 'genai';
+              if (id.includes('recharts')) return 'recharts';
+              if (id.includes('lucide-react')) return 'icons';
+              if (id.includes('react') || id.includes('react-dom')) return 'react';
+              if (id.includes('motion')) return 'motion';
+              return 'vendor';
+            }
+          }
+        }
+      }
+    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
