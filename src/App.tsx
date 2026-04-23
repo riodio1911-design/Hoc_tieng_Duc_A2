@@ -44,6 +44,7 @@ import Lektion24DACHQuiz from './components/Lektion24DACHQuiz';
 import ReviewAIRoleplay from './components/ReviewAIRoleplay';
 import ReviewDailyMix from './components/ReviewDailyMix';
 
+// Sử dụng trực tiếp VITE_GEMINI_API_KEY cho tương thích Vercel/Github
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 const VOICES = [
@@ -323,7 +324,7 @@ export default function App() {
     if (isDownloadingL24) return;
     setIsDownloadingL24(true);
     try {
-      const apiKey = process.env.GEMINI_API_KEY;
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       if (!apiKey) throw new Error("Missing Gemini API Key");
       
       const effectPrompt = voiceEffect === 'gentle' ? 'Use a very gentle, calm, and soothing tone' 

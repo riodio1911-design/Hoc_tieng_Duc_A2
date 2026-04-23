@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { GoogleGenAI } from '@google/genai';
 import { Loader2, Send, CheckCircle2, AlertCircle, Edit3, Sparkles, Mic } from 'lucide-react';
 
+// Sử dụng trực tiếp VITE_GEMINI_API_KEY
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export default function WritingPractice() {

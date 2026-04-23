@@ -6,245 +6,91 @@ import { ExFillTyping, ExFillOptionsLocal, ExRewrite } from './Lektion23Exercise
 const GRAMMAR_EXERCISES = [
   {
     id: 1,
-    title: "Phần A - Bài 1: Điền đại từ quan hệ (Nominativ)",
-    type: "FILL_TYPING",
+    title: "Phần 1: Điền đại từ quan hệ (Nominativ)",
+    type: "FILL_OPTIONS_LOCAL",
     questions: [
-      { textToPlay: "Das ist der Mann, der hier arbeitet.", q: "Das ist der Mann, {blank} hier arbeitet.", a: "der" },
-      { textToPlay: "Das ist die Frau, die sehr freundlich ist.", q: "Das ist die Frau, {blank} sehr freundlich ist.", a: "die" },
-      { textToPlay: "Das ist das Kind, das laut ist.", q: "Das ist das Kind, {blank} laut ist.", a: "das" },
-      { textToPlay: "Ich kenne den Mann, der Deutsch spricht.", q: "Ich kenne den Mann, {blank} Deutsch spricht.", a: "der" },
-      { textToPlay: "Das ist die Kollegin, die mir hilft.", q: "Das ist die Kollegin, {blank} mir hilft.", a: "die" },
-      { textToPlay: "Das ist das Haus, das neu ist.", q: "Das ist das Haus, {blank} neu ist.", a: "das" },
-      { textToPlay: "Das ist der Lehrer, der streng ist.", q: "Das ist der Lehrer, {blank} streng ist.", a: "der" },
-      { textToPlay: "Ich sehe die Frau, die dort steht.", q: "Ich sehe die Frau, {blank} dort steht.", a: "die" },
-      { textToPlay: "Das ist das Buch, das interessant ist.", q: "Das ist das Buch, {blank} interessant ist.", a: "das" },
-      { textToPlay: "Das ist der Junge, der Fußball spielt.", q: "Das ist der Junge, {blank} Fußball spielt.", a: "der" }
+      { textToPlay: "Das ist der Beruf, der zu mir passt.", q: "Das ist der Beruf, {blank} zu mir passt.", a: "der", options: ["der", "den", "dem"] },
+      { textToPlay: "Das ist das Buch, das so empfehlenswert ist.", q: "Das ist das Buch, {blank} so empfehlenswert ist.", a: "das", options: ["das", "dem", "den"] },
+      { textToPlay: "Das ist die Arbeit, die zu mir passt.", q: "Das ist die Arbeit, {blank} zu mir passt.", a: "die", options: ["die", "der", "den"] },
+      { textToPlay: "Das sind die Jobs, die zu uns passen.", q: "Das sind die Jobs, {blank} zu uns passen.", a: "die", options: ["die", "den", "der"] }
     ]
   },
   {
     id: 2,
-    title: "Phần A - Bài 2: Chọn đáp án đúng (Nominativ)",
+    title: "Phần 2: Điền đại từ quan hệ (Akkusativ)",
     type: "FILL_OPTIONS_LOCAL",
     questions: [
-      { textToPlay: "Das ist der Mann, der hier arbeitet.", q: "Das ist der Mann, {blank} hier arbeitet.", a: "der", options: ["der", "den", "dem"] },
-      { textToPlay: "Das ist die Frau, die nett ist.", q: "Das ist die Frau, {blank} nett ist.", a: "die", options: ["die", "der", "den"] },
-      { textToPlay: "Das ist das Kind, das laut ist.", q: "Das ist das Kind, {blank} laut ist.", a: "das", options: ["das", "dem", "den"] },
-      { textToPlay: "Das ist der Lehrer, der uns hilft.", q: "Das ist der Lehrer, {blank} uns hilft.", a: "der", options: ["der", "den", "dem"] },
-      { textToPlay: "Das ist die Person, die Deutsch spricht.", q: "Das ist die Person, {blank} Deutsch spricht.", a: "die", options: ["die", "den", "der"] },
-      { textToPlay: "Das ist das Haus, das groß ist.", q: "Das ist das Haus, {blank} groß ist.", a: "das", options: ["das", "den", "dem"] },
-      { textToPlay: "Das ist der Junge, der schnell läuft.", q: "Das ist der Junge, {blank} schnell läuft.", a: "der", options: ["der", "den", "dem"] },
-      { textToPlay: "Das ist die Frau, die lacht.", q: "Das ist die Frau, {blank} lacht.", a: "die", options: ["die", "der", "den"] },
-      { textToPlay: "Das ist das Buch, das gut ist.", q: "Das ist das Buch, {blank} gut ist.", a: "das", options: ["das", "den", "dem"] },
-      { textToPlay: "Das ist der Mann, der singt.", q: "Das ist der Mann, {blank} singt.", a: "der", options: ["der", "den", "dem"] }
+      { textToPlay: "Das ist der Beruf, den ich liebe.", q: "Das ist der Beruf, {blank} ich liebe.", a: "den", options: ["der", "den", "dem"] },
+      { textToPlay: "Das ist das Buch, das ich so gern gelesen habe.", q: "Das ist das Buch, {blank} ich so gern gelesen habe.", a: "das", options: ["das", "dem", "den"] },
+      { textToPlay: "Das ist die Arbeit, die ich liebe.", q: "Das ist die Arbeit, {blank} ich liebe.", a: "die", options: ["die", "der", "den"] },
+      { textToPlay: "Das sind die Jobs, die ich machen könnte.", q: "Das sind die Jobs, {blank} ich machen könnte.", a: "die", options: ["die", "den", "der"] }
     ]
   },
   {
     id: 3,
-    title: "Phần A - Bài 3: Nối câu (Nominativ)",
-    type: "REWRITE",
+    title: "Phần 3: Chọn đại từ quan hệ (Nominativ oder Akkusativ)",
+    type: "FILL_TYPING",
     questions: [
-      { prompt: "Das ist der Mann. Er arbeitet hier.", a: "Das ist der Mann, der hier arbeitet." },
-      { prompt: "Das ist die Frau. Sie ist freundlich.", a: "Das ist die Frau, die freundlich ist." },
-      { prompt: "Das ist das Kind. Es spielt.", a: "Das ist das Kind, das spielt." },
-      { prompt: "Das ist der Lehrer. Er hilft uns.", a: "Das ist der Lehrer, der uns hilft." },
-      { prompt: "Das ist die Kollegin. Sie arbeitet viel.", a: "Das ist die Kollegin, die viel arbeitet." },
-      { prompt: "Das ist das Haus. Es ist groß.", a: "Das ist das Haus, das groß ist." },
-      { prompt: "Das ist der Junge. Er spielt Fußball.", a: "Das ist der Junge, der Fußball spielt." },
-      { prompt: "Das ist die Frau. Sie spricht Deutsch.", a: "Das ist die Frau, die Deutsch spricht." },
-      { prompt: "Das ist das Buch. Es ist interessant.", a: "Das ist das Buch, das interessant ist." },
-      { prompt: "Das ist der Mann. Er ist nett.", a: "Das ist der Mann, der nett ist." }
+      { textToPlay: "Das ist der Beruf, der zu mir passt.", q: "Das ist der Beruf, {blank} zu mir passt.", a: "der" },
+      { textToPlay: "Das ist der Beruf, den ich liebe.", q: "Das ist der Beruf, {blank} ich liebe.", a: "den" },
+      { textToPlay: "Das ist das Buch, das so empfehlenswert ist.", q: "Das ist das Buch, {blank} so empfehlenswert ist.", a: "das" },
+      { textToPlay: "Das ist das Buch, das ich so gern gelesen habe.", q: "Das ist das Buch, {blank} ich so gern gelesen habe.", a: "das" },
+      { textToPlay: "Das ist die Arbeit, die zu mir passt.", q: "Das ist die Arbeit, {blank} zu mir passt.", a: "die" },
+      { textToPlay: "Das ist die Arbeit, die ich liebe.", q: "Das ist die Arbeit, {blank} ich liebe.", a: "die" },
+      { textToPlay: "Das sind die Jobs, die zu uns passen.", q: "Das sind die Jobs, {blank} zu uns passen.", a: "die" },
+      { textToPlay: "Das sind die Jobs, die ich machen könnte.", q: "Das sind die Jobs, {blank} ich machen könnte.", a: "die" }
     ]
   },
   {
     id: 4,
-    title: "Phần A - Bài 4: Sửa lỗi sai",
+    title: "Phần 4: Viết lại câu với mệnh đề quan hệ",
     type: "REWRITE",
     questions: [
-      { prompt: "Das ist der Mann, den hier arbeitet.", a: "Das ist der Mann, der hier arbeitet." },
-      { prompt: "Das ist die Frau, der freundlich ist.", a: "Das ist die Frau, die freundlich ist." },
-      { prompt: "Das ist das Kind, den laut ist.", a: "Das ist das Kind, das laut ist." },
-      { prompt: "Das ist der Lehrer, dem hilft.", a: "Das ist der Lehrer, der hilft." },
-      { prompt: "Das ist die Person, den Deutsch spricht.", a: "Das ist die Person, die Deutsch spricht." },
-      { prompt: "Das ist das Haus, dem neu ist.", a: "Das ist das Haus, das neu ist." },
-      { prompt: "Das ist der Junge, den Fußball spielt.", a: "Das ist der Junge, der Fußball spielt." },
-      { prompt: "Das ist die Frau, der lacht.", a: "Das ist die Frau, die lacht." },
-      { prompt: "Das ist das Buch, den interessant ist.", a: "Das ist das Buch, das interessant ist." },
-      { prompt: "Das ist der Mann, dem singt.", a: "Das ist der Mann, der singt." }
+      { prompt: "Das ist der Beruf. Er passt zu mir.", a: "Das ist der Beruf, der zu mir passt." },
+      { prompt: "Das ist der Beruf. Ich liebe ihn.", a: "Das ist der Beruf, den ich liebe." },
+      { prompt: "Das ist das Buch. Es ist so empfehlenswert.", a: "Das ist das Buch, das so empfehlenswert ist." },
+      { prompt: "Das ist das Buch. Ich habe es so gern gelesen.", a: "Das ist das Buch, das ich so gern gelesen habe." },
+      { prompt: "Das ist die Arbeit. Sie passt zu mir.", a: "Das ist die Arbeit, die zu mir passt." },
+      { prompt: "Das ist die Arbeit. Ich liebe sie.", a: "Das ist die Arbeit, die ich liebe." },
+      { prompt: "Das sind die Jobs. Sie passen zu uns.", a: "Das sind die Jobs, die zu uns passen." },
+      { prompt: "Das sind die Jobs. Ich könnte sie machen.", a: "Das sind die Jobs, die ich machen könnte." }
     ]
   },
   {
     id: 5,
-    title: "Phần A - Bài 5: Hoàn thành hội thoại",
+    title: "Phần 5: Zufriedenheit ausdrücken (Thể hiện sự hài lòng)",
     type: "FILL_TYPING",
     questions: [
-      { textToPlay: "Kennst du den Mann, der hier arbeitet?", q: "A: Kennst du den Mann, {blank} hier arbeitet?", a: "der" },
-      { textToPlay: "Ja, der ist mein Nachbar.", q: "B: Ja, {blank} ist mein Nachbar.", a: "der" },
-      { textToPlay: "Und die Frau, die dort steht?", q: "A: Und die Frau, {blank} dort steht?", a: "die" },
-      { textToPlay: "Die ist meine Kollegin.", q: "B: {blank} ist meine Kollegin.", a: "die" },
-      { textToPlay: "Kennst du das Kind, das spielt?", q: "A: Kennst du das Kind, {blank} spielt?", a: "das" },
-      { textToPlay: "Ja, das ist sehr nett.", q: "B: Ja, {blank} ist sehr nett.", a: "das" }
+      { textToPlay: "Ja, ich bin sehr zufrieden damit.", q: "Ja, ich bin sehr {blank} damit.", a: "zufrieden" },
+      { textToPlay: "Mein Job ist sehr interessant.", q: "Mein Job ist {blank} interessant.", a: "sehr" },
+      { textToPlay: "Ich finde meinen Beruf prima.", q: "Ich finde meinen Beruf {blank}.", a: "prima" },
+      { textToPlay: "Ich finde meinen Job gut.", q: "Ich finde meinen Job {blank}.", a: "gut" },
+      { textToPlay: "Mein Beruf macht mir großen Spaß.", q: "Mein Beruf macht mir großen {blank}.", a: "Spaß" }
     ]
   },
   {
     id: 6,
-    title: "Phần B - Bài 1: Điền đại từ quan hệ (Akkusativ)",
+    title: "Phần 6: Unzufriedenheit ausdrücken (Thể hiện sự không hài lòng)",
     type: "FILL_TYPING",
     questions: [
-      { textToPlay: "Das ist der Mann, den ich kenne.", q: "Das ist der Mann, {blank} ich kenne.", a: "den" },
-      { textToPlay: "Das ist die Frau, die ich sehe.", q: "Das ist die Frau, {blank} ich sehe.", a: "die" },
-      { textToPlay: "Das ist das Kind, das ich höre.", q: "Das ist das Kind, {blank} ich höre.", a: "das" },
-      { textToPlay: "Das ist der Lehrer, den ich frage.", q: "Das ist der Lehrer, {blank} ich frage.", a: "den" },
-      { textToPlay: "Das ist die Kollegin, die ich treffe.", q: "Das ist die Kollegin, {blank} ich treffe.", a: "die" },
-      { textToPlay: "Das ist das Buch, das ich lese.", q: "Das ist das Buch, {blank} ich lese.", a: "das" },
-      { textToPlay: "Das ist der Junge, den ich besuche.", q: "Das ist der Junge, {blank} ich besuche.", a: "den" },
-      { textToPlay: "Das ist die Frau, die ich liebe.", q: "Das ist die Frau, {blank} ich liebe.", a: "die" },
-      { textToPlay: "Das ist das Auto, das ich kaufe.", q: "Das ist das Auto, {blank} ich kaufe.", a: "das" },
-      { textToPlay: "Das ist der Mann, den ich suche.", q: "Das ist der Mann, {blank} ich suche.", a: "den" }
+      { textToPlay: "Nein, ich bin sehr unzufrieden damit.", q: "Nein, ich bin sehr {blank} damit.", a: "unzufrieden" },
+      { textToPlay: "Nein, überhaupt nicht.", q: "Nein, {blank} nicht.", a: "überhaupt" },
+      { textToPlay: "Ich habe keine Lust mehr.", q: "Ich habe keine {blank} mehr.", a: "Lust" },
+      { textToPlay: "Ich habe genug.", q: "Ich {blank} genug.", a: "habe" },
+      { textToPlay: "Immer muss ich Überstunden machen. Das ärgert mich.", q: "Immer muss ich Überstunden machen. Das {blank} mich.", a: "ärgert" },
+      { textToPlay: "Das stört mich. Deshalb möchte ich kündigen.", q: "Das stört mich. {blank} möchte ich kündigen.", a: "Deshalb" },
+      { textToPlay: "Das habe ich fest vor.", q: "Das habe ich fest {blank}.", a: "vor" }
     ]
   },
   {
     id: 7,
-    title: "Phần B - Bài 2: Chọn đáp án đúng (Akkusativ)",
+    title: "Phần 7: Phân định Thái độ (Hài lòng hay Không hài lòng?)",
     type: "FILL_OPTIONS_LOCAL",
     questions: [
-      { textToPlay: "Das ist der Mann, den ich kenne.", q: "Das ist der Mann, {blank} ich kenne.", a: "den", options: ["der", "den", "dem"] },
-      { textToPlay: "Das ist die Frau, die ich sehe.", q: "Das ist die Frau, {blank} ich sehe.", a: "die", options: ["die", "den", "der"] },
-      { textToPlay: "Das ist das Buch, das ich lese.", q: "Das ist das Buch, {blank} ich lese.", a: "das", options: ["das", "den", "dem"] },
-      { textToPlay: "Das ist der Lehrer, den ich frage.", q: "Das ist der Lehrer, {blank} ich frage.", a: "den", options: ["den", "der", "dem"] },
-      { textToPlay: "Das ist die Kollegin, die ich treffe.", q: "Das ist die Kollegin, {blank} ich treffe.", a: "die", options: ["die", "den", "der"] },
-      { textToPlay: "Das ist das Kind, das ich höre.", q: "Das ist das Kind, {blank} ich höre.", a: "das", options: ["das", "den", "dem"] },
-      { textToPlay: "Das ist der Junge, den ich besuche.", q: "Das ist der Junge, {blank} ich besuche.", a: "den", options: ["den", "der", "dem"] },
-      { textToPlay: "Das ist die Frau, die ich liebe.", q: "Das ist die Frau, {blank} ich liebe.", a: "die", options: ["die", "den", "der"] },
-      { textToPlay: "Das ist das Auto, das ich kaufe.", q: "Das ist das Auto, {blank} ich kaufe.", a: "das", options: ["das", "den", "dem"] },
-      { textToPlay: "Das ist der Mann, den ich suche.", q: "Das ist der Mann, {blank} ich suche.", a: "den", options: ["den", "der", "dem"] }
-    ]
-  },
-  {
-    id: 8,
-    title: "Phần B - Bài 3: Nối câu (Akkusativ)",
-    type: "REWRITE",
-    questions: [
-      { prompt: "Das ist der Mann. Ich kenne ihn.", a: "Das ist der Mann, den ich kenne." },
-      { prompt: "Das ist die Frau. Ich sehe sie.", a: "Das ist die Frau, die ich sehe." },
-      { prompt: "Das ist das Kind. Ich höre es.", a: "Das ist das Kind, das ich höre." },
-      { prompt: "Das ist der Lehrer. Ich frage ihn.", a: "Das ist der Lehrer, den ich frage." },
-      { prompt: "Das ist die Kollegin. Ich treffe sie.", a: "Das ist die Kollegin, die ich treffe." },
-      { prompt: "Das ist das Buch. Ich lese es.", a: "Das ist das Buch, das ich lese." },
-      { prompt: "Das ist der Junge. Ich besuche ihn.", a: "Das ist der Junge, den ich besuche." },
-      { prompt: "Das ist die Frau. Ich liebe sie.", a: "Das ist die Frau, die ich liebe." },
-      { prompt: "Das ist das Auto. Ich kaufe es.", a: "Das ist das Auto, das ich kaufe." },
-      { prompt: "Das ist der Mann. Ich suche ihn.", a: "Das ist der Mann, den ich suche." }
-    ]
-  },
-  {
-    id: 9,
-    title: "Phần B - Bài 4: Sửa lỗi sai",
-    type: "REWRITE",
-    questions: [
-      { prompt: "Das ist der Mann, der ich kenne.", a: "Das ist der Mann, den ich kenne." },
-      { prompt: "Das ist die Frau, den ich sehe.", a: "Das ist die Frau, die ich sehe." },
-      { prompt: "Das ist das Buch, den ich lese.", a: "Das ist das Buch, das ich lese." },
-      { prompt: "Das ist der Lehrer, der ich frage.", a: "Das ist der Lehrer, den ich frage." },
-      { prompt: "Das ist die Kollegin, den ich treffe.", a: "Das ist die Kollegin, die ich treffe." },
-      { prompt: "Das ist das Kind, den ich höre.", a: "Das ist das Kind, das ich höre." },
-      { prompt: "Das ist der Junge, der ich besuche.", a: "Das ist der Junge, den ich besuche." },
-      { prompt: "Das ist die Frau, den ich liebe.", a: "Das ist die Frau, die ich liebe." },
-      { prompt: "Das ist das Auto, den ich kaufe.", a: "Das ist das Auto, das ich kaufe." },
-      { prompt: "Das ist der Mann, der ich suche.", a: "Das ist der Mann, den ich suche." }
-    ]
-  },
-  {
-    id: 10,
-    title: "Phần B - Bài 5: Hoàn thành hội thoại",
-    type: "FILL_TYPING",
-    questions: [
-      { textToPlay: "Kennst du den Mann, den du suchst?", q: "A: Kennst du den Mann, {blank} du suchst?", a: "den" },
-      { textToPlay: "Ja, den kenne ich.", q: "B: Ja, {blank} kenne ich.", a: "den" },
-      { textToPlay: "Und die Frau, die du triffst?", q: "A: Und die Frau, {blank} du triffst?", a: "die" },
-      { textToPlay: "Die sehe ich oft.", q: "B: {blank} sehe ich oft.", a: "die" },
-      { textToPlay: "Kennst du das Buch, das du liest?", q: "A: Kennst du das Buch, {blank} du liest?", a: "das" },
-      { textToPlay: "Ja, das ist sehr interessant.", q: "B: Ja, {blank} ist sehr interessant.", a: "das" }
-    ]
-  },
-  {
-    id: 11,
-    title: "Phần C - Bài 1: Điền đại từ quan hệ (MIX)",
-    type: "FILL_TYPING",
-    questions: [
-      { textToPlay: "Das ist der Mann, der hier arbeitet.", q: "Das ist der Mann, {blank} hier arbeitet.", a: "der" },
-      { textToPlay: "Das ist der Mann, den ich kenne.", q: "Das ist der Mann, {blank} ich kenne.", a: "den" },
-      { textToPlay: "Das ist die Frau, die nett ist.", q: "Das ist die Frau, {blank} nett ist.", a: "die" },
-      { textToPlay: "Das ist die Frau, die ich sehe.", q: "Das ist die Frau, {blank} ich sehe.", a: "die" },
-      { textToPlay: "Das ist das Buch, das interessant ist.", q: "Das ist das Buch, {blank} interessant ist.", a: "das" },
-      { textToPlay: "Das ist das Buch, das ich lese.", q: "Das ist das Buch, {blank} ich lese.", a: "das" },
-      { textToPlay: "Das ist der Junge, der spielt.", q: "Das ist der Junge, {blank} spielt.", a: "der" },
-      { textToPlay: "Das ist der Junge, den ich besuche.", q: "Das ist der Junge, {blank} ich besuche.", a: "den" },
-      { textToPlay: "Das ist die Kollegin, die mir hilft.", q: "Das ist die Kollegin, {blank} mir hilft.", a: "die" },
-      { textToPlay: "Das ist die Kollegin, die ich treffe.", q: "Das ist die Kollegin, {blank} ich treffe.", a: "die" }
-    ]
-  },
-  {
-    id: 12,
-    title: "Phần C - Bài 2: Chọn đáp án đúng (MIX)",
-    type: "FILL_OPTIONS_LOCAL",
-    questions: [
-      { textToPlay: "Das ist der Mann, den ich kenne.", q: "Das ist der Mann, {blank} ich kenne.", a: "den", options: ["der", "den"] },
-      { textToPlay: "Das ist der Mann, der hier arbeitet.", q: "Das ist der Mann, {blank} hier arbeitet.", a: "der", options: ["der", "den"] },
-      { textToPlay: "Das ist die Frau, die ich sehe.", q: "Das ist die Frau, {blank} ich sehe.", a: "die", options: ["die", "den"] },
-      { textToPlay: "Das ist die Frau, die nett ist.", q: "Das ist die Frau, {blank} nett ist.", a: "die", options: ["die", "der"] },
-      { textToPlay: "Das ist das Buch, das ich lese.", q: "Das ist das Buch, {blank} ich lese.", a: "das", options: ["das", "den"] },
-      { textToPlay: "Das ist das Buch, das gut ist.", q: "Das ist das Buch, {blank} gut ist.", a: "das", options: ["das", "den"] },
-      { textToPlay: "Das ist der Junge, den ich besuche.", q: "Das ist der Junge, {blank} ich besuche.", a: "den", options: ["den", "der"] },
-      { textToPlay: "Das ist der Junge, der spielt.", q: "Das ist der Junge, {blank} spielt.", a: "der", options: ["der", "den"] },
-      { textToPlay: "Das ist die Kollegin, die ich treffe.", q: "Das ist die Kollegin, {blank} ich treffe.", a: "die", options: ["die", "den"] },
-      { textToPlay: "Das ist die Kollegin, die hilft.", q: "Das ist die Kollegin, {blank} hilft.", a: "die", options: ["die", "den"] }
-    ]
-  },
-  {
-    id: 13,
-    title: "Phần C - Bài 3: Viết lại câu (MIX)",
-    type: "REWRITE",
-    questions: [
-      { prompt: "Das ist der Mann. Er arbeitet hier.", a: "Das ist der Mann, der hier arbeitet." },
-      { prompt: "Das ist der Mann. Ich kenne ihn.", a: "Das ist der Mann, den ich kenne." },
-      { prompt: "Das ist die Frau. Sie ist nett.", a: "Das ist die Frau, die nett ist." },
-      { prompt: "Das ist die Frau. Ich sehe sie.", a: "Das ist die Frau, die ich sehe." },
-      { prompt: "Das ist das Buch. Es ist interessant.", a: "Das ist das Buch, das interessant ist." },
-      { prompt: "Das ist das Buch. Ich lese es.", a: "Das ist das Buch, das ich lese." },
-      { prompt: "Das ist der Junge. Er spielt.", a: "Das ist der Junge, der spielt." },
-      { prompt: "Das ist der Junge. Ich besuche ihn.", a: "Das ist der Junge, den ich besuche." },
-      { prompt: "Das ist die Kollegin. Sie hilft mir.", a: "Das ist die Kollegin, die mir hilft." },
-      { prompt: "Das ist die Kollegin. Ich treffe sie.", a: "Das ist die Kollegin, die ich treffe." }
-    ]
-  },
-  {
-    id: 14,
-    title: "Phần C - Bài 4: Sửa lỗi sai",
-    type: "REWRITE",
-    questions: [
-      { prompt: "Das ist der Mann, den hier arbeitet.", a: "Das ist der Mann, der hier arbeitet." },
-      { prompt: "Das ist der Mann, der ich kenne.", a: "Das ist der Mann, den ich kenne." },
-      { prompt: "Das ist die Frau, den nett ist.", a: "Das ist die Frau, die nett ist." },
-      { prompt: "Das ist die Frau, der ich sehe.", a: "Das ist die Frau, die ich sehe." },
-      { prompt: "Das ist das Buch, den interessant ist.", a: "Das ist das Buch, das interessant ist." },
-      { prompt: "Das ist das Buch, das ich lese es.", a: "Das ist das Buch, das ich lese." },
-      { prompt: "Das ist der Junge, den spielt.", a: "Das ist der Junge, der spielt." },
-      { prompt: "Das ist der Junge, der ich besuche.", a: "Das ist der Junge, den ich besuche." },
-      { prompt: "Das ist die Kollegin, den mir hilft.", a: "Das ist die Kollegin, die mir hilft." },
-      { prompt: "Das ist die Kollegin, die ich treffe sie.", a: "Das ist die Kollegin, die ich treffe." }
-    ]
-  },
-  {
-    id: 15,
-    title: "Phần C - Bài 5: Hoàn thành hội thoại",
-    type: "FILL_TYPING",
-    questions: [
-      { textToPlay: "Kennst du den Mann, der hier arbeitet?", q: "A: Kennst du den Mann, {blank} hier arbeitet?", a: "der" },
-      { textToPlay: "Ja, den kenne ich auch.", q: "B: Ja, {blank} kenne ich auch.", a: "den" },
-      { textToPlay: "Und die Frau, die du siehst?", q: "A: Und die Frau, {blank} du siehst?", a: "die" },
-      { textToPlay: "Die ist meine Kollegin.", q: "B: {blank} ist meine Kollegin.", a: "die" },
-      { textToPlay: "Kennst du das Buch, das du liest?", q: "A: Kennst du das Buch, {blank} du liest?", a: "das" },
-      { textToPlay: "Ja, das ist sehr gut.", q: "B: Ja, {blank} ist sehr gut.", a: "das" }
+      { textToPlay: "Na ja, es geht. Der Job ist okay.", q: "Na ja, es geht. Der Job ist {blank}.", a: "okay", options: ["okay", "schlecht", "unzufrieden"] },
+      { textToPlay: "Ich finde meine Ausbildung schön.", q: "Ich finde meine Ausbildung {blank}.", a: "schön", options: ["schön", "überhaupt", "Lust"] },
+      { textToPlay: "Das ärgert mich.", q: "Das {blank} mich.", a: "ärgert", options: ["ärgert", "freut", "passt"] },
+      { textToPlay: "Ja, ich bin zufrieden damit.", q: "Ja, ich bin {blank} damit.", a: "zufrieden", options: ["zufrieden", "stört", "genug"] }
     ]
   }
 ];

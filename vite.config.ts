@@ -6,6 +6,13 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
+  
+  // Ánh xạ GEMINI_API_KEY thành VITE_GEMINI_API_KEY để tương thích tự động
+  // giữa AI Studio và deployment (Vercel, Github)
+  if (env.GEMINI_API_KEY && !process.env.VITE_GEMINI_API_KEY) {
+    process.env.VITE_GEMINI_API_KEY = env.GEMINI_API_KEY;
+  }
+
   return {
     plugins: [
       react(), 

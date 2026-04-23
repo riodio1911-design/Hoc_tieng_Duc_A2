@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
+// Sử dụng trực tiếp VITE_GEMINI_API_KEY
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 interface AlibiGameProps {

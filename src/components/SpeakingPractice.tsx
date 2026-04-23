@@ -4,6 +4,7 @@ import { Mic, Volume2, Loader2, PlayCircle, BarChart3, ChevronRight, CheckCircle
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import { GoogleGenAI } from "@google/genai";
 
+// Sử dụng trực tiếp VITE_GEMINI_API_KEY
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 interface PracticeItem {
@@ -1102,462 +1103,92 @@ export const SPEAKING_DATA: Record<string, { words: PracticeItem[], sentences: P
   },
   "l23": {
     "words": [
-      {
-        "id": "w1",
-        "de": "Bewerbung",
-        "vi": "Đơn xin việc",
-        "ipa": "/bəˈvɛʁbʊŋ/",
-        "syllables": [
-          "Be",
-          "wer",
-          "bung"
-        ],
-        "notation": [
-          40,
-          80,
-          40
-        ]
-      },
-      {
-        "id": "w2",
-        "de": "Lebenslauf",
-        "vi": "Sơ yếu lý lịch",
-        "ipa": "/ˈleːbənsˌlaʊ̯f/",
-        "syllables": [
-          "Le",
-          "bens",
-          "lauf"
-        ],
-        "notation": [
-          80,
-          40,
-          60
-        ]
-      },
-      {
-        "id": "w3",
-        "de": "Erfahrung",
-        "vi": "Kinh nghiệm",
-        "ipa": "/ɛɐ̯ˈfaːʁʊŋ/",
-        "syllables": [
-          "Er",
-          "fah",
-          "rung"
-        ],
-        "notation": [
-          40,
-          80,
-          40
-        ]
-      },
-      {
-        "id": "w4",
-        "de": "Praktikum",
-        "vi": "Kỳ thực tập",
-        "ipa": "/ˈpʁaktikʊm/",
-        "syllables": [
-          "Prak",
-          "ti",
-          "kum"
-        ],
-        "notation": [
-          80,
-          40,
-          40
-        ]
-      },
-      {
-        "id": "w5",
-        "de": "Zeugnis",
-        "vi": "Bằng cấp/Chứng chỉ",
-        "ipa": "/ˈt͡sɔʏ̯knɪs/",
-        "syllables": [
-          "Zeug",
-          "nis"
-        ],
-        "notation": [
-          80,
-          40
-        ]
-      },
-      {
-        "id": "w6",
-        "de": "Arbeitgeber",
-        "vi": "Nhà tuyển dụng",
-        "ipa": "/ˈaʁbaɪ̯tˌɡeːbɐ/",
-        "syllables": [
-          "Ar",
-          "beit",
-          "ge",
-          "ber"
-        ],
-        "notation": [
-          80,
-          60,
-          40,
-          40
-        ]
-      },
-      {
-        "id": "w7",
-        "de": "Gehalt",
-        "vi": "Mức lương",
-        "ipa": "/ɡəˈhalt/",
-        "syllables": [
-          "Ge",
-          "halt"
-        ],
-        "notation": [
-          40,
-          80
-        ]
-      },
-      {
-        "id": "w8",
-        "de": "Vorstellungsgespräch",
-        "vi": "Buổi phỏng vấn",
-        "ipa": "/ˈfoːɐ̯ʃtɛlʊŋsɡəˌʃpʁɛːç/",
-        "syllables": [
-          "Vor",
-          "stel",
-          "lungs",
-          "ge",
-          "spräch"
-        ],
-        "notation": [
-          80,
-          40,
-          40,
-          40,
-          60
-        ]
-      },
-      {
-        "id": "w9",
-        "de": "Fähigkeit",
-        "vi": "Kỹ năng",
-        "ipa": "/ˈfɛːɪçkaɪ̯t/",
-        "syllables": [
-          "Fä",
-          "hig",
-          "keit"
-        ],
-        "notation": [
-          80,
-          40,
-          40
-        ]
-      },
-      {
-        "id": "w10",
-        "de": "zuverlässig",
-        "vi": "Đáng tin cậy",
-        "ipa": "/ˈt͡suːfɛɐ̯ˌlɛsɪç/",
-        "syllables": [
-          "zu",
-          "ver",
-          "läs",
-          "sig"
-        ],
-        "notation": [
-          80,
-          40,
-          60,
-          40
-        ]
-      },
-      {
-        "id": "w11",
-        "de": "pünktlich",
-        "vi": "Đúng giờ",
-        "ipa": "/ˈpʏŋktlɪç/",
-        "syllables": [
-          "pünkt",
-          "lich"
-        ],
-        "notation": [
-          80,
-          40
-        ]
-      },
-      {
-        "id": "w12",
-        "de": "Teamarbeit",
-        "vi": "Làm việc nhóm",
-        "ipa": "/ˈtiːmʔaʁˌbaɪ̯t/",
-        "syllables": [
-          "Team",
-          "ar",
-          "beit"
-        ],
-        "notation": [
-          80,
-          40,
-          60
-        ]
-      }
+      { "id": "w1", "de": "Abitur", "vi": "Bằng tú tài", "ipa": "/abiˈtuːɐ̯/", "syllables": ["A", "bi", "tur"], "notation": [40, 40, 80] },
+      { "id": "w2", "de": "Berufsschule", "vi": "Trường dạy nghề", "ipa": "/bəˈʁuːfsˌʃuːlə/", "syllables": ["Be", "rufs", "schu", "le"], "notation": [40, 80, 60, 40] },
+      { "id": "w3", "de": "Gesamtschule", "vi": "Trường tổng hợp", "ipa": "/ɡəˈzamtˌʃuːlə/", "syllables": ["Ge", "samt", "schu", "le"], "notation": [40, 80, 60, 40] },
+      { "id": "w4", "de": "Gymnasium", "vi": "Trường trung học phổ thông", "ipa": "/ɡʏmˈnaːzi̯ʊm/", "syllables": ["Gym", "na", "si", "um"], "notation": [40, 80, 40, 40] },
+      { "id": "w5", "de": "Lehre", "vi": "Sự học nghề", "ipa": "/ˈleːʁə/", "syllables": ["Leh", "re"], "notation": [80, 40] },
+      { "id": "w6", "de": "Bewerbung", "vi": "Đơn xin việc", "ipa": "/bəˈvɛʁbʊŋ/", "syllables": ["Be", "wer", "bung"], "notation": [40, 80, 40] },
+      { "id": "w7", "de": "Zeugnis", "vi": "Học bạ/Bằng cấp", "ipa": "/ˈt͡sɔʏ̯knɪs/", "syllables": ["Zeug", "nis"], "notation": [80, 40] },
+      { "id": "w8", "de": "mündlich", "vi": "Bằng miệng", "ipa": "/ˈmʏntlɪç/", "syllables": ["münd", "lich"], "notation": [80, 40] },
+      { "id": "w9", "de": "schriftlich", "vi": "Bằng văn bản", "ipa": "/ˈʃʁɪftlɪç/", "syllables": ["schrift", "lich"], "notation": [80, 40] },
+      { "id": "w10", "de": "kündigen", "vi": "Chấm dứt hợp đồng/Nghỉ việc", "ipa": "/ˈkʏndɪɡən/", "syllables": ["kün", "di", "gen"], "notation": [80, 40, 40] }
     ],
     "sentences": [
       {
         "id": "s1",
-        "de": "Ich schreibe eine Bewerbung für diese Stelle.",
-        "vi": "Tôi viết đơn xin việc cho vị trí này.",
-        "ipa": "/ɪç ˈʃʁaɪ̯bə ˈaɪ̯nə bəˈvɛʁbʊŋ fyːɐ̯ ˈdiːzə ˈʃtɛlə/",
-        "syllables": [
-          "Ich",
-          "schreibe",
-          "eine",
-          "Bewerbung",
-          "für",
-          "diese",
-          "Stelle."
-        ],
-        "notation": [
-          40,
-          60,
-          40,
-          80,
-          40,
-          60,
-          80
-        ]
+        "de": "Das ist der Beruf, der zu mir passt.",
+        "vi": "Đó là nghề nghiệp phù hợp với tôi.",
+        "ipa": "/das ɪst deːɐ̯ bəˈʁuːf deːɐ̯ t͡suː miːɐ̯ past/",
+        "syllables": ["Das", "ist", "der", "Beruf,", "der", "zu", "mir", "passt."],
+        "notation": [40, 40, 40, 80, 40, 40, 40, 80]
       },
       {
         "id": "s2",
-        "de": "Ein guter Lebenslauf ist sehr wichtig.",
-        "vi": "Một bản sơ yếu lý lịch tốt là rất quan trọng.",
-        "ipa": "/aɪ̯n ˈɡuːtɐ ˈleːbənsˌlaʊ̯f ɪst zeːɐ̯ ˈvɪçtɪç/",
-        "syllables": [
-          "Ein",
-          "guter",
-          "Lebenslauf",
-          "ist",
-          "sehr",
-          "wichtig."
-        ],
-        "notation": [
-          40,
-          60,
-          80,
-          40,
-          60,
-          80
-        ]
+        "de": "Das ist das Buch, das ich so gern gelesen habe.",
+        "vi": "Đó là cuốn sách mà tôi đã rất thích đọc.",
+        "ipa": "/das ɪst das buːx das ɪç zoː ɡɛʁn ɡəˈleːzən ˈhaːbə/",
+        "syllables": ["Das", "ist", "das", "Buch,", "das", "ich", "so", "gern", "ge", "le", "sen", "ha", "be."],
+        "notation": [40, 40, 40, 80, 40, 40, 40, 40, 40, 80, 40, 60, 40]
       },
       {
         "id": "s3",
-        "de": "Ich habe viel Erfahrung in diesem Bereich.",
-        "vi": "Tôi có nhiều kinh nghiệm trong lĩnh vực này.",
-        "ipa": "/ɪç ˈhaːbə fiːl ɛɐ̯ˈfaːʁʊŋ ɪn ˈdiːzəm bəˈʁaɪ̯ç/",
-        "syllables": [
-          "Ich",
-          "habe",
-          "viel",
-          "Erfahrung",
-          "in",
-          "diesem",
-          "Bereich."
-        ],
-        "notation": [
-          40,
-          40,
-          60,
-          80,
-          40,
-          60,
-          80
-        ]
+        "de": "Bist du mit deinem Beruf zufrieden?",
+        "vi": "Bạn có hài lòng với nghề nghiệp của mình không?",
+        "ipa": "/bɪst duː mɪt ˈdaɪ̯nəm bəˈʁuːf t͡suˈfʁiːdən/",
+        "syllables": ["Bist", "du", "mit", "deinem", "Beruf", "zu", "frie", "den?"],
+        "notation": [40, 40, 40, 60, 80, 40, 80, 40]
       },
       {
         "id": "s4",
-        "de": "Nächstes Jahr mache ich ein Praktikum.",
-        "vi": "Năm tới tôi sẽ đi thực tập.",
-        "ipa": "/ˈnɛːçstəs jaːɐ̯ ˈmaxə ɪç aɪ̯n ˈpʁaktikʊm/",
-        "syllables": [
-          "Nächstes",
-          "Jahr",
-          "mache",
-          "ich",
-          "ein",
-          "Praktikum."
-        ],
-        "notation": [
-          60,
-          80,
-          40,
-          40,
-          40,
-          80
-        ]
+        "de": "Ja, ich bin sehr zufrieden damit.",
+        "vi": "Có, tôi rất hài lòng với nó.",
+        "ipa": "/jaː ɪç bɪn zeːɐ̯ t͡suˈfʁiːdən daˈmɪt/",
+        "syllables": ["Ja,", "ich", "bin", "sehr", "zu", "frie", "den", "da", "mit."],
+        "notation": [60, 40, 40, 60, 40, 80, 40, 40, 80]
       },
       {
         "id": "s5",
-        "de": "Bringen Sie bitte Ihre Zeugnisse mit.",
-        "vi": "Vui lòng mang theo các bằng cấp của bạn.",
-        "ipa": "/ˈbʁɪŋən ziː ˈbɪtə ˈiːʁə ˈt͡sɔʏ̯knɪsə mɪt/",
-        "syllables": [
-          "Bringen",
-          "Sie",
-          "bitte",
-          "Ihre",
-          "Zeugnisse",
-          "mit."
-        ],
-        "notation": [
-          60,
-          40,
-          60,
-          40,
-          80,
-          60
-        ]
+        "de": "Nein, überhaupt nicht.",
+        "vi": "Không, hoàn toàn không.",
+        "ipa": "/naɪ̯n yːbɐˈhaʊ̯pt nɪçt/",
+        "syllables": ["Nein,", "über", "haupt", "nicht."],
+        "notation": [80, 40, 80, 60]
       },
       {
         "id": "s6",
-        "de": "Der Arbeitgeber bietet ein gutes Gehalt.",
-        "vi": "Nhà tuyển dụng đưa ra mức lương tốt.",
-        "ipa": "/deːɐ̯ ˈaʁbaɪ̯tˌɡeːbɐ ˈbiːtət aɪ̯n ˈɡuːtəs ɡəˈhalt/",
-        "syllables": [
-          "Der",
-          "Arbeitgeber",
-          "bietet",
-          "ein",
-          "gutes",
-          "Gehalt."
-        ],
-        "notation": [
-          40,
-          80,
-          60,
-          40,
-          60,
-          80
-        ]
+        "de": "Ich habe keine Lust mehr.",
+        "vi": "Tôi không còn hứng thú nữa.",
+        "ipa": "/ɪç ˈhaːbə ˈkaɪ̯nə lʊst meːɐ̯/",
+        "syllables": ["Ich", "ha", "be", "kei", "ne", "Lust", "mehr."],
+        "notation": [40, 80, 40, 60, 40, 80, 60]
       },
       {
         "id": "s7",
-        "de": "Morgen habe ich ein Vorstellungsgespräch.",
-        "vi": "Ngày mai tôi có một buổi phỏng vấn xin việc.",
-        "ipa": "/ˈmɔʁɡən ˈhaːbə ɪç aɪ̯n ˈfoːɐ̯ʃtɛlʊŋsɡəˌʃpʁɛːç/",
-        "syllables": [
-          "Morgen",
-          "habe",
-          "ich",
-          "ein",
-          "Vorstellungsgespräch."
-        ],
-        "notation": [
-          60,
-          40,
-          40,
-          40,
-          80
-        ]
+        "de": "Immer muss ich kopieren. Das ärgert mich.",
+        "vi": "Tôi luôn phải phô tô. Điều đó làm tôi bực mình.",
+        "ipa": "/ˈɪmɐ mʊs ɪç koˈpiːʁən das ˈɛʁɡɐt mɪç/",
+        "syllables": ["Im", "mer", "muss", "ich", "ko", "pie", "ren.", "Das", "är", "gert", "mich."],
+        "notation": [80, 40, 60, 40, 40, 80, 40, 40, 80, 40, 60]
       },
       {
         "id": "s8",
-        "de": "Welche Fähigkeiten haben Sie?",
-        "vi": "Bạn có những kỹ năng gì?",
-        "ipa": "/ˈvɛlçə ˈfɛːɪçkaɪ̯tən ˈhaːbən ziː/",
-        "syllables": [
-          "Welche",
-          "Fähigkeiten",
-          "haben",
-          "Sie?"
-        ],
-        "notation": [
-          60,
-          80,
-          40,
-          40
-        ]
-      },
-      {
-        "id": "s9",
-        "de": "Ich bin immer sehr zuverlässig.",
-        "vi": "Tôi luôn luôn rất đáng tin cậy.",
-        "ipa": "/ɪç bɪn ˈɪmɐ zeːɐ̯ ˈt͡suːfɛɐ̯ˌlɛsɪç/",
-        "syllables": [
-          "Ich",
-          "bin",
-          "immer",
-          "sehr",
-          "zuverlässig."
-        ],
-        "notation": [
-          40,
-          40,
-          60,
-          60,
-          80
-        ]
-      },
-      {
-        "id": "s10",
-        "de": "Pünktlichkeit ist in Deutschland wichtig.",
-        "vi": "Sự đúng giờ rất quan trọng ở Đức.",
-        "ipa": "/ˈpʏŋktlɪçkaɪ̯t ɪst ɪn ˈdɔʏ̯t͡ʃlant ˈvɪçtɪç/",
-        "syllables": [
-          "Pünktlichkeit",
-          "ist",
-          "in",
-          "Deutschland",
-          "wichtig."
-        ],
-        "notation": [
-          80,
-          40,
-          40,
-          80,
-          60
-        ]
-      },
-      {
-        "id": "s11",
-        "de": "Ich mag die Teamarbeit in unserem Büro.",
-        "vi": "Tôi thích làm việc nhóm trong văn phòng của chúng tôi.",
-        "ipa": "/ɪç maːk diː ˈtiːmʔaʁˌbaɪ̯t ɪn ˈʊnzəʁəm byˈʁoː/",
-        "syllables": [
-          "Ich",
-          "mag",
-          "die",
-          "Teamarbeit",
-          "in",
-          "unserem",
-          "Büro."
-        ],
-        "notation": [
-          40,
-          60,
-          40,
-          80,
-          40,
-          40,
-          80
-        ]
-      },
-      {
-        "id": "s12",
-        "de": "Ich freue mich auf Ihre Antwort.",
-        "vi": "Tôi mong nhận được phản hồi từ bạn.",
-        "ipa": "/ɪç ˈfʁɔʏ̯ə mɪç aʊ̯f ˈiːʁə ˈantvɔʁt/",
-        "syllables": [
-          "Ich",
-          "freue",
-          "mich",
-          "auf",
-          "Ihre",
-          "Antwort."
-        ],
-        "notation": [
-          40,
-          60,
-          40,
-          40,
-          40,
-          80
-        ]
+        "de": "Ich möchte kündigen.",
+        "vi": "Tôi muốn nghỉ việc.",
+        "ipa": "/ɪç ˈmœçtə ˈkʏndɪɡən/",
+        "syllables": ["Ich", "möch", "te", "kün", "di", "gen."],
+        "notation": [40, 80, 40, 80, 40, 40]
       }
+    ],
+    "conversations": [
+      { "id": "l23-c1", "context": "Hội thoại 1: Ullas Berufswunsch", "speaker": "A", "de": "Ulla ist 14 Jahre alt und will Medizin studieren. Welcher Schultyp passt zu ihr?", "vi": "Ulla 14 tuổi và muốn học y. Loại trường nào phù hợp với cô ấy?" },
+      { "id": "l23-c2", "context": "Hội thoại 1: Ullas Berufswunsch", "speaker": "B", "de": "Sie kann zum Beispiel ein Gymnasium oder eine Gesamtschule besuchen.", "vi": "Cô ấy có thể học trường Gymnasium hoặc Gesamtschule." },
+      { "id": "l23-c3", "context": "Hội thoại 1: Ullas Berufswunsch", "speaker": "A", "de": "Was muss sie machen, damit sie auf die Universität kann?", "vi": "Cố ấy phải làm gì để có thể vào đại học?" },
+      { "id": "l23-c4", "context": "Hội thoại 1: Ullas Berufswunsch", "speaker": "B", "de": "Sie muss das Abitur machen, dann kann sie auf die Universität.", "vi": "Cô ấy phải thi đỗ tú tài, sau đó có thể lên đại học." },
+      { "id": "l23-c5", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "A", "de": "Simon, 8, geht nicht gern in die Schule. Er möchte später als Schreiner arbeiten. Welcher Schultyp passt zu ihm?", "vi": "Simon, 8 tuổi, không thích đi học. Cậu ấy muốn làm thợ mộc sau này. Loại trường nào phù hợp với cậu ấy?" },
+      { "id": "l23-c6", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "B", "de": "Er kann eine Hauptschule oder eine Mittelschule besuchen.", "vi": "Cậu ấy có thể học trường Hauptschule hoặc Mittelschule." },
+      { "id": "l23-c7", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "A", "de": "Was muss er danach machen?", "vi": "Cậu ấy phải làm gì tiếp theo?" },
+      { "id": "l23-c8", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "B", "de": "Er muss die Hauptschule abschließen, dann kann er eine Lehre machen.", "vi": "Cậu ấy phải tốt nghiệp trường Hauptschule, sau đó có thể học nghề." }
     ]
   }
 };
