@@ -15,10 +15,11 @@ import {
   Gamepad2,
   MonitorPlay,
   Download,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 import { GoogleGenAI, Modality } from "@google/genai";
-import { VOCABULARY_DATA, Lesson, VocabularyItem, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT, L24_GRAMMAR_SCRIPT, L24_INTRO_SCRIPT } from './constants';
+import { VOCABULARY_DATA, Lesson, VocabularyItem, L21_INTRO_SCRIPT, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT, L24_GRAMMAR_SCRIPT, L24_INTRO_SCRIPT } from './constants';
 import AlibiGame from './components/AlibiGame';
 import Kartenspiel from './components/Kartenspiel';
 import Lektion21Slides from './components/Lektion21Slides';
@@ -63,8 +64,6 @@ const EFFECTS = [
   { id: 'slow', name: 'Chậm rãi', prompt: 'Say slowly and clearly' },
 ];
 
-const L21_INTRO_SCRIPT = `Xin chào các bạn. Trong bài 21 của giáo trình Menschen A2, chúng ta sẽ học cách giao tiếp trong các tình huống thực tế liên quan đến giấy tờ và mô tả sự việc. Bạn sẽ học cách thuật lại một sự kiện, cách yêu cầu người khác mô tả với câu hỏi: "Können Sie das beschreiben?" . Và cách nói khi không nhớ rõ: "Dann kann ich mich nicht mehr erinnern." ... Về đọc hiểu, chúng ta sẽ rèn luyện đọc các tờ thông báo ngắn như Flyer. Về từ vựng, chủ đề chính là "Dokumente". Bạn sẽ biết cách giao tiếp với các câu như: "Ich habe meine Papiere verloren." ... "Ich muss Dokumente mitbringen." ... "Ich muss das Anmeldeformular ausfüllen." ... "Ich brauche ein Exemplar." ... và: "Ich muss mich bewerben." ... Về ngữ pháp có ba trọng tâm chính. Thứ nhất là "Frageartikel" như: "welcher" ... "welche" ... "welches" ... dùng để hỏi rõ: "Welchen Pass meinen Sie?" ... Thứ hai là "Demonstrativpronomen", đại từ chỉ định như: "dieser" ... "diese" ... "dieses" ... để nhấn mạnh một vật cụ thể, ví dụ: "Dieser Pass ist neu." ... Và thứ ba là động từ "lassen", vận dụng chủ yếu khi nhờ ai đó làm giúp việc gì, ví dụ: "Ich lasse meinen Pass kopieren." ... hoặc là: "Ich lasse meine Haare schneiden." ... Hãy nắm chắc mục tiêu và tự tin học tập nhé!`;
-
 export default function App() {
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState<'vocabulary' | 'grammar' | 'game' | 'lecture' | 'speaking' | 'writing' | 'review'>('vocabulary');
@@ -74,6 +73,7 @@ export default function App() {
   const [isDownloadingL21, setIsDownloadingL21] = useState(false);
   const [isDownloadingL23, setIsDownloadingL23] = useState(false);
   const [isDownloadingL24, setIsDownloadingL24] = useState(false);
+  const [isDownloadingL22, setIsDownloadingL22] = useState(false);
   const [isDownloadingGrammar, setIsDownloadingGrammar] = useState(false);
 
   const [voiceName, setVoiceName] = useState('Kore');
@@ -175,77 +175,6 @@ export default function App() {
       alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
     } finally {
       setIsDownloadingGrammar(false);
-    }
-  };
-
-  const downloadL21Intro = async () => {
-    if (isDownloadingL21) return;
-    setIsDownloadingL21(true);
-    try {
-      const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
-      const response = await ai.models.generateContent({
-        model: "gemini-3.1-flash-tts-preview",
-        contents: [{ parts: [{ text: `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${L21_INTRO_SCRIPT}` }] }],
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voiceName as any } } },
-        },
-      });
-      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-      if (base64Audio) {
-        const binaryString = atob(base64Audio);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        
-        // Convert to WAV
-        const sampleRate = 24000;
-        const numChannels = 1;
-        const bitsPerSample = 16;
-        const blockAlign = numChannels * bitsPerSample / 8;
-        const byteRate = sampleRate * blockAlign;
-        const dataSize = bytes.length;
-        
-        const buffer = new ArrayBuffer(44 + dataSize);
-        const view = new DataView(buffer);
-        
-        const writeString = (v: DataView, offset: number, str: string) => {
-          for (let i = 0; i < str.length; i++) v.setUint8(offset + i, str.charCodeAt(i));
-        };
-        
-        writeString(view, 0, 'RIFF');
-        view.setUint32(4, 36 + dataSize, true);
-        writeString(view, 8, 'WAVE');
-        writeString(view, 12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, numChannels, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, byteRate, true);
-        view.setUint16(32, blockAlign, true);
-        view.setUint16(34, bitsPerSample, true);
-        writeString(view, 36, 'data');
-        view.setUint32(40, dataSize, true);
-        
-        const dataView = new Uint8Array(buffer, 44);
-        dataView.set(bytes);
-        
-        const blob = new Blob([buffer], { type: 'audio/wav' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Lektion21_Intro_${voiceName}.wav`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Có lỗi xảy ra khi tạo audio. Vui lòng thử lại sau.");
-    } finally {
-      setIsDownloadingL21(false);
     }
   };
 
@@ -1004,14 +933,6 @@ Return a JSON object with:
                         <span className="text-[11px] font-black text-theme-primary uppercase tracking-widest leading-none pt-0.5">
                           Audio giới thiệu bài 21
                         </span>
-                        <button 
-                          onClick={downloadL21Intro} 
-                          disabled={isDownloadingL21}
-                          className="ml-2 w-8 h-8 rounded-full bg-theme-primary/20 hover:bg-theme-primary hover:text-white text-theme-primary flex items-center justify-center transition-all disabled:opacity-50"
-                          title="Tải audio về máy (.wav)"
-                        >
-                          {isDownloadingL21 ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
-                        </button>
                       </div>
                     )}
                     {selectedLesson.id === 'l22' && (
