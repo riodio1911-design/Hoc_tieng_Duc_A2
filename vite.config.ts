@@ -35,6 +35,7 @@ export default defineConfig(({mode}) => {
           ]
         },
         workbox: {
+          navigateFallbackDenylist: [/^\/.*\.pdf$/],
           globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
           runtimeCaching: [
             {
