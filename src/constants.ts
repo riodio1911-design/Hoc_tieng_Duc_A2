@@ -85,6 +85,140 @@ Lưu ý quan trọng: Ngôi "ich" và ngôi "er/sie/es" trong thì Präteritum l
 
 export const VOCABULARY_DATA: Lesson[] = [
   {
+    id: "l15",
+    title: "Lektion 15",
+    subtitle: "Gleich geht's los!",
+    items: [
+      { id: "v15_1", word: "der Krimi", ipa: "/ˈkʁiːmi/", meaning: "Phim hình sự", example: "Wir sehen heute Abend einen Krimi.", exampleTranslation: "Tối nay chúng ta sẽ xem một phim hình sự.", category: "Medien" },
+      { id: "v15_2", word: "die Serie", ipa: "/ˈzeːʁiə/", meaning: "Phim bộ/Phim dài tập", example: "Das ist meine Lieblingsserie.", exampleTranslation: "Đó là series yêu thích của tôi.", category: "Medien" },
+      { id: "v15_3", word: "die Folge", ipa: "/ˈfɔlɡə/", meaning: "Tập phim", example: "Hast du die letzte Folge gesehen?", exampleTranslation: "Bạn đã xem tập cuối chưa?", category: "Medien" },
+      { id: "v15_4", word: "der Spielfilm", ipa: "/ˈʃpiːlˌfɪlm/", meaning: "Phim truyện", example: "Der Spielfilm dauert zwei Stunden.", exampleTranslation: "Phim truyện dài hai tiếng.", category: "Medien" },
+      { id: "v15_5", word: "die Sendung", ipa: "/ˈzɛndʊŋ/", meaning: "Chương trình (TV, radio)", example: "Diese Sendung ist sehr beliebt.", exampleTranslation: "Chương trình này rất được yêu thích.", category: "Medien" },
+      { id: "v15_6", word: "der Sender", ipa: "/ˈzɛndɐ/", meaning: "Đài truyền hình, kênh", example: "ARD ist ein deutscher Sender.", exampleTranslation: "ARD là một đài truyền hình Đức.", category: "Medien" },
+      { id: "v15_7", word: "produzieren", ipa: "/pʁoduˈt͡siːʁən/", meaning: "Sản xuất", example: "Der Film wird in Berlin produziert.", exampleTranslation: "Bộ phim được sản xuất ở Berlin.", category: "Arbeit" },
+      { id: "v15_8", word: "das Drehbuch", ipa: "/ˈdʁeːˌbuːx/", meaning: "Kịch bản", example: "Das Drehbuch wird zuerst geschrieben.", exampleTranslation: "Kịch bản được viết đầu tiên.", category: "Arbeit" },
+      { id: "v15_9", word: "der Regisseur", ipa: "/ʁeʒɪˈsøːɐ̯/", meaning: "Đạo diễn", example: "Der Regisseur instruiert die Schauspieler.", exampleTranslation: "Đạo diễn chỉ đạo các diễn viên.", category: "Arbeit" },
+      { id: "v15_10", word: "der Schauspieler", ipa: "/ˈʃaʊ̯ˌʃpiːlɐ/", meaning: "Diễn viên", example: "Er ist ein bekannter Schauspieler.", exampleTranslation: "Anh ấy là một diễn viên nổi tiếng.", category: "Arbeit" },
+      { id: "v15_11", word: "das Studio", ipa: "/ˈʃtuːdi̯o/", meaning: "Trường quay, phòng thu", example: "Die Show wird im Studio gedreht.", exampleTranslation: "Chương trình được quay ở trường quay.", category: "Arbeit" },
+      { id: "v15_12", word: "der Zuschauer", ipa: "/ˈt͡suːˌʃaʊ̯ɐ/", meaning: "Khán giả", example: "Die Zuschauer klatschen.", exampleTranslation: "Khán giả vỗ tay.", category: "Medien" },
+      { id: "v15_13", word: "die Quizshow", ipa: "/ˈkvɪzˌʃoː/", meaning: "Chương trình đố vui", example: "In der Quizshow kann man Geld gewinnen.", exampleTranslation: "Trong chương trình đố vui người ta có thể thắng tiền.", category: "Medien" },
+      { id: "v15_14", word: "die Dokumentation", ipa: "/dokumɛntaˈt͡si̯oːn/", meaning: "Phim tài liệu", example: "Ich sehe gern Dokumentationen über Tiere.", exampleTranslation: "Tôi thích xem phim tài liệu về động vật.", category: "Medien" },
+      { id: "v15_15", word: "die Nachrichtensendung", ipa: "/ˈnaːxʁɪçtn̩ˌzɛndʊŋ/", meaning: "Chương trình thời sự", example: "Die Nachrichten kommen um 20 Uhr.", exampleTranslation: "Bản tin thời sự phát lúc 20h.", category: "Medien" },
+      { id: "v15_16", word: "bestellen", ipa: "/bəˈʃtɛlən/", meaning: "Đặt hàng", example: "Ich bestelle das Buch online.", exampleTranslation: "Tôi đặt mua sách trên mạng.", category: "Aktion" },
+      { id: "v15_17", word: "liefern", ipa: "/ˈliːfɐn/", meaning: "Giao hàng", example: "Das Paket wird morgen geliefert.", exampleTranslation: "Gói hàng sẽ được giao vào ngày mai.", category: "Aktion" }
+    ],
+    grammar: [
+      { id: "g15_1", word: "Passiv Präsens", ipa: "", meaning: "Câu bị động hiện tại", rule: "werden + Partizip II", example: "Das Auto wird repariert.", exampleTranslation: "Chiếc xe đang được sửa.", note: "Nhấn mạnh hành động, không quan trọng ai làm. Chia động từ werden: ich werde, du wirst, er/sie/es wird, wir werden, ihr werdet, sie/Sie werden." },
+      { id: "g15_2", word: "Passiv mit Trạng từ (Zuerst, dann, danach, am Ende)", ipa: "", meaning: "Câu bị động theo trình tự", rule: "Trạng từ + wird/werden + Chủ ngữ + ... + Partizip II", example: "Zuerst wird das Drehbuch geschrieben.", exampleTranslation: "Đầu tiên, kịch bản được viết.", note: "Dùng để mô tả quy trình." },
+      { id: "g15_3", word: "Man -> Passiv", ipa: "", meaning: "Đại từ bất định chuyển sang bị động", rule: "Man dreht den Film -> Der Film wird gedreht.", example: "Man zeigt die Serie. -> Die Serie wird gezeigt.", exampleTranslation: "Người ta chiếu phim bộ. -> Phim bộ được chiếu.", note: "Thường dùng để thay thế cho nhau." }
+    ]
+  },
+  {
+    id: "l16",
+    title: "Lektion 16",
+    subtitle: "Darf ich fragen, ob ...?",
+    items: [
+      { id: "v16_1", word: "das Einzelzimmer", ipa: "/ˈaɪ̯nt͡sl̩ˌt͡sɪmɐ/", meaning: "Phòng đơn", example: "Ich hätte gern ein Einzelzimmer.", exampleTranslation: "Tôi muốn một phòng đơn.", category: "Hotel" },
+      { id: "v16_2", word: "das Doppelzimmer", ipa: "/ˈdɔpl̩ˌt͡sɪmɐ/", meaning: "Phòng đôi", example: "Haben Sie noch ein Doppelzimmer frei?", exampleTranslation: "Bạn còn phòng đôi nào trống không?", category: "Hotel" },
+      { id: "v16_3", word: "das Mehrbettzimmer", ipa: "/ˈmeːɐ̯bɛtˌt͡sɪmɐ/", meaning: "Phòng nhiều giường", example: "Wir brauchen ein Mehrbettzimmer.", exampleTranslation: "Chúng tôi cần một phòng nhiều giường.", category: "Hotel" },
+      { id: "v16_4", word: "das Frühstück", ipa: "/ˈfʁyːˌʃtʏk/", meaning: "Bữa sáng", example: "Ist das Frühstück im Preis inklusive?", exampleTranslation: "Giá phòng đã bao gồm bữa sáng chưa?", category: "Verpflegung" },
+      { id: "v16_5", word: "die Halbpension", ipa: "/ˈhalppɑ̃ˌzi̯oːn/", meaning: "Bán thời gian ăn uống (sáng + tối)", example: "Wir buchen mit Halbpension.", exampleTranslation: "Chúng tôi đặt phòng kèm bán trú.", category: "Verpflegung" },
+      { id: "v16_6", word: "die Vollpension", ipa: "/ˈfɔlpɑ̃ˌzi̯oːn/", meaning: "Toàn thời gian ăn uống (3 bữa)", example: "Die Vollpension kostet 30 Euro extra.", exampleTranslation: "Toàn trú tốn thêm 30 Euro.", category: "Verpflegung" },
+      { id: "v16_7", word: "die Rezeption", ipa: "/ʁet͡sɛpˈt͡si̯oːn/", meaning: "Quầy lễ tân", example: "Der Schlüssel liegt an der Rezeption.", exampleTranslation: "Chìa khóa ở tại quầy lễ tân.", category: "Service" },
+      { id: "v16_8", word: "die Reservierung", ipa: "/ʁezɛʁˈviːʁʊŋ/", meaning: "Việc đặt phòng", example: "Haben Sie eine Reservierung?", exampleTranslation: "Bạn đã đặt phòng chưa?", category: "Service" },
+      { id: "v16_9", word: "buchen", ipa: "/ˈbuːxn̩/", meaning: "Đặt chỗ, đặt phòng", example: "Er möchte ein Zimmer buchen.", exampleTranslation: "Anh ấy muốn đặt một phòng.", category: "Service" },
+      { id: "v16_10", word: "der Parkplatz", ipa: "/ˈpaʁkˌplat͡s/", meaning: "Bãi đỗ xe", example: "Gibt es hier einen Parkplatz?", exampleTranslation: "Ở đây có bãi đỗ xe không?", category: "Service" },
+      { id: "v16_11", word: "die Sauna", ipa: "/ˈzaʊ̯na/", meaning: "Phòng xông hơi", example: "Das Hotel hat eine kleine Sauna.", exampleTranslation: "Khách sạn có một phòng xông hơi nhỏ.", category: "Service" },
+      { id: "v16_12", word: "das Schwimmbad", ipa: "/ˈʃvɪmˌbaːt/", meaning: "Bể bơi", example: "Wie lange ist das Schwimmbad geöffnet?", exampleTranslation: "Bể bơi mở cửa đến mấy giờ?", category: "Service" },
+      { id: "v16_13", word: "die Kreditkarte", ipa: "/kʁeˈdiːtˌkaʁtə/", meaning: "Thẻ tín dụng", example: "Kann ich mit Kreditkarte bezahlen?", exampleTranslation: "Tôi có thể trả bằng thẻ tín dụng không?", category: "Service" },
+      { id: "v16_14", word: "der Schlüssel", ipa: "/ˈʃlʏsl̩/", meaning: "Chìa khóa", example: "Hier ist Ihr Schlüssel.", exampleTranslation: "Đây là chìa khóa của bạn.", category: "Service" },
+      { id: "v16_15", word: "ausfüllen", ipa: "/ˈaʊ̯sˌfʏlən/", meaning: "Điền vào (mẫu)", example: "Bitte füllen Sie das Formular aus.", exampleTranslation: "Vui lòng điền vào biểu mẫu này.", category: "Alltag" },
+      { id: "v16_16", word: "angenehm", ipa: "/ˈanɡəˌneːm/", meaning: "Dễ chịu", example: "Wir wünschen Ihnen einen angenehmen Aufenthalt.", exampleTranslation: "Chúng tôi chúc bạn một kỳ nghỉ dễ chịu.", category: "Alltag" },
+      { id: "v16_17", word: "frei", ipa: "/fʁaɪ̯/", meaning: "Trống, rảnh", example: "Haben Sie noch ein Zimmer frei?", exampleTranslation: "Bạn còn phòng trống không?", category: "Alltag" }
+    ],
+    grammar: [
+      { id: "g16_1", word: "Indirekte Fragen (W-Fragen)", ipa: "", meaning: "Câu hỏi gián tiếp với từ để hỏi", rule: "Mệnh đề chính + W-Wort + ... + Verb ở cuối", example: "Wissen Sie, wann der Zug abfährt?", exampleTranslation: "Bạn có biết khi nào tàu chạy không?", note: "Làm câu hỏi lịch sự hơn. Ví dụ khác: Können Sie mir sagen, wo die Rezeption ist?" },
+      { id: "g16_2", word: "Indirekte Fragen (ob)", ipa: "", meaning: "Câu hỏi gián tiếp với ob (Yes/No)", rule: "Mệnh đề chính + ob + ... + Verb ở cuối", example: "Darf ich fragen, ob das Frühstück inklusiv ist?", exampleTranslation: "Cho tôi hỏi bữa sáng có bao gồm không?", note: "Dùng khi câu trả lời của câu trực tiếp là Ja/Nein." },
+      { id: "g16_3", word: "Lokale Präpositionen (door/an/gegenüber)", ipa: "", meaning: "Giới từ chỉ vị trí và hướng", rule: "durch + Akkusativ; an ... vorbei + Dativ; gegenüber von + Dativ", example: "Gehen Sie durch die Empfangshalle, dann am Restaurant vorbei.", exampleTranslation: "Hãy đi xuyên qua sảnh lễ tân, sau đó đi ngang qua nhà hàng.", note: "Dùng để chỉ đường trong không gian hẹp như khách sạn." }
+    ]
+  },
+  {
+    id: "l17",
+    title: "Lektion 17",
+    subtitle: "Wir wollen nach Rumänien",
+    items: [
+      { id: "v17_1", word: "die Tankstelle", ipa: "/ˈtaŋkˌʃtɛlə/", meaning: "Trạm xăng", example: "Wir müssen an der nächsten Tankstelle halten.", exampleTranslation: "Chúng ta phải dừng ở trạm xăng tiếp theo.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_2", word: "die Panne", ipa: "/ˈpanə/", meaning: "Sự cố, hỏng hóc", example: "Wir haben eine Panne auf der Autobahn.", exampleTranslation: "Chúng tôi gặp sự cố trên đường cao tốc.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_3", word: "die Ampel", ipa: "/ˈampəl/", meaning: "Đèn giao thông", example: "Du musst an der Ampel warten.", exampleTranslation: "Bạn phải đợi ở đèn giao thông.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_4", word: "die Autobahn", ipa: "/ˈaʊ̯toˌbaːn/", meaning: "Đường cao tốc", example: "Auf der Autobahn darf man schnell fahren.", exampleTranslation: "Người ta được lái xe nhanh trên cao tốc.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_5", word: "die Grenze", ipa: "/ˈɡʁɛnt͡sə/", meaning: "Biên giới", example: "An der Grenze zu Österreich stehen wir im Stau.", exampleTranslation: "Ở biên giới qua Áo, chúng tôi đang bị tắc đường.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_6", word: "die Fähre", ipa: "/ˈfɛːʁə/", meaning: "Phà", example: "Wir fahren mit der Fähre über den Fluss.", exampleTranslation: "Chúng tôi đi phà qua sông.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_7", word: "der Motor", ipa: "/ˈmoːtoːɐ/", meaning: "Động cơ", example: "Der Motor ist kaputtgegangen.", exampleTranslation: "Động cơ đã bị hỏng.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_8", word: "das Autoradio", ipa: "/ˈaʊ̯toˌʁaːdio/", meaning: "Đài trên ô tô", example: "Mach das Autoradio an!", exampleTranslation: "Hãy bật đài ô tô lên!", category: "Verkehrsmittel & Straße" },
+      { id: "v17_9", word: "der Reifen", ipa: "/ˈʁaɪ̯fən/", meaning: "Lốp xe", example: "Wir müssen die Winterreifen wechseln.", exampleTranslation: "Chúng ta phải đổi lốp xe mùa đông.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_10", word: "die Abfahrt", ipa: "/ˈapˌfaːɐ̯t/", meaning: "Sự khởi hành", example: "Die Abfahrt ist früh am Morgen.", exampleTranslation: "Khởi hành vào sáng sớm.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_11", word: "die Ankunft", ipa: "/ˈanˌkʊnft/", meaning: "Sự đến nơi", example: "Kurz nach der Ankunft waren wir im Hotel.", exampleTranslation: "Ngay sau khi đến nơi, chúng tôi đã ở khách sạn.", category: "Verkehrsmittel & Straße" },
+      { id: "v17_12", word: "das Meer", ipa: "/meːɐ̯/", meaning: "Biển", example: "Wir fahren jedes Jahr ans Meer.", exampleTranslation: "Chúng tôi đi ra biển mỗi năm.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_13", word: "die Küste", ipa: "/ˈkʏstə/", meaning: "Bờ biển", example: "Wir machen Urlaub an der Küste.", exampleTranslation: "Chúng tôi nghỉ dưỡng ở bờ biển.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_14", word: "der Strand", ipa: "/ʃtʁant/", meaning: "Bãi cát", example: "Ich liege gern am Strand.", exampleTranslation: "Tôi thích nằm ở bãi biển.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_15", word: "die Insel", ipa: "/ˈɪnzəl/", meaning: "Hòn đảo", example: "Wir übernachten auf einer Insel.", exampleTranslation: "Chúng tôi qua đêm trên một hòn đảo.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_16", word: "das Gebirge / die Berge", ipa: "/ɡəˈbɪʁɡə/", meaning: "Dãy núi", example: "Sie wandern gern im Gebirge.", exampleTranslation: "Họ thích đi bộ trong dãy núi.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_17", word: "der Wald", ipa: "/valt/", meaning: "Rừng", example: "Wir gehen im Wald spazieren.", exampleTranslation: "Chúng tôi đi bộ trong rừng.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_18", word: "die Wüste", ipa: "/ˈvyːstə/", meaning: "Sa mạc", example: "In der Wüste ist es sehr heiß.", exampleTranslation: "Trong sa mạc trời rất nóng.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_19", word: "das Zelt", ipa: "/t͡sɛlt/", meaning: "Lều", example: "Wir haben ein Zelt gekauft.", exampleTranslation: "Chúng tôi đã mua một cái lều.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_20", word: "die Wiese", ipa: "/ˈviːzə/", meaning: "Đồng cỏ", example: "Wir zelten auf einer großen Wiese.", exampleTranslation: "Chúng tôi cắm trại trên một đồng cỏ lớn.", category: "Landschaften & Urlaubsorte" },
+      { id: "v17_21", word: "der Süden", ipa: "/ˈzyːdən/", meaning: "Hướng Nam", example: "Die Vögel fliegen in den Süden.", exampleTranslation: "Chim bay về hướng Nam.", category: "Himmelsrichtungen" },
+      { id: "v17_22", word: "müde", ipa: "/ˈmyːdə/", meaning: "Mệt mỏi", example: "Nach der Fahrt war ich total müde.", exampleTranslation: "Sau chuyến đi, tôi cực kỳ mệt mỏi.", category: "Adjektive & Verben" },
+      { id: "v17_23", word: "munter", ipa: "/ˈmʊntɐ/", meaning: "Tỉnh táo / Vui vẻ", example: "Am Morgen bin ich wieder munter.", exampleTranslation: "Buổi sáng tôi lại tỉnh táo.", category: "Adjektive & Verben" },
+      { id: "v17_24", word: "optimistisch", ipa: "/ɔptiˈmɪstɪʃ/", meaning: "Lạc quan", example: "Er bleibt immer optimistisch.", exampleTranslation: "Anh ấy luôn lạc quan.", category: "Adjektive & Verben" },
+      { id: "v17_25", word: "komisch", ipa: "/ˈkoːmɪʃ/", meaning: "Kỳ lạ", example: "Das ist aber eine komische Geschichte.", exampleTranslation: "Đấy quả là một câu chuyện kỳ lạ.", category: "Adjektive & Verben" },
+      { id: "v17_26", word: "sich ausruhen", ipa: "/ˈaʊ̯sˌʁuːən/", meaning: "Nghỉ ngơi", example: "Wir müssen uns ein bisschen ausruhen.", exampleTranslation: "Chúng ta cần nghỉ ngơi một chút.", category: "Adjektive & Verben" },
+      { id: "v17_27", word: "einschlafen", ipa: "/ˈaɪ̯nˌʃlaːfən/", meaning: "Ngủ thiếp đi", example: "Ich bin sofort eingeschlafen.", exampleTranslation: "Tôi đã ngủ thiếp đi ngay lập tức.", category: "Adjektive & Verben" }
+    ],
+    grammar: [
+      { id: "g17_1", word: "Wohin? (Akkusativ)", ipa: "", meaning: "Hỏi hướng đi đâu", rule: "in/an/auf/nach + Akkusativ/Dativ", example: "Wir fahren ans Meer.", exampleTranslation: "Chúng tôi lái xe ra biển.", note: "Chỉ sự rẽ hướng, di chuyển." }
+    ]
+  },
+  {
+    id: "l18",
+    title: "Lektion 18",
+    subtitle: "Ich weiß nicht, wo ich bin",
+    items: [
+      { id: "v18_1", word: "die Sonne", ipa: "/ˈzɔnə/", meaning: "Mặt trời", example: "Die Sonne scheint.", exampleTranslation: "Mặt trời đang chiếu sáng.", category: "Wetter" },
+      { id: "v18_2", word: "der Regen", ipa: "/ˈʁeːɡən/", meaning: "Mưa", example: "Wir bleiben bei dem Regen zu Hause.", exampleTranslation: "Chúng tôi ở nhà khi trời mưa.", category: "Wetter" },
+      { id: "v18_3", word: "der Schnee", ipa: "/ʃneː/", meaning: "Tuyết", example: "Im Winter gibt es viel Schnee.", exampleTranslation: "Vào mùa đông có rất nhiều tuyết.", category: "Wetter" },
+      { id: "v18_4", word: "der Wind", ipa: "/vɪnt/", meaning: "Gió", example: "Der Wind ist heute sehr stark.", exampleTranslation: "Gió hôm nay rất mạnh.", category: "Wetter" },
+      { id: "v18_5", word: "der Nebel", ipa: "/ˈneːbl̩/", meaning: "Sương mù", example: "Bei Nebel muss man langsam fahren.", exampleTranslation: "Khi có sương mù, người ta phải lái xe chậm.", category: "Wetter" },
+      { id: "v18_6", word: "das Gewitter", ipa: "/ɡəˈvɪtɐ/", meaning: "Dông bão", example: "Ich habe Angst vor dem Gewitter.", exampleTranslation: "Tôi sợ dông bão.", category: "Wetter" },
+      { id: "v18_7", word: "die Hitze", ipa: "/ˈhɪt͡sə/", meaning: "Sự nóng bức", example: "Die Hitze im Sommer ist unerträglich.", exampleTranslation: "Cái nóng bức vào mùa hè thật không thể chịu nổi.", category: "Wetter" },
+      { id: "v18_8", word: "die Kälte", ipa: "/ˈkɛltə/", meaning: "Sự lạnh lẽo", example: "Ich mag die Kälte nicht.", exampleTranslation: "Tôi không thích thời tiết lạnh lẽo.", category: "Wetter" },
+      { id: "v18_9", word: "sonnig", ipa: "/ˈzɔnɪç/", meaning: "Nhiều nắng", example: "Heute ist ein sonniger Tag.", exampleTranslation: "Hôm nay là một ngày nhiều nắng.", category: "Wetter" },
+      { id: "v18_10", word: "regnerisch", ipa: "/ˈʁeːɡnəʁɪʃ/", meaning: "Trời mưa", example: "Das Wetter ist heute regnerisch.", exampleTranslation: "Thời tiết hôm nay trời có mưa.", category: "Wetter" },
+      { id: "v18_11", word: "windig", ipa: "/ˈvɪndɪç/", meaning: "Nhiều gió", example: "An der Küste ist es oft windig.", exampleTranslation: "Ở bờ biển thường có nhiều gió.", category: "Wetter" },
+      { id: "v18_12", word: "neblig", ipa: "/ˈneːblɪç/", meaning: "Nhiều sương mù", example: "Im Herbst ist es morgens oft neblig.", exampleTranslation: "Vào mùa thu buổi sáng thường có sương mù.", category: "Wetter" },
+      { id: "v18_13", word: "heiß", ipa: "/haɪ̯s/", meaning: "Nóng", example: "Es ist heute sehr heiß.", exampleTranslation: "Hôm nay trời rất nóng.", category: "Wetter" },
+      { id: "v18_14", word: "kalt", ipa: "/kalt/", meaning: "Lạnh", example: "Mir ist kalt.", exampleTranslation: "Tôi thấy lạnh.", category: "Wetter" },
+      { id: "v18_15", word: "warm", ipa: "/vaʁm/", meaning: "Ấm áp", example: "Das Wasser ist warm.", exampleTranslation: "Nước ấm.", category: "Wetter" },
+      { id: "v18_16", word: "bewölkt", ipa: "/bəˈvœlkt/", meaning: "Nhiều mây", example: "Der Himmel ist bewölkt.", exampleTranslation: "Bầu trời có nhiều mây.", category: "Wetter" },
+      { id: "v18_17", word: "das Handtuch", ipa: "/ˈhantˌtuːχ/", meaning: "Khăn tắm", example: "Ich brauche ein Handtuch.", exampleTranslation: "Tôi cần một cái khăn tắm.", category: "Urlaub & Strand" },
+      { id: "v18_18", word: "die Badehose", ipa: "/ˈbaːdəˌhoːzə/", meaning: "Quần bơi", example: "Wo ist meine Badehose?", exampleTranslation: "Quần bơi của tôi ở đâu?", category: "Urlaub & Strand" },
+      { id: "v18_19", word: "die Sonnencreme", ipa: "/ˈzɔnənˌkʁeːm/", meaning: "Kem chống nắng", example: "Vergiss die Sonnencreme nicht!", exampleTranslation: "Đừng quên kem chống nắng!", category: "Urlaub & Strand" },
+      { id: "v18_20", word: "der Golfplatz", ipa: "/ˈɡɔlfˌplat͡s/", meaning: "Sân golf", example: "Er spielt auf dem Golfplatz.", exampleTranslation: "Anh ấy chơi ở sân golf.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_21", word: "der Parkplatz", ipa: "/ˈpaʁkˌplat͡s/", meaning: "Bãi đỗ xe", example: "Gibt es hier einen Parkplatz?", exampleTranslation: "Ở đây có bãi đỗ xe không?", category: "Orte & Wegbeschreibung" },
+      { id: "v18_22", word: "das Freizeitland", ipa: "/ˈfʁaɪ̯t͡saɪ̯tˌlant/", meaning: "Khu vui chơi / công viên giải trí", example: "Die Kinder wollen ins Freizeitland.", exampleTranslation: "Bọn trẻ muốn đến công viên giải trí.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_23", word: "geradeaus", ipa: "/ɡəʁaːdəˈaʊ̯s/", meaning: "Đi thẳng", example: "Gehen Sie immer geradeaus.", exampleTranslation: "Hãy cứ đi thẳng.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_24", word: "links / rechts", ipa: "/lɪŋks / ʁɛçt͡s/", meaning: "Trái / Phải", example: "An der Ampel nach links.", exampleTranslation: "Đến đèn giao thông rẽ trái.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_25", word: "dahinter", ipa: "/daˈhɪntɐ/", meaning: "Phía sau đó", example: "Der Parkplatz ist gleich dahinter.", exampleTranslation: "Bãi đỗ xe ở ngay phía sau đó.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_26", word: "vorbei", ipa: "/foːɐ̯ˈbaɪ̯/", meaning: "Ngang qua", example: "Gehen Sie an der Bäckerei vorbei.", exampleTranslation: "Hãy đi ngang qua tiệm bánh.", category: "Orte & Wegbeschreibung" },
+      { id: "v18_27", word: "meistens", ipa: "/ˈmaɪ̯stn̩s/", meaning: "Thông thường", example: "Er ist meistens pünktlich.", exampleTranslation: "Anh ấy thông thường đúng giờ.", category: "Adverbien" },
+      { id: "v18_28", word: "leider", ipa: "/ˈlaɪ̯dɐ/", meaning: "Đáng tiếc", example: "Ich habe leider keine Zeit.", exampleTranslation: "Đáng tiếc là tôi không có thời gian.", category: "Adverbien" }
+    ],
+    grammar: [
+      { id: "g18_1", word: "Verben mit festen Präpositionen", ipa: "", meaning: "Động từ đi kèm giới từ cố định", rule: "Học thuộc động từ + giới từ + cách (Akk/Dat)", example: "Ich freue mich auf den Urlaub. / Er träumt von einer Reise.", exampleTranslation: "Tôi mong đợi kỳ nghỉ. / Anh ấy mơ về một chuyến đi.", note: "Ví dụ: sich freuen auf (Akk), träumen von (Dat), sprechen über (Akk)..." },
+      { id: "g18_2", word: "Lokale Präpositionen (Wege)", ipa: "", meaning: "Giới từ chỉ phương hướng (Chỉ đường)", rule: "durch/über + Akk, an...vorbei/bis zu + Dat", example: "Gehen Sie durch den Wald. / Fahren Sie über die Brücke.", exampleTranslation: "Hãy đi xuyên qua rừng. / Hãy lái xe qua cầu.", note: "Chỉ lộ trình hoặc đường đi." }
+    ]
+  },
+  {
     id: "l21",
     title: "Lektion 21",
     subtitle: "Ja genau, den meine ich",

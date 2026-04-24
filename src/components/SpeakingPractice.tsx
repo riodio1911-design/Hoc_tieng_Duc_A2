@@ -62,6 +62,158 @@ const TeachingNotation = ({ syllables, notation, isSentence }: { syllables?: str
 }
 
 export const SPEAKING_DATA: Record<string, { words: PracticeItem[], sentences: PracticeItem[], conversations?: PracticeItem[] }> = {
+  "l15": {
+    "words": [
+      { "id": "w1", "de": "Fernseher", "vi": "Ti-vi", "ipa": "/ˈfɛʁnˌzeːɐ/", "syllables": ["Fern", "se", "her"], "notation": [80, 40, 40] },
+      { "id": "w2", "de": "Sendung", "vi": "Chương trình (phát sóng)", "ipa": "/ˈzɛndʊŋ/", "syllables": ["Sen", "dung"], "notation": [80, 40] },
+      { "id": "w3", "de": "Krimi", "vi": "Phim hình sự", "ipa": "/ˈkʁiːmi/", "syllables": ["Kri", "mi"], "notation": [80, 40] },
+      { "id": "w4", "de": "Zuschauer", "vi": "Khán giả", "ipa": "/ˈt͡suːˌʃaʊ̯ɐ/", "syllables": ["Zu", "schau", "er"], "notation": [80, 60, 40] },
+      { "id": "w5", "de": "Mediathek", "vi": "Thư viện truyền thông", "ipa": "/ˌmeːdiaˈteːk/", "syllables": ["Me", "dia", "thek"], "notation": [40, 40, 80] },
+      { "id": "w6", "de": "Schauspieler", "vi": "Diễn viên", "ipa": "/ˈʃaʊ̯ˌʃpiːlɐ/", "syllables": ["Schau", "spie", "ler"], "notation": [80, 60, 40] },
+      { "id": "w7", "de": "spannend", "vi": "Căng thẳng, hồi hộp", "ipa": "/ˈʃpanənt/", "syllables": ["span", "nend"], "notation": [80, 40] },
+      { "id": "w8", "de": "langweilig", "vi": "Nhàm chán", "ipa": "/ˈlaŋˌvaɪ̯lɪç/", "syllables": ["lang", "wei", "lig"], "notation": [80, 60, 40] },
+      { "id": "w9", "de": "gucken", "vi": "Xem", "ipa": "/ˈɡʊkən/", "syllables": ["gu", "cken"], "notation": [80, 40] },
+      { "id": "w10", "de": "Serie", "vi": "Loạt phim (Series)", "ipa": "/ˈzeːʁiə/", "syllables": ["Se", "ri", "e"], "notation": [80, 40, 60] },
+      { "id": "w11", "de": "Sender", "vi": "Đài phát thanh/truyền hình", "ipa": "/ˈzɛndɐ/", "syllables": ["Sen", "der"], "notation": [80, 40] },
+      { "id": "w12", "de": "regelmäßig", "vi": "Thường xuyên", "ipa": "/ˈʁeːɡəlˌmɛːsɪç/", "syllables": ["re", "gel", "mä", "ßig"], "notation": [80, 40, 60, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Ich sehe am liebsten Krimis.", "vi": "Tôi thích xem phim hình sự nhất.", "ipa": "/ɪç ˈzeːə am ˈliːpstən ˈkʁiːmɪs/", "syllables": ["Ich", "se", "he", "am", "liebs", "ten", "Kri", "mis."], "notation": [40, 60, 40, 40, 80, 40, 80, 40] },
+      { "id": "s2", "de": "Der Tatort ist sehr spannend.", "vi": "Phim Tatort rất hồi hộp.", "ipa": "/deːɐ̯ ˈtaːtˌɔʁt ɪst zeːɐ̯ ˈʃpanənt/", "syllables": ["Der", "Tat", "ort", "ist", "sehr", "span", "nend."], "notation": [40, 80, 60, 40, 60, 80, 40] },
+      { "id": "s3", "de": "Ich gucke oft abends fern.", "vi": "Tôi thường xem TV vào buổi tối.", "ipa": "/ɪç ˈɡʊkə ɔft ˈaːbənts fɛʁn/", "syllables": ["Ich", "gu", "cke", "oft", "a", "bends", "fern."], "notation": [40, 80, 40, 60, 80, 40, 60] },
+      { "id": "s4", "de": "Hast du den neuen Film gesehen?", "vi": "Bạn đã xem bộ phim mới chưa?", "ipa": "/hast duː deːn ˈnɔɪ̯ən fɪlm ɡəˈzeːən/", "syllables": ["Hast", "du", "den", "neu", "en", "Film", "ge", "se", "hen?"], "notation": [60, 40, 40, 80, 40, 60, 40, 80, 40] },
+      { "id": "s5", "de": "Wir laden dich zum Videoabend ein.", "vi": "Chúng tôi mời bạn đến buổi tối xem video.", "ipa": "/viːɐ̯ ˈlaːdən dɪç t͡sʊm ˈviːdeoˌʔaːbənt aɪ̯n/", "syllables": ["Wir", "la", "den", "dich", "zum", "Vi", "de", "o", "a", "bend", "ein."], "notation": [40, 80, 40, 40, 40, 80, 40, 40, 80, 60, 60] },
+      { "id": "s6", "de": "Die Serie läuft jeden Sonntag.", "vi": "Loạt phim chiếu vào mỗi Chủ Nhật.", "ipa": "/diː ˈzeːʁiə lɔɪ̯ft ˈjeːdən ˈzɔntaːk/", "syllables": ["Die", "Se", "ri", "e", "läuft", "je", "den", "Sonn", "tag."], "notation": [40, 80, 40, 60, 60, 80, 40, 80, 60] },
+      { "id": "s7", "de": "Ich finde die Dialoge interessant.", "vi": "Tôi thấy các đoạn hội thoại rất thú vị.", "ipa": "/ɪç ˈfɪndə diː diaˈloːɡə ɪntəʁɛˈsant/", "syllables": ["Ich", "fin", "de", "die", "Di", "a", "lo", "ge", "in", "te", "res", "sant."], "notation": [40, 80, 40, 40, 40, 40, 80, 40, 40, 40, 60, 80] },
+      { "id": "s8", "de": "Die Schauspieler spielen toll.", "vi": "Các diễn viên diễn xuất tuyệt vời.", "ipa": "/diː ˈʃaʊ̯ˌʃpiːlɐ ˈʃpiːlən tɔl/", "syllables": ["Die", "Schau", "spie", "ler", "spie", "len", "toll."], "notation": [40, 80, 60, 40, 80, 40, 60] },
+      { "id": "s9", "de": "Ich schaue in der Mediathek.", "vi": "Tôi xem trong thư viện truyền thông.", "ipa": "/ɪç ˈʃaʊ̯ə ɪn deːɐ̯ ˌmeːdiaˈteːk/", "syllables": ["Ich", "schau", "e", "in", "der", "Me", "dia", "thek."], "notation": [40, 80, 40, 40, 40, 40, 40, 80] },
+      { "id": "s10", "de": "Sollen wir einen Film ansehen?", "vi": "Chúng ta có nên xem một bộ phim không?", "ipa": "/ˈzɔlən viːɐ̯ ˈaɪ̯nən fɪlm ˈanˌzeːən/", "syllables": ["Sol", "len", "wir", "ei", "nen", "Film", "an", "se", "hen?"], "notation": [80, 40, 40, 80, 40, 60, 80, 60, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại 1: Sở thích xem TV", "speaker": "A", "de": "Was siehst du gern im Fernsehen?", "vi": "Bạn thích xem gì trên TV?" },
+      { "id": "c2", "context": "Hội thoại 1: Sở thích xem TV", "speaker": "B", "de": "Ich sehe am liebsten Krimis, besonders den Tatort.", "vi": "Tôi thích xem phim hình sự nhất, đặc biệt là Tatort." },
+      { "id": "c3", "context": "Hội thoại 2: Thời gian xem", "speaker": "A", "de": "Wann guckst du immer?", "vi": "Bạn thường xem lúc nào?" },
+      { "id": "c4", "context": "Hội thoại 2: Thời gian xem", "speaker": "B", "de": "Meistens am Sonntagabend um 20 Uhr.", "vi": "Thường là vào tối Chủ Nhật lúc 8 giờ tối." },
+      { "id": "c5", "context": "Hội thoại 3: Xem cùng ai", "speaker": "A", "de": "Und wo guckst du fern?", "vi": "Và bạn xem ở đâu?" },
+      { "id": "c6", "context": "Hội thoại 3: Xem cùng ai", "speaker": "B", "de": "Entweder zu Hause allein oder mit Freunden.", "vi": "Hoặc là ở nhà một mình hoặc cùng với bạn bè." },
+      { "id": "c7", "context": "Hội thoại 4: Chất lượng phim", "speaker": "A", "de": "Wie findest du die Schauspieler?", "vi": "Bạn thấy các diễn viên diễn thế nào?" },
+      { "id": "c8", "context": "Hội thoại 4: Chất lượng phim", "speaker": "B", "de": "Sie spielen toll und die Dialoge sind interessant.", "vi": "Họ diễn xuất tuyệt vời và lời thoại rất thú vị." }
+    ]
+  },
+  "l16": {
+    "words": [
+      { "id": "w1", "de": "Einzelzimmer", "vi": "Phòng đơn", "ipa": "/ˈaɪ̯nt͡səlˌt͡sɪmɐ/", "syllables": ["Ein", "zel", "zim", "mer"], "notation": [80, 40, 60, 40] },
+      { "id": "w2", "de": "Doppelzimmer", "vi": "Phòng đôi", "ipa": "/ˈdɔpəlˌt͡sɪmɐ/", "syllables": ["Dop", "pel", "zim", "mer"], "notation": [80, 40, 60, 40] },
+      { "id": "w3", "de": "Rezeption", "vi": "Lễ tân", "ipa": "/ʁet͡sɛpˈt͡sjoːn/", "syllables": ["Re", "zep", "ti", "on"], "notation": [40, 40, 80, 40] },
+      { "id": "w4", "de": "buchen", "vi": "Đặt phòng/vé", "ipa": "/ˈbuːxən/", "syllables": ["bu", "chen"], "notation": [80, 40] },
+      { "id": "w5", "de": "Frühstück", "vi": "Bữa sáng", "ipa": "/ˈfʁyːˌʃtʏk/", "syllables": ["Früh", "stück"], "notation": [80, 60] },
+      { "id": "w6", "de": "Schlüssel", "vi": "Chìa khóa", "ipa": "/ˈʃlʏsəl/", "syllables": ["Schlüs", "sel"], "notation": [80, 40] },
+      { "id": "w7", "de": "Aufzug", "vi": "Thang máy", "ipa": "/ˈaʊ̯fˌt͡suːk/", "syllables": ["Auf", "zug"], "notation": [80, 60] },
+      { "id": "w8", "de": "Schwimmbad", "vi": "Hồ bơi", "ipa": "/ˈʃvɪmˌbaːt/", "syllables": ["Schwimm", "bad"], "notation": [80, 60] },
+      { "id": "w9", "de": "reservieren", "vi": "Đặt trước", "ipa": "/ʁezɛʁˈviːʁən/", "syllables": ["re", "ser", "vie", "ren"], "notation": [40, 40, 80, 40] },
+      { "id": "w10", "de": "gegenüber", "vi": "Đối diện", "ipa": "/ɡeːɡn̩ˈʔyːbɐ/", "syllables": ["ge", "gen", "ü", "ber"], "notation": [40, 40, 80, 40] },
+      { "id": "w11", "de": "Aufenthalt", "vi": "Sự lưu trú", "ipa": "/ˈaʊ̯fɛntˌhalt/", "syllables": ["Auf", "ent", "halt"], "notation": [80, 40, 60] },
+      { "id": "w12", "de": "Halbpension", "vi": "Bán thời gian (ăn 2 bữa)", "ipa": "/ˈhalpbɑ̃ˌzjoːn/", "syllables": ["Halb", "pen", "si", "on"], "notation": [80, 40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Haben Sie noch ein Zimmer frei?", "vi": "Bạn còn phòng trống không?", "ipa": "/ˈhaːbən ziː nɔx aɪ̯n ˈt͡sɪmɐ fʁaɪ̯/", "syllables": ["Ha", "ben", "Sie", "noch", "ein", "Zim", "mer", "frei?"], "notation": [80, 40, 40, 60, 40, 80, 40, 60] },
+      { "id": "s2", "de": "Ich möchte ein Doppelzimmer buchen.", "vi": "Tôi muốn đặt một phòng đôi.", "ipa": "/ɪç ˈmœçtə aɪ̯n ˈdɔpəlˌt͡sɪmɐ ˈbuːxən/", "syllables": ["Ich", "möch", "te", "ein", "Dop", "pel", "zim", "mer", "bu", "chen."], "notation": [40, 80, 40, 40, 80, 40, 60, 40, 80, 40] },
+      { "id": "s3", "de": "Wann gibt es Frühstück?", "vi": "Khi nào thì có bữa sáng?", "ipa": "/van ɡiːpt ɛs ˈfʁyːˌʃtʏk/", "syllables": ["Wann", "gibt", "es", "Früh", "stück?"], "notation": [60, 80, 40, 80, 60] },
+      { "id": "s4", "de": "Wo ist der Frühstücksraum?", "vi": "Phòng ăn sáng ở đâu?", "ipa": "/voː ɪst deːɐ̯ ˈfʁyːʃtʏksˌʁaʊ̯m/", "syllables": ["Wo", "ist", "der", "Früh", "stücks", "raum?"], "notation": [60, 40, 40, 80, 60, 40] },
+      { "id": "s5", "de": "Gehen Sie hier durch die Tür.", "vi": "Mời bạn đi qua cánh cửa này.", "ipa": "/ˈɡeːən ziː hiːɐ̯ dʊʁç diː tyːɐ̯/", "syllables": ["Ge", "hen", "Sie", "hier", "durch", "die", "Tür."], "notation": [80, 40, 40, 60, 40, 40, 80] },
+      { "id": "s6", "de": "Die Sauna ist gegenüber.", "vi": "Phòng xông hơi ở đối diện.", "ipa": "/diː ˈzaʊ̯na ɪst ɡeːɡn̩ˈʔyːbɐ/", "syllables": ["Die", "Sau", "na", "ist", "ge", "gen", "ü", "ber."], "notation": [40, 80, 40, 40, 40, 40, 80, 40] },
+      { "id": "s7", "de": "Wie lange möchten Sie bleiben?", "vi": "Bạn muốn ở lại bao lâu?", "ipa": "/viː ˈlaŋə ˈmœçtən ziː ˈblaɪ̯bən/", "syllables": ["Wie", "lan", "ge", "möch", "ten", "Sie", "blei", "ben?"], "notation": [60, 80, 40, 80, 40, 40, 80, 40] },
+      { "id": "s8", "de": "Ich wünsche einen angenehmen Aufenthalt.", "vi": "Chúc bạn một kỳ nghỉ vui vẻ.", "ipa": "/ɪç ˈvʏnʃə ˈaɪ̯nən ˈanɡəˌneːmən ˈaʊ̯fɛntˌhalt/", "syllables": ["Ich", "wün", "sche", "ei", "nen", "an", "ge", "neh", "men", "Auf", "ent", "halt."], "notation": [40, 80, 40, 40, 40, 80, 40, 60, 40, 80, 40, 60] },
+      { "id": "s9", "de": "Das Zimmer kostet hundert Euro.", "vi": "Căn phòng có giá 100 Euro.", "ipa": "/das ˈt͡sɪmɐ ˈkɔstət ˈhʊndɐt ˈɔɪ̯ʁo/", "syllables": ["Das", "Zim", "mer", "kos", "tet", "hun", "dert", "Eu", "ro."], "notation": [40, 80, 40, 80, 40, 80, 40, 80, 40] },
+      { "id": "s10", "de": "Wie funktioniert der Fernseher?", "vi": "TV hoạt động như thế nào?", "ipa": "/viː fʊŋkt͡sjoˈniːɐ̯t deːɐ̯ ˈfɛʁnˌzeːɐ/", "syllables": ["Wie", "funk", "tio", "niert", "der", "Fern", "se", "her?"], "notation": [60, 40, 40, 80, 40, 80, 40, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại 1: Đặt phòng", "speaker": "A", "de": "Guten Tag, kann ich Ihnen helfen?", "vi": "Xin chào, tôi có thể giúp gì cho ngài?" },
+      { "id": "c2", "context": "Hội thoại 1: Đặt phòng", "speaker": "B", "de": "Ja, haben Sie noch ein Zimmer frei?", "vi": "Vâng, bạn còn phòng trống không?" },
+      { "id": "c3", "context": "Hội thoại 2: Loại phòng", "speaker": "A", "de": "Möchten Sie ein Einzel- oder ein Doppelzimmer?", "vi": "Ngài muốn phòng đơn hay phòng đôi?" },
+      { "id": "c4", "context": "Hội thoại 2: Loại phòng", "speaker": "B", "de": "Ein Doppelzimmer für zwei Nächte, bitte.", "vi": "Một phòng đôi trong 2 đêm, xin cảm ơn." },
+      { "id": "c5", "context": "Hội thoại 3: Dịch vụ ăn uống", "speaker": "A", "de": "Mit Frühstück oder Halbpension?", "vi": "Bao gồm bữa sáng hay ăn nửa buổi?" },
+      { "id": "c6", "context": "Hội thoại 3: Dịch vụ ăn uống", "speaker": "B", "de": "Nur Frühstück, bitte.", "vi": "Chỉ bữa sáng thôi, cảm ơn." },
+      { "id": "c7", "context": "Hội thoại 4: Giao chìa khóa", "speaker": "A", "de": "Hier ist Ihr Schlüssel. Ich wünsche einen angenehmen Aufenthalt.", "vi": "Đây là chìa khóa của ngài. Chúc ngài một kì nghỉ vui vẻ." },
+      { "id": "c8", "context": "Hội thoại 4: Giao chìa khóa", "speaker": "B", "de": "Vielen Dank!", "vi": "Cảm ơn rất nhiều!" }
+    ]
+  },
+  "l17": {
+    "words": [
+      { "id": "w1", "de": "Urlaub", "vi": "Kỳ nghỉ", "ipa": "/ˈuːɐ̯ˌlaʊ̯p/", "syllables": ["Ur", "laub"], "notation": [80, 40] },
+      { "id": "w2", "de": "Motorrad", "vi": "Xe máy", "ipa": "/moˈtoːʁaːt/", "syllables": ["Mo", "tor", "rad"], "notation": [40, 80, 40] },
+      { "id": "w3", "de": "Flugzeug", "vi": "Máy bay", "ipa": "/ˈfluːkˌt͡sɔɪ̯k/", "syllables": ["Flug", "zeug"], "notation": [80, 60] },
+      { "id": "w4", "de": "Autobahn", "vi": "Đường cao tốc", "ipa": "/ˈaʊ̯toˌbaːn/", "syllables": ["Au", "to", "bahn"], "notation": [80, 40, 60] },
+      { "id": "w5", "de": "Grenze", "vi": "Biên giới", "ipa": "/ˈɡʁɛnt͡sə/", "syllables": ["Gren", "ze"], "notation": [80, 40] },
+      { "id": "w6", "de": "Gebirge", "vi": "Dãy núi", "ipa": "/ɡəˈbɪʁɡə/", "syllables": ["Ge", "bir", "ge"], "notation": [40, 80, 40] },
+      { "id": "w7", "de": "anstrengend", "vi": "Mệt mỏi, vất vả", "ipa": "/ˈanˌʃtʁɛŋənt/", "syllables": ["an", "stren", "gend"], "notation": [80, 60, 40] },
+      { "id": "w8", "de": "gefährlich", "vi": "Nguy hiểm", "ipa": "/ɡəˈfɛːɐ̯lɪç/", "syllables": ["ge", "fähr", "lich"], "notation": [40, 80, 40] },
+      { "id": "w9", "de": "Fähre", "vi": "Phà", "ipa": "/ˈfɛːʁə/", "syllables": ["Fäh", "re"], "notation": [80, 40] },
+      { "id": "w10", "de": "Reifen", "vi": "Lốp xe", "ipa": "/ˈʁaɪ̯fən/", "syllables": ["Rei", "fen"], "notation": [80, 40] },
+      { "id": "w11", "de": "Panne", "vi": "Sự cố, hỏng hóc", "ipa": "/ˈpanə/", "syllables": ["Pan", "ne"], "notation": [80, 40] },
+      { "id": "w12", "de": "überqueren", "vi": "Băng qua", "ipa": "/yːbɐˈkveːʁən/", "syllables": ["ü", "ber", "que", "ren"], "notation": [40, 40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Wir wollen nach Rumänien.", "vi": "Chúng tôi muốn đến Rumani.", "ipa": "/viːɐ̯ ˈvɔlən nax ʁuˈmɛːni̯ən/", "syllables": ["Wir", "wol", "len", "nach", "Ru", "mä", "ni", "en."], "notation": [40, 80, 40, 40, 40, 80, 40, 40] },
+      { "id": "s2", "de": "Wir reisen mit dem Motorrad.", "vi": "Chúng tôi du lịch bằng xe máy.", "ipa": "/viːɐ̯ ˈʁaɪ̯zən mɪt deːm moˈtoːʁaːt/", "syllables": ["Wir", "rei", "sen", "mit", "dem", "Mo", "tor", "rad."], "notation": [40, 80, 40, 40, 40, 40, 80, 40] },
+      { "id": "s3", "de": "Wir hatten eine Reifenpanne.", "vi": "Chúng tôi đã bị thủng lốp.", "ipa": "/viːɐ̯ ˈhatən ˈaɪ̯nə ˈʁaɪ̯fənˌpanə/", "syllables": ["Wir", "hat", "ten", "ei", "ne", "Rei", "fen", "pan", "ne."], "notation": [40, 80, 40, 40, 40, 80, 40, 60, 40] },
+      { "id": "s4", "de": "Nicht zu glauben!", "vi": "Không thể tin được!", "ipa": "/nɪçt t͡su ˈɡlaʊ̯bən/", "syllables": ["Nicht", "zu", "glau", "ben!"], "notation": [80, 40, 80, 40] },
+      { "id": "s5", "de": "Das war sicher anstrengend.", "vi": "Chắc hẳn điều đó rất mệt mỏi.", "ipa": "/das vaːɐ̯ ˈzɪçɐ ˈanˌʃtʁɛŋənt/", "syllables": ["Das", "war", "si", "cher", "an", "stren", "gend."], "notation": [40, 40, 80, 40, 80, 60, 40] },
+      { "id": "s6", "de": "Wir fahren ans Schwarze Meer.", "vi": "Chúng tôi đi đến Biển Đen.", "ipa": "/viːɐ̯ ˈfaːʁən ans ˈʃvaʁt͡sə meːɐ̯/", "syllables": ["Wir", "fah", "ren", "ans", "Schwar", "ze", "Meer."], "notation": [40, 80, 40, 40, 80, 40, 80] },
+      { "id": "s7", "de": "Ich war auf einer Insel.", "vi": "Tôi đã ở trên một hòn đảo.", "ipa": "/ɪç vaːɐ̯ aʊ̯f ˈaɪ̯nɐ ˈɪnzəl/", "syllables": ["Ich", "war", "auf", "ei", "ner", "In", "sel."], "notation": [40, 60, 40, 40, 40, 80, 40] },
+      { "id": "s8", "de": "Ich finde das toll.", "vi": "Tôi thấy điều đó thật tuyệt.", "ipa": "/ɪç ˈfɪndə das tɔl/", "syllables": ["Ich", "fin", "de", "das", "toll."], "notation": [40, 80, 40, 40, 80] },
+      { "id": "s9", "de": "Das ist wirklich ärgerlich!", "vi": "Thật là đáng tức giận!", "ipa": "/das ɪst ˈvɪʁklɪç ˈɛʁɡɐlɪç/", "syllables": ["Das", "ist", "wirk", "lich", "är", "ger", "lich!"], "notation": [40, 40, 80, 40, 80, 40, 40] },
+      { "id": "s10", "de": "Letzten Sommer war ich in Brasilien.", "vi": "Mùa hè năm ngoái tôi đã ở Brasil.", "ipa": "/ˈlɛt͡stən ˈzɔmɐ vaːɐ̯ ɪç ɪn bʁaˈziːli̯ən/", "syllables": ["Letz", "ten", "Som", "mer", "war", "ich", "in", "Bra", "si", "li", "en."], "notation": [80, 40, 80, 40, 40, 40, 40, 40, 80, 40, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại 1: Đi nghỉ ở đâu", "speaker": "A", "de": "Wo warst du im Urlaub?", "vi": "Bạn đã ở đâu trong kỳ nghỉ?" },
+      { "id": "c2", "context": "Hội thoại 1: Đi nghỉ ở đâu", "speaker": "B", "de": "Ich war in den Bergen.", "vi": "Tôi đã ở vùng núi." },
+      { "id": "c3", "context": "Hội thoại 2: Phương tiện", "speaker": "A", "de": "Und mit welchem Verkehrsmittel bist du gereist?", "vi": "Và bạn đã đi bằng phương tiện gì?" },
+      { "id": "c4", "context": "Hội thoại 2: Phương tiện", "speaker": "B", "de": "Ich bin mit dem Auto gefahren.", "vi": "Tôi đã lái xe ô tô đi." },
+      { "id": "c5", "context": "Hội thoại 3: Sự cố", "speaker": "A", "de": "Gab es Probleme auf der Fahrt?", "vi": "Có vấn đề gì trong chuyến đi không?" },
+      { "id": "c6", "context": "Hội thoại 3: Sự cố", "speaker": "B", "de": "Ja, leider hatten wir eine Panne.", "vi": "Vâng, rất tiếc chúng tôi đã gặp sự cố trên đường." },
+      { "id": "c7", "context": "Hội thoại 4: An ủi", "speaker": "A", "de": "So ein Pech! Das ist wirklich ärgerlich.", "vi": "Thật không may! Thật bực mình." },
+      { "id": "c8", "context": "Hội thoại 4: An ủi", "speaker": "B", "de": "Ja, aber danach war der Urlaub super.", "vi": "Vâng, nhưng sau đó kỳ nghỉ rất tuyệt." }
+    ]
+  },
+  "l18": {
+    "words": [
+      { "id": "w1", "de": "Wetter", "vi": "Thời tiết", "ipa": "/ˈvɛtɐ/", "syllables": ["Wet", "ter"], "notation": [80, 40] },
+      { "id": "w2", "de": "Sonne", "vi": "Mặt trời", "ipa": "/ˈzɔnə/", "syllables": ["Son", "ne"], "notation": [80, 40] },
+      { "id": "w3", "de": "Regen", "vi": "Mưa", "ipa": "/ˈʁeːɡən/", "syllables": ["Re", "gen"], "notation": [80, 40] },
+      { "id": "w4", "de": "Schnee", "vi": "Tuyết", "ipa": "/ʃneː/", "syllables": ["Schnee"], "notation": [80] },
+      { "id": "w5", "de": "Wind", "vi": "Gió", "ipa": "/vɪnt/", "syllables": ["Wind"], "notation": [80] },
+      { "id": "w6", "de": "Hitze", "vi": "Sức nóng, nóng nực", "ipa": "/ˈhɪt͡sə/", "syllables": ["Hit", "ze"], "notation": [80, 40] },
+      { "id": "w7", "de": "Kälte", "vi": "Cái lạnh", "ipa": "/ˈkɛltə/", "syllables": ["Käl", "te"], "notation": [80, 40] },
+      { "id": "w8", "de": "kalt", "vi": "Lạnh", "ipa": "/kalt/", "syllables": ["kalt"], "notation": [80] },
+      { "id": "w9", "de": "warm", "vi": "Ấm áp", "ipa": "/vaʁm/", "syllables": ["warm"], "notation": [80] },
+      { "id": "w10", "de": "regnen", "vi": "Trời mưa", "ipa": "/ˈʁeːɡnən/", "syllables": ["reg", "nen"], "notation": [80, 40] },
+      { "id": "w11", "de": "schneien", "vi": "Tuyết rơi", "ipa": "/ˈʃnaɪ̯ən/", "syllables": ["schnei", "en"], "notation": [80, 40] },
+      { "id": "w12", "de": "Gewitter", "vi": "Sấm sét, dông bão", "ipa": "/ɡəˈvɪtɐ/", "syllables": ["Ge", "wit", "ter"], "notation": [40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Wie ist das Wetter heute?", "vi": "Thời tiết hôm nay thế nào?", "ipa": "/viː ɪst das ˈvɛtɐ ˈhɔɪ̯tə/", "syllables": ["Wie", "ist", "das", "Wet", "ter", "heu", "te?"], "notation": [60, 40, 40, 80, 40, 80, 40] },
+      { "id": "s2", "de": "Es regnet und es ist ziemlich kalt.", "vi": "Trời mưa và khá lạnh.", "ipa": "/ɛs ˈʁeːɡnət ʊnt ɛs ɪst ˈt͡siːmlɪç kalt/", "syllables": ["Es", "reg", "net", "und", "es", "ist", "ziem", "lich", "kalt."], "notation": [40, 80, 40, 40, 40, 40, 80, 40, 80] },
+      { "id": "s3", "de": "Ich freue mich auf Sonne und Wärme.", "vi": "Tôi mong ngóng mặt trời và sự ấm áp.", "ipa": "/ɪç ˈfʁɔɪ̯ə mɪç aʊ̯f ˈzɔnə ʊnt ˈvɛʁmə/", "syllables": ["Ich", "freu", "e", "mich", "auf", "Son", "ne", "und", "Wär", "me."], "notation": [40, 80, 40, 40, 40, 80, 40, 40, 80, 40] },
+      { "id": "s4", "de": "Im Sommer scheint oft die Sonne.", "vi": "Vào mùa hè mặt trời thường chiếu sáng.", "ipa": "/ɪm ˈzɔmɐ ʃaɪ̯nt ɔft diː ˈzɔnə/", "syllables": ["Im", "Som", "mer", "scheint", "oft", "die", "Son", "ne."], "notation": [40, 80, 40, 80, 60, 40, 80, 40] },
+      { "id": "s5", "de": "Im Winter gibt es oft Schnee.", "vi": "Vùng mùa đông thường có tuyết.", "ipa": "/ɪm ˈvɪntɐ ɡiːpt ɛs ɔft ʃneː/", "syllables": ["Im", "Win", "ter", "gibt", "es", "oft", "Schnee."], "notation": [40, 80, 40, 60, 40, 60, 80] },
+      { "id": "s6", "de": "Die Temperaturen sind heute niedrig.", "vi": "Nhiệt độ hôm nay khá thấp.", "ipa": "/diː tɛmpəʁaˈtuːʁən zɪnt ˈhɔɪ̯tə ˈniːdʁɪç/", "syllables": ["Die", "Tem", "pe", "ra", "tu", "ren", "sind", "heu", "te", "nied", "rig."], "notation": [40, 40, 40, 40, 80, 40, 40, 80, 40, 80, 40] },
+      { "id": "s7", "de": "Es ist stürmisch an der Küste.", "vi": "Có bão ở vùng bờ biển.", "ipa": "/ɛs ɪst ˈʃtʏʁmɪʃ an deːɐ̯ ˈkʏstə/", "syllables": ["Es", "ist", "stür", "misch", "an", "der", "Küs", "te."], "notation": [40, 40, 80, 40, 40, 40, 80, 40] },
+      { "id": "s8", "de": "Ich ärgere mich über das Wetter.", "vi": "Tôi thấy bực mình vì thời tiết (xấu).", "ipa": "/ɪç ˈɛʁɡəʁə mɪç ˈyːbɐ das ˈvɛtɐ/", "syllables": ["Ich", "är", "ge", "re", "mich", "ü", "ber", "das", "Wet", "ter."], "notation": [40, 80, 40, 40, 40, 80, 40, 40, 80, 40] },
+      { "id": "s9", "de": "Bist du mit dem Wetter zufrieden?", "vi": "Bạn có hài lòng với thời tiết không?", "ipa": "/bɪst duː mɪt deːm ˈvɛtɐ t͡suˈfʁiːdən/", "syllables": ["Bist", "du", "mit", "dem", "Wet", "ter", "zu", "frie", "den?"], "notation": [60, 40, 40, 40, 80, 40, 40, 80, 40] },
+      { "id": "s10", "de": "Im Herbst gibt es Niederschläge.", "vi": "Mùa thu thường có lượng giáng thủy (mưa/tuyết...).", "ipa": "/ɪm ˈhɛʁpst ɡiːpt ɛs ˈniːdɐˌʃlɛːɡə/", "syllables": ["Im", "Herbst", "gibt", "es", "Nie", "der", "schlä", "ge."], "notation": [40, 80, 60, 40, 80, 40, 60, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại 1: Thời tiết ở vùng miền", "speaker": "A", "de": "Wie ist das Wetter in Deutschland?", "vi": "Thời tiết ở Đức như thế nào?" },
+      { "id": "c2", "context": "Hội thoại 1: Thời tiết ở vùng miền", "speaker": "B", "de": "Es ist meistens kalt und es regnet oft.", "vi": "Thường thì trời lạnh và hay có mưa." },
+      { "id": "c3", "context": "Hội thoại 2: Sở thích cá nhân", "speaker": "A", "de": "Worauf freust du dich?", "vi": "Bạn đang mong đợi điều gì?" },
+      { "id": "c4", "context": "Hội thoại 2: Sở thích cá nhân", "speaker": "B", "de": "Ich freue mich auf den Sommer.", "vi": "Tôi mong chờ mùa hè đến." },
+      { "id": "c5", "context": "Hội thoại 3: Lý do", "speaker": "A", "de": "Warum?", "vi": "Tại sao vậy?" },
+      { "id": "c6", "context": "Hội thoại 3: Lý do", "speaker": "B", "de": "Weil es dann wärmer ist und die Sonne scheint.", "vi": "Vì lúc đó trời ấm hơn và có nắng." },
+      { "id": "c7", "context": "Hội thoại 4: Thời tiết hôm nay", "speaker": "A", "de": "Und wie ist es heute?", "vi": "Và hôm nay thời tiết sao?" },
+      { "id": "c8", "context": "Hội thoại 4: Thời tiết hôm nay", "speaker": "B", "de": "Heute gibt es leider ein Gewitter.", "vi": "Hôm nay rất tiếc là có giông bão." }
+    ]
+  },
   "l21": {
     "words": [
       {
