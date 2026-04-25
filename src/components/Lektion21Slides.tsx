@@ -7,6 +7,7 @@ import { L21_INTRO_SCRIPT } from '../constants';
 interface SlideProps {
   playAudio: (text: string, id: string, lang?: 'de-DE' | 'vi-VN', overrideVoiceName?: string) => void;
   playingId: string | null;
+  onBack?: () => void;
 }
 
 const backgrounds: Record<number, { bgImage?: string, bgColor?: string }> = {
@@ -24,7 +25,7 @@ const backgrounds: Record<number, { bgImage?: string, bgColor?: string }> = {
   20: { bgImage: "https://images.unsplash.com/photo-1544716278-e513176f20b5?w=1200&h=800&fit=crop&q=80", bgColor: 'bg-theme-primary/10' }
 };
 
-export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
+export default function Lektion21Slides({ playAudio, playingId, onBack }: SlideProps) {
   const [currentSlide, setCurrentSlide] = useState(-1);
   const [activeSlideTab, setActiveSlideTab] = useState<'roadmap' | 'downloads'>('roadmap');
   const totalSlides = 26; 
@@ -673,7 +674,7 @@ export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
 
   return (
     <div className="max-w-6xl mx-auto py-4 md:py-8 w-full">
-      <div className="relative overflow-hidden h-[75vh] min-h-[550px] md:h-[650px] flex flex-col bg-zinc-100 rounded-[2.5rem] shadow-2xl border-4 border-white">
+      <div className="relative overflow-hidden min-h-[65vh] md:min-h-[650px] h-auto flex flex-col bg-zinc-100 rounded-[2.5rem] shadow-2xl border-4 border-white">
         
         {/* Dynamic Background */}
         <div className="absolute inset-0 w-full h-full pointer-events-none transition-all duration-1000 z-0">
@@ -687,7 +688,7 @@ export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
         <div className="absolute top-0 left-0 h-2 bg-theme-primary transition-all duration-500 ease-out z-20 shadow-sm" style={{ width: currentSlide === -1 ? '0%' : `${((currentSlide + 1) / totalSlides) * 100}%` }} />
         
         {/* Content */}
-        <div className="flex-1 p-2 md:p-8 relative z-10 overflow-y-auto custom-scrollbar overflow-x-hidden">
+        <div className="flex-1 p-2 md:p-8 relative z-10 w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -695,7 +696,7 @@ export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="min-h-max h-full"
+              className="w-full"
             >
               {renderSlide()}
             </motion.div>
@@ -704,8 +705,18 @@ export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
 
         {/* Navigation */}
         {currentSlide === -1 ? (
-          <div className="p-4 flex justify-center border-t border-theme-dark/5 bg-theme-cream/50 z-10 text-[10px] md:text-xs font-bold text-theme-dark/50 tracking-widest uppercase">
-            Sơ đồ tổng quan Lektion 21
+          <div className="p-4 flex items-center justify-between border-t border-theme-dark/5 bg-theme-cream/50 z-10">
+            {onBack ? (
+              <button
+                onClick={onBack}
+                className="px-4 md:px-6 py-2 md:py-3 rounded-[20px] font-black tracking-wide transition-all flex items-center gap-1 md:gap-2 bg-white border border-theme-dark/10 hover:bg-theme-dark/5 active:scale-95 text-theme-dark text-xs md:text-base shadow-sm"
+              >
+                <ChevronLeft size={18} className="md:w-5 md:h-5" /> <span className="hidden sm:inline">Trở lại</span>
+              </button>
+            ) : <div />}
+            <div className="text-[10px] md:text-xs font-bold text-theme-dark/50 tracking-widest uppercase text-right">
+              Sơ đồ Lektion 21
+            </div>
           </div>
         ) : (
           <div className="p-4 md:p-6 flex items-center justify-between border-t border-theme-dark/5 bg-theme-cream/50 z-10">
@@ -719,7 +730,7 @@ export default function Lektion21Slides({ playAudio, playingId }: SlideProps) {
               <span className="font-black text-theme-dark/30 tracking-widest text-xs md:text-sm">
                 {currentSlide + 1} / {totalSlides}
               </span>
-              <button onClick={() => setCurrentSlide(-1)} className="text-[10px] text-theme-primary font-bold hover:underline uppercase tracking-widest hidden sm:block">
+              <button onClick={() => setCurrentSlide(-1)} className="text-[10px] text-theme-primary flex items-center justify-center font-bold hover:underline uppercase tracking-widest p-1 mt-1 bg-theme-primary/10 rounded-lg sm:bg-transparent sm:mt-0 sm:p-0">
                 Xem Lộ Trình
               </button>
             </div>

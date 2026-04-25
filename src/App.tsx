@@ -63,6 +63,7 @@ import Lektion23GrammarEx from './components/Lektion23GrammarEx';
 import Lektion24GrammarEx from './components/Lektion24GrammarEx';
 import Lektion24WordGuessingGame from './components/Lektion24WordGuessingGame';
 import Lektion24DACHQuiz from './components/Lektion24DACHQuiz';
+import ReadingPractice from './components/ReadingPractice';
 
 import ReviewAIRoleplay from './components/ReviewAIRoleplay';
 import ReviewDailyMix from './components/ReviewDailyMix';
@@ -89,6 +90,7 @@ const EFFECTS = [
 export default function App() {
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState<'vocabulary' | 'grammar' | 'game' | 'lecture' | 'speaking' | 'writing' | 'review'>('vocabulary');
+  const [currentPage, setCurrentPage] = useState(1);
   const [activeSubTab, setActiveSubTab] = useState<'flashcard' | 'alibi' | 'exercises' | 'ai_roleplay' | 'daily_mix'>('flashcard');
   const [grammarSubTab, setGrammarSubTab] = useState<'theory' | 'exercises'>('theory');
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -811,41 +813,62 @@ Return a JSON object with:
                 <p className="text-theme-dark/90 font-bold">Khám phá các mẫu câu thông dụng theo từng chủ đề thực tế.</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {VOCABULARY_DATA.map((lesson) => (
-                  <button
-                    key={lesson.id}
-                    onClick={() => {
-                      setSelectedLesson(lesson);
-                      setActiveTab('vocabulary');
-                    }}
-                    className="group relative flex items-start gap-4 p-8 slide-card hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-xl hover:shadow-theme-primary/5"
-                  >
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-theme-primary">
-                      <BookOpen size={100} />
-                    </div>
-                    <div className="p-4 bg-theme-cream rounded-2xl group-hover:bg-theme-primary group-hover:text-white transition-all">
-                      <BookOpen className="w-7 h-7" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-display font-black text-2xl text-theme-dark group-hover:text-theme-primary transition-colors">{lesson.title}</h3>
-                      <p className="text-sm text-theme-dark/80 font-bold line-clamp-1">{lesson.subtitle}</p>
-                      <div className="flex items-center gap-3 mt-6">
-                        <div className="flex items-center text-[10px] font-black text-theme-primary bg-theme-primary/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                          {lesson.items.length} từ vựng
-                        </div>
-                        {lesson.grammar && (
-                          <div className="flex items-center text-[10px] font-black text-theme-secondary bg-theme-secondary/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                            {lesson.grammar.length} ngữ pháp
+              <div className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {VOCABULARY_DATA.slice((currentPage - 1) * 4, currentPage * 4).map((lesson) => (
+                    <button
+                      key={lesson.id}
+                      onClick={() => {
+                        setSelectedLesson(lesson);
+                        setActiveTab('vocabulary');
+                      }}
+                      className="group relative flex items-start gap-4 p-8 slide-card hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-xl hover:shadow-theme-primary/5 cursor-pointer"
+                    >
+                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-theme-primary">
+                        <BookOpen size={100} />
+                      </div>
+                      <div className="p-4 bg-theme-cream rounded-2xl group-hover:bg-theme-primary group-hover:text-white transition-all">
+                        <BookOpen className="w-7 h-7" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-display font-black text-2xl text-theme-dark group-hover:text-theme-primary transition-colors">{lesson.title}</h3>
+                        <p className="text-sm text-theme-dark/80 font-bold line-clamp-1">{lesson.subtitle}</p>
+                        <div className="flex items-center gap-3 mt-6">
+                          <div className="flex items-center text-[10px] font-black text-theme-primary bg-theme-primary/10 px-3 py-1 rounded-full uppercase tracking-wider">
+                            {lesson.items.length} từ vựng
                           </div>
-                        )}
-                        <div className="ml-auto flex items-center text-xs font-black text-theme-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                          Bắt đầu <ChevronRight className="w-4 h-4" />
+                          {lesson.grammar && (
+                            <div className="flex items-center text-[10px] font-black text-theme-secondary bg-theme-secondary/10 px-3 py-1 rounded-full uppercase tracking-wider">
+                              {lesson.grammar.length} ngữ pháp
+                            </div>
+                          )}
+                          <div className="ml-auto flex items-center text-xs font-black text-theme-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                            Bắt đầu <ChevronRight className="w-4 h-4" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Pagination Controls */}
+                {Math.ceil(VOCABULARY_DATA.length / 4) > 1 && (
+                  <div className="flex items-center justify-center gap-2 mt-8">
+                    {Array.from({ length: Math.ceil(VOCABULARY_DATA.length / 4) }).map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentPage(idx + 1)}
+                        className={`w-10 h-10 rounded-full font-bold transition-all ${
+                          currentPage === idx + 1
+                            ? 'bg-theme-primary text-white shadow-md cursor-default'
+                            : 'bg-theme-cream text-theme-dark/60 hover:bg-theme-primary/20 hover:text-theme-primary cursor-pointer'
+                        }`}
+                      >
+                        {idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 {/* Review Module Button */}
                 <button
@@ -860,26 +883,26 @@ Return a JSON object with:
                       setActiveTab('review');
                       setActiveSubTab('ai_roleplay');
                     }}
-                    className="md:col-span-2 group relative flex items-start gap-4 p-8 slide-card border-theme-primary/30 hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-xl hover:shadow-theme-primary/10 bg-gradient-to-br from-theme-cream to-white"
+                    className="w-full group relative flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 p-8 md:p-10 slide-card border-theme-primary/30 hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-2xl hover:shadow-theme-primary/20 bg-gradient-to-br from-theme-cream via-white to-theme-cream"
                   >
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-theme-primary">
-                      <MonitorPlay size={150} />
+                    <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 transition-all duration-700 rotate-12 group-hover:rotate-0 text-theme-primary">
+                      <MonitorPlay size={250} />
                     </div>
-                    <div className="p-4 bg-theme-primary/10 rounded-2xl group-hover:bg-theme-primary group-hover:text-white transition-all">
-                      <Gamepad2 className="w-8 h-8 text-theme-primary group-hover:text-white" />
+                    <div className="p-5 md:p-6 bg-theme-primary/10 rounded-3xl group-hover:bg-theme-primary group-hover:scale-110 transition-all duration-500 z-10 shrink-0">
+                      <Gamepad2 className="w-10 h-10 md:w-12 md:h-12 text-theme-primary group-hover:text-white transition-colors" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-display font-black text-3xl text-theme-primary transition-colors">Bài Ôn tập giáo trình Menschen A2</h3>
-                      <p className="text-base text-theme-dark/80 font-bold line-clamp-2 mt-1">Phòng luyện giao tiếp AI, Trạm ôn tập tổng hợp hàng ngày (Spaced Repetition).</p>
-                      <div className="flex items-center gap-3 mt-6">
-                        <div className="flex items-center text-[11px] font-black text-emerald-600 bg-emerald-100 px-4 py-1.5 rounded-full uppercase tracking-wider">
-                          AI Roleplay
+                    <div className="flex-1 text-center md:text-left z-10">
+                      <h3 className="font-display font-black text-3xl md:text-4xl text-theme-primary transition-colors mb-2">Bài Ôn tập giáo trình Menschen A2</h3>
+                      <p className="text-base md:text-lg text-theme-dark/80 font-bold max-w-2xl">Phòng luyện giao tiếp AI tương tác trực tiếp & Trạm ôn tập từ vựng, ngữ pháp tổng hợp hàng ngày (Spaced Repetition).</p>
+                      <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 mt-6 md:mt-8">
+                        <div className="flex items-center text-xs md:text-sm font-black text-emerald-700 bg-emerald-100 px-5 py-2 rounded-full uppercase tracking-wider shadow-sm">
+                          🎤 AI Roleplay
                         </div>
-                        <div className="flex items-center text-[11px] font-black text-amber-600 bg-amber-100 px-4 py-1.5 rounded-full uppercase tracking-wider">
-                          Daily Mix
+                        <div className="flex items-center text-xs md:text-sm font-black text-amber-700 bg-amber-100 px-5 py-2 rounded-full uppercase tracking-wider shadow-sm">
+                          ⚡ Daily Mix
                         </div>
-                        <div className="ml-auto flex items-center text-sm font-black text-theme-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                          Khám phá ngay <ChevronRight className="w-5 h-5 ml-1" />
+                        <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-auto flex items-center justify-center md:justify-end text-sm md:text-base font-black text-white bg-theme-primary px-6 py-3 rounded-full uppercase tracking-widest shadow-md group-hover:shadow-lg transition-all group-hover:bg-theme-dark">
+                          Khám phá ngay <ChevronRight className="w-5 h-5 ml-2" />
                         </div>
                       </div>
                     </div>
@@ -1041,10 +1064,10 @@ Return a JSON object with:
                   </button>
                 </div>
               ) : (
-              <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x">
+              <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x snap-x">
                 <button
                   onClick={() => setActiveTab('vocabulary')}
-                  className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                  className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                     activeTab === 'vocabulary' ? 'bg-white shadow-xl shadow-theme-dark/10 text-theme-primary' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                   }`}
                 >
@@ -1052,7 +1075,7 @@ Return a JSON object with:
                 </button>
                 <button
                   onClick={() => setActiveTab('grammar')}
-                  className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                  className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                     activeTab === 'grammar' ? 'bg-white shadow-xl shadow-theme-dark/10 text-theme-secondary' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                   }`}
                 >
@@ -1061,7 +1084,7 @@ Return a JSON object with:
                 {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('lecture')}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                       activeTab === 'lecture' ? 'bg-white shadow-xl shadow-theme-dark/10 text-amber-600' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                     }`}
                   >
@@ -1071,7 +1094,7 @@ Return a JSON object with:
                 {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('game')}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                       activeTab === 'game' ? 'bg-white shadow-xl shadow-theme-dark/10 text-theme-accent' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                     }`}
                   >
@@ -1081,17 +1104,27 @@ Return a JSON object with:
                 {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('speaking')}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                       activeTab === 'speaking' ? 'bg-white shadow-xl shadow-theme-dark/10 text-emerald-500' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                     }`}
                   >
                     <Mic className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Luyện nói</span>
                   </button>
                 )}
-                {(selectedLesson.id === 'l21') && (
+                {(['l15', 'l16', 'l18', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                  <button
+                    onClick={() => setActiveTab('reading')}
+                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
+                      activeTab === 'reading' ? 'bg-white shadow-xl shadow-theme-dark/10 text-rose-500' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
+                    }`}
+                  >
+                    <span className="text-xl md:text-lg mb-1 md:mb-0">📖</span> <span className="text-center leading-tight">Đọc hiểu</span>
+                  </button>
+                )}
+                {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('writing')}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
+                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
                       activeTab === 'writing' ? 'bg-white shadow-xl shadow-theme-dark/10 text-indigo-500' : 'text-theme-dark/70 hover:text-theme-dark hover:bg-white/50'
                     }`}
                   >
@@ -1105,25 +1138,27 @@ Return a JSON object with:
                 {selectedLesson.id === 'review' || activeTab === 'review' ? (
                    activeSubTab === 'ai_roleplay' ? <ReviewAIRoleplay /> : <ReviewDailyMix />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l15' ? (
-                  <Lektion15Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion15Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l16' ? (
-                  <Lektion16Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion16Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l17' ? (
-                  <Lektion17Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion17Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l18' ? (
-                  <Lektion18Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion18Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l21' ? (
-                  <Lektion21Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion21Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l22' ? (
-                  <Lektion22Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion22Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l23' ? (
-                  <Lektion23Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion23Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l24' ? (
-                  <Lektion24Slides playAudio={playAudio} playingId={playingId} />
+                  <Lektion24Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'speaking' ? (
                   <SpeakingPractice lessonId={selectedLesson.id} playAudio={playAudio} playingId={playingId} />
-                ) : activeTab === 'writing' && selectedLesson.id === 'l21' ? (
-                  <WritingPractice />
+                ) : activeTab === 'reading' && ['l15', 'l16', 'l18', 'l22', 'l23', 'l24'].includes(selectedLesson.id) ? (
+                  <ReadingPractice lessonId={selectedLesson.id} />
+                ) : activeTab === 'writing' && ['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id) ? (
+                  <WritingPractice lessonId={selectedLesson.id} />
                 ) : activeTab === 'game' ? (
                   <div className="space-y-6">
                     {selectedLesson.id === 'l15' && (

@@ -157,12 +157,12 @@ export default function Kartenspiel({ lesson, onBack, playAudio, playingId }: Ka
         </div>
         
         <div className="flex items-center gap-6 relative z-10">
-          <div className="w-16 h-16 bg-theme-primary/10 rounded-[24px] flex items-center justify-center text-theme-primary shadow-inner">
+          <div className="w-16 h-16 bg-theme-primary/10 rounded-[24px] flex items-center justify-center text-theme-primary shadow-inner shrink-0">
             <Gamepad2 size={32} />
           </div>
           <div>
-            <h2 className="text-3xl font-display font-black text-theme-dark leading-tight flex items-center gap-3">
-              Kartenspiel <span className="text-theme-primary italic">(Trò chơi lật thẻ)</span>
+            <h2 className="text-2xl md:text-3xl font-display font-black text-theme-dark leading-tight flex flex-wrap items-center gap-2 md:gap-3">
+              Kartenspiel <span className="text-theme-primary italic text-xl md:text-3xl">(Trò chơi lật thẻ)</span>
             </h2>
             <div className="flex items-center gap-3 mt-1.5">
               <span className="text-[10px] font-black text-theme-dark/60 uppercase tracking-[0.2em]">{lesson.title}</span>
