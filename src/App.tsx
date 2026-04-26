@@ -389,40 +389,47 @@ export default function App() {
 
       if (!pcmData && !isQuotaLimited) {
         isFetchingAudio.current = true;
-        const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
-        const promptText = lang === 'vi-VN' 
-          ? `${effectPrompt}. Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${text}`
-          : `${effectPrompt} in German: ${text}`;
         
-        const response = await ai.models.generateContent({
-          model: "gemini-3.1-flash-tts-preview",
-          contents: [{ parts: [{ text: promptText }] }],
-          config: {
-            responseModalities: [Modality.AUDIO],
-            speechConfig: {
-              voiceConfig: {
-                prebuiltVoiceConfig: { voiceName: currentVoiceName as any },
-              },
-            },
-          },
-        });
-
-        const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-        
-        if (base64Audio) {
-          const binaryString = atob(base64Audio);
-          const bytes = new Uint8Array(binaryString.length);
-          for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
+        try {
+          const res = await fetch('/api/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, lang, voiceName: currentVoiceName, voiceEffect })
+          });
+          
+          if (!res.ok) throw new Error("Failed to fetch audio from server");
+          
+          const data = await res.json();
+          if (data.fileUrl && !data.pcmBase64) {
+            // Fetch the cached PCM file directly
+            const audioRes = await fetch(data.fileUrl);
+            const buffer = await audioRes.arrayBuffer();
+            pcmData = new Int16Array(buffer);
+          } else if (data.pcmBase64) {
+            // First time generated, parse from base64
+            const binaryString = atob(data.pcmBase64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            pcmData = new Int16Array(bytes.buffer);
           }
-          pcmData = new Int16Array(bytes.buffer);
+        } catch (e: any) {
+           console.error("Error calling /api/tts:", e);
+           const errorString = e.message || String(e);
+           if (errorString.includes('429') || errorString.includes('RESOURCE_EXHAUSTED')) {
+             throw e; // pass to outer catch for quota handling
+           }
+        }
+
+        if (pcmData) {
           audioCache.current[currentVoiceName][cacheKey] = pcmData;
           
           // Store to Cache API for Offline use
           try {
              const cache = await caches.open('german-tts-cache-v1');
              const offlineKey = `/tts/${currentVoiceName}/${encodeURIComponent(cacheKey)}`;
-             await cache.put(offlineKey, new Response(bytes.buffer, {
+             await cache.put(offlineKey, new Response(pcmData.buffer, {
                headers: { 'Content-Type': 'audio/pcm' }
              }));
           } catch (e) {
@@ -527,26 +534,28 @@ export default function App() {
            const cachedResponse = await cache.match(offlineKey);
            
            if (!cachedResponse) {
-              const effectPrompt = EFFECTS.find(e => e.id === voiceEffect)?.prompt || 'Say clearly';
-              const response = await ai.models.generateContent({
-                model: "gemini-3.1-flash-tts-preview",
-                contents: [{ parts: [{ text: `${effectPrompt} in German: ${text}` }] }],
-                config: {
-                  responseModalities: [Modality.AUDIO],
-                  speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voiceName as any } } },
-                },
-              });
-
-              const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-              if (base64Audio) {
-                const binaryString = atob(base64Audio);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let j = 0; j < binaryString.length; j++) bytes[j] = binaryString.charCodeAt(j);
-                await cache.put(offlineKey, new Response(bytes.buffer, { headers: { 'Content-Type': 'audio/pcm' } }));
-              }
-              // Wait 1.5 seconds between requests to spare quota
-              await new Promise(r => setTimeout(r, 1500));
-           }
+               const res = await fetch('/api/tts', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({ text, lang: 'de-DE', voiceName: voiceName, voiceEffect })
+               });
+               
+               if (res.ok) {
+                 const data = await res.json();
+                 if (data.pcmBase64) {
+                   const binaryString = atob(data.pcmBase64);
+                   const bytes = new Uint8Array(binaryString.length);
+                   for (let j = 0; j < binaryString.length; j++) bytes[j] = binaryString.charCodeAt(j);
+                   await cache.put(offlineKey, new Response(bytes.buffer, { headers: { 'Content-Type': 'audio/pcm' } }));
+                 } else if (data.fileUrl) {
+                   const audioRes = await fetch(data.fileUrl);
+                   const buffer = await audioRes.arrayBuffer();
+                   await cache.put(offlineKey, new Response(buffer, { headers: { 'Content-Type': 'audio/pcm' } }));
+                 }
+               }
+               // Wait briefly between requests
+               await new Promise(r => setTimeout(r, 500));
+            }
            setDownloadProgress({ current: i + 1, total: items.length });
         } catch (e) {
            console.log("Error caching item", i, e);
@@ -718,17 +727,7 @@ export default function App() {
         try {
           const base64Audio = (reader.result as string).split(',')[1];
           
-          const response = await ai.models.generateContent({
-            model: "gemini-3.1-pro-preview",
-            contents: [
-              {
-                inlineData: {
-                  data: base64Audio,
-                  mimeType: "audio/webm",
-                },
-              },
-              {
-                text: `ACT AS A STRICT AND DEMANDING GERMAN LINGUISTICS EXPERT. 
+          const prompt = `ACT AS A STRICT AND DEMANDING GERMAN LINGUISTICS EXPERT. 
 Evaluate the German pronunciation of this audio recording against the EXACT target phrase: "${targetText}".
 
 CRITICAL INSTRUCTIONS FOR STRICTNESS & PRECISION:
@@ -742,15 +741,17 @@ CRITICAL INSTRUCTIONS FOR STRICTNESS & PRECISION:
 Return a JSON object with: 
 - score: integer (0-100, specific up to 1 digit unit like 83, 76, 92)
 - transcription: string (exactly what you heard the user actually say, transcribing their errors accurately if any)
-- suggestion: string (a precise, direct, and critical tip in Vietnamese pointing out EXACTLY which syllable or sound was wrong and how to correct it)`
-              }
-            ],
-            config: {
-              responseMimeType: "application/json",
-            }
+- suggestion: string (a precise, direct, and critical tip in Vietnamese pointing out EXACTLY which syllable or sound was wrong and how to correct it)`;
+
+          const res = await fetch('/api/evaluate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt, mimeType: "audio/webm", audioBase64: base64Audio })
           });
 
-          const result = JSON.parse(response.text || '{}');
+          if (!res.ok) throw new Error("Evaluation failed at server");
+          const data = await res.json();
+          const result = JSON.parse(data.result || '{}');
           setFeedback(prev => ({ ...prev, [id]: result }));
         } catch (error: any) {
           console.error('Evaluation API error:', error);
