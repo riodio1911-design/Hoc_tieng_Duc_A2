@@ -214,6 +214,57 @@ export const SPEAKING_DATA: Record<string, { words: PracticeItem[], sentences: P
       { "id": "c8", "context": "Hội thoại 4: Thời tiết hôm nay", "speaker": "B", "de": "Heute gibt es leider ein Gewitter.", "vi": "Hôm nay rất tiếc là có giông bão." }
     ]
   },
+  "l19": {
+    "words": [
+      { "id": "w1", "de": "Konzert", "vi": "Buổi hòa nhạc", "ipa": "/kɔnˈtsɛʁt/", "syllables": ["Kon", "zert"], "notation": [40, 80] },
+      { "id": "w2", "de": "Kino", "vi": "Rạp phim", "ipa": "/ˈkiːno/", "syllables": ["Ki", "no"], "notation": [80, 40] },
+      { "id": "w3", "de": "Ausstellung", "vi": "Buổi triển lãm", "ipa": "/ˈaʊ̯sˌʃtɛlʊŋ/", "syllables": ["Aus", "stel", "lung"], "notation": [80, 60, 40] },
+      { "id": "w4", "de": "Theater", "vi": "Nhà hát", "ipa": "/teˈaːtɐ/", "syllables": ["The", "a", "ter"], "notation": [40, 80, 40] },
+      { "id": "w5", "de": "Bühne", "vi": "Sân khấu", "ipa": "/ˈbyːnə/", "syllables": ["Büh", "ne"], "notation": [80, 40] },
+      { "id": "w6", "de": "Publikum", "vi": "Khán giả", "ipa": "/ˈpuːblikʊm/", "syllables": ["Pub", "li", "kum"], "notation": [80, 40, 40] },
+      { "id": "w7", "de": "romantisch", "vi": "Lãng mạn", "ipa": "/ʁoˈmantɪʃ/", "syllables": ["ro", "man", "tisch"], "notation": [40, 80, 40] },
+      { "id": "w8", "de": "ausgezeichnet", "vi": "Xuất sắc", "ipa": "/ˈaʊ̯sɡəˌt͡saɪ̯çnət/", "syllables": ["aus", "ge", "zeich", "net"], "notation": [80, 40, 60, 40] },
+      { "id": "w9", "de": "überragend", "vi": "Vượt trội", "ipa": "/yːbɐˈʁaːɡn̩t/", "syllables": ["ü", "ber", "ra", "gend"], "notation": [40, 40, 80, 40] },
+      { "id": "w10", "de": "Veranstaltung", "vi": "Sự kiện", "ipa": "/fɛɐ̯ˈʔanˌʃtaltʊŋ/", "syllables": ["Ver", "an", "stal", "tung"], "notation": [40, 80, 60, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Gehen wir heute Abend ins Kino?", "vi": "Tối nay chúng ta đi xem phim không?", "ipa": "/ˈɡeːən viːɐ̯ ˈhɔɪ̯tə ˈaːbənt ɪns ˈkiːno/", "syllables": ["Ge", "hen", "wir", "heu", "te", "A", "bend", "ins", "Ki", "no?"], "notation": [80, 40, 40, 80, 40, 80, 40, 40, 80, 40] },
+      { "id": "s2", "de": "Das Konzert war sensationell.", "vi": "Buổi hòa nhạc thật chấn động.", "ipa": "/das kɔnˈt͡sɛʁt vaːɐ̯ zɛnzat͡sioˈnɛl/", "syllables": ["Das", "Kon", "zert", "war", "sen", "sa", "ti", "o", "nell."], "notation": [40, 40, 80, 40, 40, 40, 40, 40, 80] },
+      { "id": "s3", "de": "Hast du Lust auf Theater?", "vi": "Bạn có hứng thú với nhà hát không?", "ipa": "/hast duː lʊst aʊ̯f teˈaːtɐ/", "syllables": ["Hast", "du", "Lust", "auf", "The", "a", "ter?"], "notation": [60, 40, 80, 40, 40, 80, 40] },
+      { "id": "s4", "de": "Die Ausstellung hat mir sehr gut gefallen.", "vi": "Tôi rất thích buổi triển lãm.", "ipa": "/diː ˈaʊ̯sˌʃtɛlʊŋ hat miːɐ̯ zeːɐ̯ ɡuːt ɡəˈfalən/", "syllables": ["Die", "Aus", "stel", "lung", "hat", "mir", "sehr", "gut", "ge", "fal", "len."], "notation": [40, 80, 60, 40, 40, 40, 60, 80, 40, 80, 40] },
+      { "id": "s5", "de": "Ich war schon lange nicht mehr auf einem Konzert.", "vi": "Đã lâu rồi tôi không đi xem hòa nhạc.", "ipa": "/ɪç vaːɐ̯ ʃoːn ˈlaŋə nɪçt meːɐ̯ aʊ̯f ˈaɪ̯nəm kɔnˈt͡sɛʁt/", "syllables": ["Ich", "war", "schon", "lan", "ge", "nicht", "mehr", "auf", "ei", "nem", "Kon", "zert."], "notation": [40, 40, 40, 80, 40, 80, 40, 40, 40, 40, 40, 80] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại: Rủ đi chơi", "speaker": "A", "de": "Hast du am Wochenende schon etwas vor?", "vi": "Cuối tuần bạn đã có dự định gì chưa?" },
+      { "id": "c2", "context": "Hội thoại: Rủ đi chơi", "speaker": "B", "de": "Nein, noch nichts. Was wollen wir machen?", "vi": "Chưa, chưa có gì. Chúng ta muốn làm gì?" },
+      { "id": "c3", "context": "Hội thoại: Đề xuất điểm đến", "speaker": "A", "de": "Sollen wir ins Konzert oder ins Kino gehen?", "vi": "Chúng ta nên đi hòa nhạc hay xem phim?" },
+      { "id": "c4", "context": "Hội thoại: Đề xuất điểm đến", "speaker": "B", "de": "Ein Konzert wäre toll. Ich liebe Live-Musik.", "vi": "Hòa nhạc thì tuyệt. Tôi rất thích nhạc sống." }
+    ]
+  },
+  "l20": {
+    "words": [
+      { "id": "w1", "de": "Märchen", "vi": "Truyện cổ tích", "ipa": "/ˈmɛːɐ̯çən/", "syllables": ["Mär", "chen"], "notation": [80, 40] },
+      { "id": "w2", "de": "Comic", "vi": "Truyện tranh", "ipa": "/ˈkɔmɪk/", "syllables": ["Co", "mic"], "notation": [80, 40] },
+      { "id": "w3", "de": "Ratgeber", "vi": "Sách hướng dẫn/tư vấn", "ipa": "/ˈʁaːtˌɡeːbɐ/", "syllables": ["Rat", "ge", "ber"], "notation": [80, 40, 40] },
+      { "id": "w4", "de": "Gedicht", "vi": "Bài thơ", "ipa": "/ɡəˈdɪçt/", "syllables": ["Ge", "dicht"], "notation": [40, 80] },
+      { "id": "w5", "de": "beeilen", "vi": "Nhanh chóng, khẩn trương", "ipa": "/bəˈʔaɪ̯lən/", "syllables": ["be", "ei", "len"], "notation": [40, 80, 40] },
+      { "id": "w6", "de": "vorlesen", "vi": "Đọc to (cho ai nghe)", "ipa": "/ˈfoːɐ̯ˌleːzən/", "syllables": ["vor", "le", "sen"], "notation": [80, 40, 40] },
+      { "id": "w7", "de": "Zeitung", "vi": "Báo", "ipa": "/ˈt͡saɪ̯tʊŋ/", "syllables": ["Zei", "tung"], "notation": [80, 40] },
+      { "id": "w8", "de": "Sachbuch", "vi": "Sách chuyên ngành/phi hư cấu", "ipa": "/ˈzaxˌbuːx/", "syllables": ["Sach", "buch"], "notation": [80, 60] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Ich lese am liebsten Krimis und Thriller.", "vi": "Tôi thích đọc truyện trinh thám và giật gân nhất.", "ipa": "/ɪç ˈleːzə am ˈliːpstən ˈkʁiːmɪs ʊnt ˈθʁɪlɐ/", "syllables": ["Ich", "le", "se", "am", "liebs", "ten", "Kri", "mis", "und", "Thril", "ler."], "notation": [40, 80, 40, 40, 80, 40, 80, 40, 40, 80, 40] },
+      { "id": "s2", "de": "Frauen lesen mehr Romane als Männer.", "vi": "Phụ nữ đọc nhiều tiểu thuyết hơn nam giới.", "ipa": "/ˈfʁaʊ̯ən ˈleːzən meːɐ̯ ʁoˈmaːnə als ˈmɛnɐ/", "syllables": ["Frau", "en", "le", "sen", "mehr", "Ro", "ma", "ne", "als", "Män", "ner."], "notation": [80, 40, 80, 40, 60, 40, 80, 40, 60, 80, 40] },
+      { "id": "s3", "de": "Er liest jeden Morgen die Zeitung.", "vi": "Sáng nào anh ấy cũng đọc báo.", "ipa": "/eːɐ̯ liːst ˈjeːdən ˈmɔʁɡən diː ˈt͡saɪ̯tʊŋ/", "syllables": ["Er", "liest", "je", "den", "Mor", "gen", "die", "Zei", "tung."], "notation": [40, 80, 80, 40, 80, 40, 40, 80, 40] },
+      { "id": "s4", "de": "Kinder lieben Märchen.", "vi": "Trẻ em yêu thích truyện cổ tích.", "ipa": "/ˈkɪndɐ ˈliːbən ˈmɛːɐ̯çən/", "syllables": ["Kin", "der", "lie", "ben", "Mär", "chen."], "notation": [80, 40, 80, 40, 80, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại: Thói quen đọc sách", "speaker": "A", "de": "Liest du gern?", "vi": "Bạn có thích đọc không?" },
+      { "id": "c2", "context": "Hội thoại: Thói quen đọc sách", "speaker": "B", "de": "Ja, ich lese sehr gern. Am liebsten lese ich Sachbücher.", "vi": "Có, tôi rất thích đọc. Tôi thích đọc sách phi hư cấu nhất." },
+      { "id": "c3", "context": "Hội thoại: Nơi đọc sách", "speaker": "A", "de": "Und wo liest du meistens?", "vi": "Và bạn thường đọc ở đâu nhất?" },
+      { "id": "c4", "context": "Hội thoại: Nơi đọc sách", "speaker": "B", "de": "Meistens im Bett, bevor ich einschlafe.", "vi": "Thường là ở trên giường, trước khi tôi ngủ." }
+    ]
+  },
   "l21": {
     "words": [
       {
@@ -1341,9 +1392,32 @@ export const SPEAKING_DATA: Record<string, { words: PracticeItem[], sentences: P
       { "id": "l23-c7", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "A", "de": "Was muss er danach machen?", "vi": "Cậu ấy phải làm gì tiếp theo?" },
       { "id": "l23-c8", "context": "Hội thoại 2: Simons Berufswunsch", "speaker": "B", "de": "Er muss die Hauptschule abschließen, dann kann er eine Lehre machen.", "vi": "Cậu ấy phải tốt nghiệp trường Hauptschule, sau đó có thể học nghề." }
     ]
+  },
+  "l24": {
+    "words": [
+      { "id": "w1", "de": "Arzt", "vi": "Bác sĩ", "ipa": "/aʁt͡st/", "syllables": ["Arzt"], "notation": [80] },
+      { "id": "w2", "de": "Bewerbung", "vi": "Đơn xin việc", "ipa": "/bəˈvɛʁbʊŋ/", "syllables": ["Be", "wer", "bung"], "notation": [40, 80, 40] },
+      { "id": "w3", "de": "Lebenslauf", "vi": "Sơ yếu lý lịch", "ipa": "/ˈleːbənsˌlaʊ̯f/", "syllables": ["Le", "bens", "lauf"], "notation": [80, 40, 60] },
+      { "id": "w4", "de": "Krankenhaus", "vi": "Bệnh viện", "ipa": "/ˈkʁaŋkənˌhaʊ̯s/", "syllables": ["Kran", "ken", "haus"], "notation": [80, 40, 60] },
+      { "id": "w5", "de": "Umzug", "vi": "Sự chuyển nhà", "ipa": "/ˈʊmˌt͡suːk/", "syllables": ["Um", "zug"], "notation": [80, 60] },
+      { "id": "w6", "de": "Erfahrung", "vi": "Kinh nghiệm", "ipa": "/ɛɐ̯ˈfaːʁʊŋ/", "syllables": ["Er", "fah", "rung"], "notation": [40, 80, 40] },
+      { "id": "w7", "de": "Vertrag", "vi": "Hợp đồng", "ipa": "/fɛɐ̯ˈtʁaːk/", "syllables": ["Ver", "trag"], "notation": [40, 80] },
+      { "id": "w8", "de": "kündigen", "vi": "Nghỉ việc/Chấm dứt", "ipa": "/ˈkʏndɪɡən/", "syllables": ["kün", "di", "gen"], "notation": [80, 40, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Ich möchte mich um die Stelle bewerben.", "vi": "Tôi muốn ứng tuyển vào vị trí này.", "ipa": "/ɪç ˈmœçtə mɪç ʊm diː ˈʃtɛlə bəˈvɛʁbən/", "syllables": ["Ich", "möch", "te", "mich", "um", "die", "Stel", "le", "be", "wer", "ben."], "notation": [40, 80, 40, 40, 40, 40, 80, 40, 40, 80, 40] },
+      { "id": "s2", "de": "Er hat den Vertrag unterschrieben.", "vi": "Anh ấy đã ký hợp đồng.", "ipa": "/eːɐ̯ hat deːn fɛɐ̯ˈtʁaːk ʊntɐˈʃʁiːbən/", "syllables": ["Er", "hat", "den", "Ver", "trag", "un", "ter", "schrie", "ben."], "notation": [40, 40, 40, 40, 80, 40, 40, 80, 40] },
+      { "id": "s3", "de": "Wir müssen bald wieder umziehen.", "vi": "Chúng ta phải sớm chuyển nhà lại thôi.", "ipa": "/viːɐ̯ ˈmʏsən balt ˈviːdɐ ˈʊmˌt͡siːən/", "syllables": ["Wir", "müs", "sen", "bald", "wie", "der", "um", "zie", "hen."], "notation": [40, 80, 40, 60, 80, 40, 80, 60, 40] },
+      { "id": "s4", "de": "Sie arbeitet als Assistenzärztin.", "vi": "Cô ấy làm việc với tư cách là bác sĩ nội trú.", "ipa": "/ziː ˈaʁbaɪ̯tət als asɪsˈtɛnt͡sˌʔɛʁt͡stɪn/", "syllables": ["Sie", "ar", "bei", "tet", "als", "As", "sis", "tenz", "ärz", "tin."], "notation": [40, 80, 40, 40, 40, 40, 40, 80, 60, 40] }
+    ],
+    "conversations": [
+      { "id": "c1", "context": "Hội thoại: Sự nhiệp", "speaker": "A", "de": "Was sind Sie von Beruf?", "vi": "Nghề nghiệp của bạn là gì?" },
+      { "id": "c2", "context": "Hội thoại: Sự nghiêp", "speaker": "B", "de": "Ich bin Arzt. Ich arbeite in einem Krankenhaus in Berlin.", "vi": "Tôi là bác sĩ. Tôi làm việc trong một bệnh viện ở Berlin." },
+      { "id": "c3", "context": "Hội thoại: Kinh nghiệm", "speaker": "A", "de": "Haben Sie schon viel Berufserfahrung?", "vi": "Ngài đã có nhiều kinh nghiệm làm việc chưa?" },
+      { "id": "c4", "context": "Hội thoại: Kinh nghiệm", "speaker": "B", "de": "Ja, ich bin seit fünf Jahren Arzt.", "vi": "Vâng, tôi đã làm bác sĩ được 5 năm rồi." }
+    ]
   }
 };
-
 
 type DimensionData = {
   subject: string;

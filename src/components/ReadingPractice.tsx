@@ -139,6 +139,52 @@ const LESSON_CONTENT: Record<string, any> = {
        }
      ]
   },
+  'l17': {
+     title: 'Urlaub an der Ostsee',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Familie Müller plant ihren Sommerurlaub. Dieses Jahr wollen sie nicht in den Süden fliegen, sondern in Deutschland bleiben. Sie haben ein Ferienhaus an der Ostsee gemietet. Das Ferienhaus liegt direkt am Strand und hat einen großen Garten für den Hund.",
+       "„Wir fahren mit dem Auto“, sagt Herr Müller. „Das ist am praktischsten. Da können wir alle unsere Sachen und auch Fahrräder mitnehmen. Am Meer wollen wir nämlich oft Fahrradtouren machen.“",
+       "Aber die Autobahn ist verstopft. Es gibt einen Stau wegen einer Baustelle. Die Familie verliert zwei Stunden auf der Autobahn. Endlich kommen sie an. Aber wo ist der Schlüssel für das Ferienhaus? Frau Müller sucht in ihrer Handtasche: „Oh nein, ich glaube, der Schlüssel liegt noch zu Hause auf dem Küchentisch!“ Glücklicherweise wohnt der Vermieter gleich im Nachbarhaus und hat noch einen Ersatzschlüssel."
+     ],
+     questions: [
+       {
+         id: 1,
+         question: "Wo macht Familie Müller dieses Jahr Urlaub?",
+         options: ["Im Süden", "Auf dem Land", "An der Ostsee", "Am Bodensee"],
+         correct: 2,
+         explanation: "Im Text steht: 'Sie haben ein Ferienhaus an der Ostsee gemietet.'"
+       },
+       {
+         id: 2,
+         question: "Wie fährt die Familie in den Urlaub?",
+         options: ["Mit dem Zug", "Mit dem Flugzeug", "Mit dem Bus", "Mit dem Auto"],
+         correct: 3,
+         explanation: "Herr Müller sagt: 'Wir fahren mit dem Auto.'"
+       },
+       {
+         id: 3,
+         question: "Warum gibt es einen Stau auf der Autobahn?",
+         options: ["Wegen eines Unfalls", "Wegen einer Baustelle", "Weil viele Leute in den Süden fahren", "Weil das Meer so schön ist"],
+         correct: 1,
+         explanation: "Im Text steht: 'Es gibt einen Stau wegen einer Baustelle.'"
+       },
+       {
+         id: 4,
+         question: "Was hat Frau Müller zu Hause vergessen?",
+         options: ["Die Handtasche", "Den Hund", "Ihren Mann", "Den Hausschlüssel"],
+         correct: 3,
+         explanation: "Sie sagt: 'der Schlüssel liegt noch zu Hause auf dem Küchentisch.'"
+       },
+       {
+         id: 5,
+         question: "Wie kommen sie in das Ferienhaus?",
+         options: ["Sie brechen die Tür auf.", "Sie schlafen im Auto.", "Der Vermieter gibt ihnen einen Ersatzschlüssel.", "Sie fahren wieder nach Hause."],
+         correct: 2,
+         explanation: "Im Text steht: 'Glücklicherweise wohnt der Vermieter gleich im Nachbarhaus und hat noch einen Ersatzschlüssel.'"
+       }
+     ]
+  },
   'l18': {
      title: 'Literatur: Alte Freunde, Neue Freunde - Teil 2',
      instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
@@ -195,6 +241,153 @@ const LESSON_CONTENT: Record<string, any> = {
          options: ["Bernd sucht einen Flug für Diogo im Internet.", "Max bucht einen Flug für alle nach Brasilien.", "Ina hat schon einen Flug gebucht.", "Niemand bucht einen Flug, sie rufen Diogo nur an."],
          correct: 0,
          explanation: "Bernd schaut im Internet nach und sagt: „Ja, hier: Du kommst damit um 17 Uhr in Dresden an...“"
+       }
+     ]
+  },
+  'l19': {
+     title: 'Kulturprogramm für das Wochenende',
+     instruction: 'Lesen Sie die E-Mail und beantworten Sie die Fragen.',
+     text: [
+       "Liebe Sarah,",
+       "wie geht es dir? Ich hoffe, du hattest eine gute Woche. Ich komme gerade aus dem Büro und freue mich schon auf das Wochenende. Hast du am Samstagabend schon etwas vor? Wenn nicht, wollen wir zusammen ausgehen?",
+       "Im Stadtzentrum gibt es ein neues Kulturzentrum. Dort gibt es am Samstagabend eine interessante Veranstaltung. Um 19 Uhr beginnt eine Fotoausstellung über Südamerika, und danach um 20:30 Uhr gibt es ein Konzert von einer argentinischen Band. Sie spielen Tango und Folklore.",
+       "Ich weiß, dass du dich sehr für Fotografie interessierst, und ich liebe Live-Musik. Ich glaube, das wäre perfekt für uns beide! Die Eintrittskarten kosten nur 15 Euro für den ganzen Abend.",
+       "Sollen wir uns um 18:30 Uhr vor dem Zentrum treffen? Dann können wir vor der Ausstellung noch einen Kaffee trinken.",
+       "Bitte sag mir bis morgen Bescheid, ob du Zeit hast. Dann reserviere ich die Karten.",
+       "Liebe Grüße",
+       "Dein Felix"
+     ],
+     questions: [
+       {
+         id: 1,
+         question: "Woher kommt Felix, als er die E-Mail schreibt?",
+         options: ["Aus dem Kulturzentrum.", "Aus dem Büro.", "Aus Südamerika.", "Aus dem Café."],
+         correct: 1,
+         explanation: "Im Text steht: 'Ich komme gerade aus dem Büro...'"
+       },
+       {
+         id: 2,
+         question: "Was gibt es am Samstagabend um 19 Uhr?",
+         options: ["Ein Konzert.", "Einen Kaffee.", "Eine Fotoausstellung.", "Einen Film."],
+         correct: 2,
+         explanation: "Im Text steht: 'Um 19 Uhr beginnt eine Fotoausstellung...'"
+       },
+       {
+         id: 3,
+         question: "Warum denkt Felix, dass Sarah das Programm gefällt?",
+         options: ["Weil sie aus Argentinien kommt.", "Weil sie gerne Kaffee trinkt.", "Weil sie sich für Fotografie interessiert.", "Weil sie selbst in einer Band spielt."],
+         correct: 2,
+         explanation: "Im Text steht: 'Ich weiß, dass du dich sehr für Fotografie interessierst...'"
+       },
+       {
+         id: 4,
+         question: "Was wollen Felix und Sarah vor der Ausstellung machen?",
+         options: ["Tickets kaufen.", "Zusammen essen.", "Einen Kaffee trinken.", "Live-Musik hören."],
+         correct: 2,
+         explanation: "Felix schreibt: 'Sollen wir uns um 18:30 Uhr vor dem Zentrum treffen? Dann können wir vor der Ausstellung noch einen Kaffee trinken.'"
+       },
+       {
+         id: 5,
+         question: "Bis wann muss Sarah antworten?",
+         options: ["Bis heute Abend.", "Bis morgen.", "Bis Samstag.", "Bis nächste Woche."],
+         correct: 1,
+         explanation: "Im Text steht: 'Bitte sag mir bis morgen Bescheid, ob du Zeit hast.'"
+       }
+     ]
+  },
+  'l20': {
+     title: 'Lesegewohnheiten der Deutschen',
+     instruction: 'Lesen Sie den Zeitungsartikel und beantworten Sie die Fragen.',
+     text: [
+       "Lesen die Deutschen noch Bücher, oder sitzen sie nur noch vor dem Computer oder Handy? Eine neue Umfrage des Instituts für Meinungsforschung zeigt: Das Buch ist noch nicht tot! Etwa 40 Prozent der Deutschen lesen mindestens einmal pro Woche in einem Buch, 20 Prozent sogar täglich.",
+       "Aber was lesen sie am liebsten? Bei den Erwachsenen stehen Romane – besonders Krimis und Thriller – ganz oben auf der Liste. Etwa jeder zweite Leser greift gerne zu spannenden Geschichten. Auch Sachbücher und Ratgeber (zum Thema Gesundheit, Kochen oder Garten) sind sehr beliebt.",
+       "Und wie steht es mit elektronischen Büchern, den E-Books? Immer mehr Menschen, besonders junge Erwachsene, lesen digital. Der Vorteil: Auf einem kleinen E-Reader kann man Hunderte Bücher mit in den Urlaub nehmen. Dennoch bevorzugt die Mehrheit der Deutschen (über 60 Prozent) das klassische gedruckte Buch aus Papier.",
+       "Ein interessantes Detail der Umfrage: Frauen lesen im Durchschnitt mehr als Männer. Frauen lesen oft Romane zur Entspannung, während Männer eher zu Sachbüchern und Zeitungen greifen.",
+       "Wo lesen die Leute am meisten? Der Lieblingsort zum Lesen ist ganz klar: das Bett (vor dem Einschlafen). Aber auch auf dem Sofa, im Zug oder am Strand wird viel gelesen."
+     ],
+     questions: [
+       {
+         id: 1,
+         question: "Wie oft liest jeder fünfte (20%) Deutsche in einem Buch?",
+         options: ["Einmal im Jahr.", "Einmal pro Woche.", "Täglich.", "Nie."],
+         correct: 2,
+         explanation: "Im Text steht: '...20 Prozent sogar täglich.'"
+       },
+       {
+         id: 2,
+         question: "Welches Genre lesen Erwachsene am liebsten?",
+         options: ["Comics und Mangas", "Krimis und Thriller", "Märchen", "Gedichte"],
+         correct: 1,
+         explanation: "Im Text steht: 'Bei den Erwachsenen stehen Romane – besonders Krimis und Thriller – ganz oben auf der Liste.'"
+       },
+       {
+         id: 3,
+         question: "Welchen Vorteil hat ein E-Reader nach dem Text?",
+         options: ["Die Bücher sind kostenlos.", "Es kostet keinen Strom.", "Man kann viele Bücher mit in den Urlaub nehmen.", "Es ist besser für die Augen."],
+         correct: 2,
+         explanation: "Im Text steht: 'Der Vorteil: Auf einem kleinen E-Reader kann man Hunderte Bücher mit in den Urlaub nehmen.'"
+       },
+       {
+         id: 4,
+         question: "Wer liest mehr, Männer oder Frauen?",
+         options: ["Männer lesen mehr.", "Frauen lesen mehr.", "Sie lesen gleich viel.", "Die Umfrage sagt dazu nichts."],
+         correct: 1,
+         explanation: "Im Text steht: 'Frauen lesen im Durchschnitt mehr als Männer.'"
+       },
+       {
+         id: 5,
+         question: "Wo ist der absolute Lieblingsort zum Lesen?",
+         options: ["Auf dem Sofa.", "Im Zug.", "Am Strand.", "Im Bett."],
+         correct: 3,
+         explanation: "Im Text steht: 'Der Lieblingsort zum Lesen ist ganz klar: das Bett (vor dem Einschlafen).'"
+       }
+     ]
+  },
+  'l21': {
+     title: 'Hilfe, mein Portemonnaie ist weg!',
+     instruction: 'Lesen Sie den Erfahrungsbericht und beantworten Sie die Fragen.',
+     text: [
+       "Gestern war ein furchtbarer Tag für Lisa. Sie war nach der Arbeit noch im Supermarkt einkaufen. An der Kasse wollte sie bezahlen, griff in ihre Handtasche – aber ihr Portemonnaie war nicht da! Lisa war geschockt. Hatte sie es verloren? Oder wurde es gestohlen?",
+       "Zuerst ging sie den ganzen Weg zum Büro zurück und suchte auf der Straße, aber da war nichts. Dann fragte sie in ihrem Bürogebäude beim Pförtner, aber niemand hatte etwas abgegeben.",
+       "Lisa ging zur Polizei und machte eine Anzeige wegen Diebstahls. „Im Portemonnaie waren 100 Euro, mein Personalausweis, mein Führerschein und meine Kreditkarte“, erzählte sie dem Polizisten. Der Polizist riet ihr: „Sie müssen sofort Ihre EC-Karte und Ihre Kreditkarte sperren lassen, damit niemand Geld von Ihrem Konto abheben kann!“ Das machte Lisa sofort per Telefon.",
+       "Heute Morgen klingelte dann Lisas Telefon. Es war das städtische Fundbüro. Ein ehrlicher Finder hatte Lisas Portemonnaie auf der Straße gefunden und dort abgegeben.",
+       "Lisa fuhr schnell zum Fundbüro. Das Geld (die 100 Euro) war leider weg. Aber das Wichtigste: Der Personalausweis, der Führerschein und alle anderen Karten waren noch da! Lisa war so froh, dass sie keine neuen Papiere beantragen musste."
+     ],
+     questions: [
+       {
+         id: 1,
+         question: "Wann merkte Lisa, dass ihr Portemonnaie weg war?",
+         options: ["Im Büro.", "An der Kasse im Supermarkt.", "Auf der Straße.", "Bei der Polizei."],
+         correct: 1,
+         explanation: "Im Text steht: 'An der Kasse wollte sie bezahlen, griff in ihre Handtasche – aber ihr Portemonnaie war nicht da!'"
+       },
+       {
+         id: 2,
+         question: "Was machte Lisa, nachdem sie im Büro gesucht hatte?",
+         options: ["Sie ging nach Hause.", "Sie rief ihre Bank an.", "Sie ging zur Polizei und machte eine Anzeige.", "Sie kaufte trotzdem ein."],
+         correct: 2,
+         explanation: "Im Text steht: 'Lisa ging zur Polizei und machte eine Anzeige wegen Diebstahls.'"
+       },
+       {
+         id: 3,
+         question: "Welchen Rat gab der Polizist?",
+         options: ["Sie soll nach Hause gehen und schlafen.", "Sie soll einen neuen Ausweis beantragen.", "Sie soll ihre Karten sofort sperren lassen.", "Sie soll im Fundbüro suchen."],
+         correct: 2,
+         explanation: "Der Polizist riet ihr: „Sie müssen sofort Ihre EC-Karte und Ihre Kreditkarte sperren lassen...“"
+       },
+       {
+         id: 4,
+         question: "Wer rief Lisa am nächsten Morgen an?",
+         options: ["Der Supermarkt.", "Der Polizist.", "Das Fundbüro.", "Der Finder."],
+         correct: 2,
+         explanation: "Im Text steht: 'Heute Morgen klingelte dann Lisas Telefon. Es war das städtische Fundbüro.'"
+       },
+       {
+         id: 5,
+         question: "Was fehlte am Ende im Portemonnaie?",
+         options: ["Nichts fehlte.", "Der Führerschein.", "Der Personalausweis.", "Das Geld (100 Euro)."],
+         correct: 3,
+         explanation: "Im Text steht: 'Das Geld (die 100 Euro) war leider weg. Aber das Wichtigste: Der Personalausweis... waren noch da!'"
        }
      ]
   },

@@ -64,6 +64,32 @@ const LESSON_CONTENT: Record<string, {
       { de: 'Normalerweise ist das Wetter hier wärmer / kälter als heute.', vi: 'Bình thường thì thời tiết ở đây ấm hơn / lạnh hơn so với hôm nay.' }
     ]
   },
+  'l19': {
+    topicTitle: 'Kulturprogramm für das Wochenende',
+    topicDesc: 'Viết một email cho bạn bè để rủ họ đi tham gia một sự kiện văn hóa vào cuối tuần (ví dụ: xem phim, nghe nhạc, đi bảo tàng). Hãy đề cập đến: Bạn vừa từ đâu về? Tại sao bạn muốn xem chương trình này? Địa điểm và thời gian gặp mặt.',
+    placeholder: 'Hallo ..., hast du am Wochenende schon etwas vor? Ich komme gerade vom...',
+    aiPrompt: 'The writing prompt is: "Schreiben Sie eine E-Mail an Freunde, um sie zu einer Kulturveranstaltung am Wochenende einzuladen. Punkte: - Woher kommen Sie gerade? - Warum wollen Sie diese Veranstaltung besuchen? - Ort und Zeit des Treffens." (Write an email to friends inviting them to a cultural event this weekend. Include: Where are you coming from right now? Why do you want to attend this event? Place and time of meeting). Evaluate their ability to invite clearly, use Wo/Woher/Wohin prepositions (aus/von, in/zu/nach) correctly, and their use of cultural vocabulary.',
+    redemittel: [
+      { de: 'Hast du am Wochenende schon etwas vor?', vi: 'Cuối tuần này bạn đã có kế hoạch gì chưa?' },
+      { de: 'Ich komme gerade vom/aus dem...', vi: 'Tôi vừa mới đi ... về.' },
+      { de: 'Haben Sie / Hast du Lust auf ...?', vi: 'Bạn có hứng thú với ... không?' },
+      { de: 'Sollen wir ins Konzert / ins Kino gehen?', vi: 'Chúng ta có nên đi xem hòa nhạc / xem phim không?' },
+      { de: 'Wir treffen uns am Samstag um ... vor dem ...', vi: 'Chúng ta gặp nhau vào thứ Bảy lúc ... trước ...' }
+    ]
+  },
+  'l20': {
+    topicTitle: 'Die Lesegewohnheiten der Deutschen',
+    topicDesc: 'Viết một đoạn văn trên diễn đàn kể về thói quen đọc sách của bạn. Hãy nói về: Bạn có thích đọc sách/báo không? Loại sách hay văn bản nào bạn thích nhất (sách chuyên ngành, truyện tranh, truyện cổ tích...)? Khi nào và ở đâu bạn thường đọc sách?',
+    placeholder: 'Hallo zusammen, bei diesem Thema möchte ich gerne meine Erfahrungen teilen. Ich lese ...',
+    aiPrompt: 'The writing prompt is: "Lesegewohnheiten. Schreiben Sie einen Forumsbeitrag über Ihre Lesegewohnheiten. Punkte: - Lesen Sie gern? - Welche Bücher/Texte lesen Sie am liebsten (Sachbuch, Comic, Märchen etc.)? - Wann und wo lesen Sie meistens?" (Reading habits. Write a forum post about your reading habits. Include: Do you like reading? What kind of books/texts do you prefer? When and where do you usually read?). Evaluate their vocabulary related to books/reading and their ability to express reading habits.',
+    redemittel: [
+      { de: 'Ich lese sehr gerne in meiner Freizeit.', vi: 'Tôi rất thích đọc sách vào thời gian rảnh rỗi.' },
+      { de: 'Am liebsten lese ich...', vi: 'Tôi thích đọc nhất là...' },
+      { de: 'Manchmal lese ich auch...', vi: 'Thỉnh thoảng tôi cũng đọc...' },
+      { de: 'Ich interessiere mich für...', vi: 'Tôi quan tâm đến / hứng thú với...' },
+      { de: 'Ich lese meistens im Bett / auf dem Sofa / in der Bahn.', vi: 'Tôi thường đọc sách trên giường / trên ghế sofa / trên tàu điện.' }
+    ]
+  },
   'l21': {
     topicTitle: 'Schreiben Sie eine spannende Geschichte.',
     topicDesc: 'Viết một câu chuyện ly kỳ với một người bạn dưới dạng một bức E-Mail. Kể về một vụ trộm (Einbruch).',

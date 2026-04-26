@@ -44,6 +44,16 @@ import Lektion18GrammarTheory from './components/Lektion18GrammarTheory';
 import Lektion18VocabEx from './components/Lektion18VocabEx';
 import Lektion18GrammarEx from './components/Lektion18GrammarEx';
 import Lektion18NavigatorGame from './components/Lektion18NavigatorGame';
+import Lektion19Slides from './components/Lektion19Slides';
+import Lektion19VocabTheory from './components/Lektion19VocabTheory';
+import Lektion19VocabEx from './components/Lektion19VocabEx';
+import Lektion19GrammarTheory from './components/Lektion19GrammarTheory';
+import Lektion19GrammarEx from './components/Lektion19GrammarEx';
+import Lektion20Slides from './components/Lektion20Slides';
+import Lektion20VocabTheory from './components/Lektion20VocabTheory';
+import Lektion20VocabEx from './components/Lektion20VocabEx';
+import Lektion20GrammarTheory from './components/Lektion20GrammarTheory';
+import Lektion20GrammarEx from './components/Lektion20GrammarEx';
 import Lektion21Slides from './components/Lektion21Slides';
 import Lektion21GrammarTheory from './components/Lektion21GrammarTheory';
 import Lektion21GrammarEx from './components/Lektion21GrammarEx';
@@ -791,7 +801,7 @@ Return a JSON object with:
           )}
           <button 
             onClick={() => setShowSettings(true)}
-            className="p-2.5 hover:bg-theme-cream rounded-full transition-all border-2 border-transparent hover:border-theme-dark/20"
+            className="p-2.5 hover:bg-theme-cream rounded-full transition-all border-2 border-transparent hover:border-theme-dark/20 cursor-pointer"
           >
             <Settings className="w-5 h-5 text-theme-dark/80" />
           </button>
@@ -1081,7 +1091,7 @@ Return a JSON object with:
                 >
                   <Languages className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Ngữ pháp</span>
                 </button>
-                {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('lecture')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1091,7 +1101,7 @@ Return a JSON object with:
                     <MonitorPlay className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Bài giảng</span>
                   </button>
                 )}
-                {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('game')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1101,7 +1111,7 @@ Return a JSON object with:
                     <Gamepad2 className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Trò chơi</span>
                   </button>
                 )}
-                {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('speaking')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1121,7 +1131,7 @@ Return a JSON object with:
                     <span className="text-xl md:text-lg mb-1 md:mb-0">📖</span> <span className="text-center leading-tight">Đọc hiểu</span>
                   </button>
                 )}
-                {(['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('writing')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1145,6 +1155,10 @@ Return a JSON object with:
                   <Lektion17Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l18' ? (
                   <Lektion18Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l19' ? (
+                  <Lektion19Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l20' ? (
+                  <Lektion20Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l21' ? (
                   <Lektion21Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l22' ? (
@@ -1157,7 +1171,7 @@ Return a JSON object with:
                   <SpeakingPractice lessonId={selectedLesson.id} playAudio={playAudio} playingId={playingId} />
                 ) : activeTab === 'reading' && ['l15', 'l16', 'l18', 'l22', 'l23', 'l24'].includes(selectedLesson.id) ? (
                   <ReadingPractice lessonId={selectedLesson.id} />
-                ) : activeTab === 'writing' && ['l15', 'l16', 'l17', 'l18', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id) ? (
+                ) : activeTab === 'writing' && ['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id) ? (
                   <WritingPractice lessonId={selectedLesson.id} />
                 ) : activeTab === 'game' ? (
                   <div className="space-y-6">
@@ -1323,10 +1337,10 @@ Return a JSON object with:
                 ) : (
                   activeTab === 'vocabulary' ? (
                     <div>
-                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
-                            {(selectedLesson.id === 'l17' || selectedLesson.id === 'l18') && (
+                            {(selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20') && (
                               <button 
                                 onClick={() => setActiveSubTab('theory')}
                                 className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'theory' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
@@ -1344,7 +1358,7 @@ Return a JSON object with:
                               onClick={() => setActiveSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : 'Bài tập đại trà (10 bài)'}
+                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : ['l19', 'l20'].includes(selectedLesson.id) ? 'Bài tập Từ vựng' : 'Bài tập đại trà (10 bài)'}
                             </button>
                           </div>
                         </div>
@@ -1354,6 +1368,10 @@ Return a JSON object with:
                         <Lektion17VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l18' && activeSubTab === 'theory' ? (
                         <Lektion18VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l19' && activeSubTab === 'theory' ? (
+                        <Lektion19VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l20' && activeSubTab === 'theory' ? (
+                        <Lektion20VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l22' && activeSubTab === 'exercises' ? (
                         <Lektion22Exercises />
                       ) : selectedLesson.id === 'l23' && activeSubTab === 'exercises' ? (
@@ -1364,6 +1382,10 @@ Return a JSON object with:
                         <Lektion17VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l18' && activeSubTab === 'exercises' ? (
                         <Lektion18VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l19' && activeSubTab === 'exercises' ? (
+                        <Lektion19VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l20' && activeSubTab === 'exercises' ? (
+                        <Lektion20VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l16' && activeSubTab === 'exercises' ? (
                         <Lektion16VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l15' && activeSubTab === 'exercises' ? (
@@ -1384,7 +1406,7 @@ Return a JSON object with:
                     </div>
                   ) : (
                     <div>
-                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -1397,7 +1419,7 @@ Return a JSON object with:
                               onClick={() => setGrammarSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-secondary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l15' ? 'Bài tập Passiv' : 'Bài tập Ngữ pháp'}
+                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l19' ? 'Bài tập Ngữ pháp Woher/Wohin' : selectedLesson.id === 'l20' ? 'Bài tập Präteritum' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l15' ? 'Bài tập Passiv' : 'Bài tập Ngữ pháp'}
                             </button>
                           </div>
                         </div>
@@ -1417,6 +1439,14 @@ Return a JSON object with:
                         <Lektion18GrammarEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l18' && grammarSubTab === 'theory' ? (
                         <Lektion18GrammarTheory />
+                      ) : selectedLesson.id === 'l19' && grammarSubTab === 'exercises' ? (
+                        <Lektion19GrammarEx playAudio={playAudio} />
+                      ) : selectedLesson.id === 'l19' && grammarSubTab === 'theory' ? (
+                        <Lektion19GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l20' && grammarSubTab === 'exercises' ? (
+                        <Lektion20GrammarEx playAudio={playAudio} />
+                      ) : selectedLesson.id === 'l20' && grammarSubTab === 'theory' ? (
+                        <Lektion20GrammarTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l16' && grammarSubTab === 'exercises' ? (
                         <Lektion16GrammarEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l16' && grammarSubTab === 'theory' ? (
