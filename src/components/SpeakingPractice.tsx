@@ -1553,19 +1553,13 @@ export default function SpeakingPractice({ lessonId, playAudio, playingId }: Spe
           
           let promptFormat = '';
           if (activeTab === 'words') {
-            promptFormat = `
-              CRITICAL TASK: Evaluate the pronunciation of the SINGLE GERMAN WORD: "${item.de}".
-              Return a JSON object assessing 5 metrics from 0 to 100: "Vowels", "Consonants", "EndingSounds", "Stress", "Clarity".
-              Additionally, provide a short "Feedback" string in Vietnamese explaining their specific error.
-              Format: { "Vowels": 80, "Consonants": 70, "EndingSounds": 60, "Stress": 90, "Clarity": 85, "Feedback": "..." }
-            `;
+            promptFormat = `Eval German Word: "${item.de}".
+Return JSON for 5 metrics (0-100): "Vowels", "Consonants", "EndingSounds", "Stress", "Clarity". Give short VNese "Feedback".
+Format: {"Vowels":80,"Consonants":70,"EndingSounds":60,"Stress":90,"Clarity":85,"Feedback":"..."}`;
           } else {
-            promptFormat = `
-              CRITICAL TASK: Evaluate the pronunciation of the GERMAN SENTENCE: "${item.de}".
-              Return a JSON object assessing 5 metrics from 0 to 100: "Intonation", "Pausing", "SentenceStress", "Pronunciation", "Fluency".
-              Additionally, provide a short "Feedback" string in Vietnamese pointing out strong/weak points.
-              Format: { "Intonation": 80, "Pausing": 70, "SentenceStress": 60, "Pronunciation": 85, "Fluency": 82, "Feedback": "..." }
-            `;
+            promptFormat = `Eval German Sentence: "${item.de}".
+Return JSON for 5 metrics (0-100): "Intonation", "Pausing", "SentenceStress", "Pronunciation", "Fluency". Give short VNese "Feedback".
+Format: {"Intonation":80,"Pausing":70,"SentenceStress":60,"Pronunciation":85,"Fluency":82,"Feedback":"..."}`;
           }
 
           const response = await ai.models.generateContent({

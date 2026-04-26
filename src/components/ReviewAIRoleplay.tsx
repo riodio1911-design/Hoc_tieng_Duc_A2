@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2, PlayCircle, RefreshCw, Mic } from 'lucide-react';
-import { Chat } from "@google/genai";
 import { getAI } from '../ai';
 
 const ai = getAI();
@@ -52,7 +51,6 @@ export default function ReviewAIRoleplay() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chatRef = useRef<Chat | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,15 +63,14 @@ export default function ReviewAIRoleplay() {
     setIsLoading(true);
 
     try {
-      const chat = ai.chats.create({
+      const chatContents = [{ role: 'user', parts: [{ text: "Bắt đầu cuộc hội thoại." }] }];
+      const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
+        contents: chatContents as any,
         config: {
             systemInstruction: scenario.prompt
         }
       });
-      chatRef.current = chat;
-
-      const response = await chat.sendMessage({ message: "Bắt đầu cuộc hội thoại." });
       const text = response.text || "";
       
       try {
@@ -98,7 +95,7 @@ export default function ReviewAIRoleplay() {
   };
 
   const sendMessage = async () => {
-    if (!input.trim() || !chatRef.current || isLoading) return;
+    if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { id: Date.now().toString(), role: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
@@ -106,7 +103,20 @@ export default function ReviewAIRoleplay() {
     setIsLoading(true);
 
     try {
-      const response = await chatRef.current.sendMessage({ message: userMessage.text });
+      const recentMessages = messages.slice(-4);
+      const contents = recentMessages.map(m => ({
+          role: m.role === 'bot' ? 'model' : 'user',
+          parts: [{ text: m.text }]
+      }));
+      contents.push({ role: 'user', parts: [{ text: userMessage.text }] });
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: contents as any,
+        config: {
+          systemInstruction: selectedScenario!.prompt
+        }
+      });
       const text = response.text || "";
       
       try {

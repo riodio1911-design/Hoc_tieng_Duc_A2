@@ -727,21 +727,10 @@ export default function App() {
         try {
           const base64Audio = (reader.result as string).split(',')[1];
           
-          const prompt = `ACT AS A STRICT AND DEMANDING GERMAN LINGUISTICS EXPERT. 
-Evaluate the German pronunciation of this audio recording against the EXACT target phrase: "${targetText}".
-
-CRITICAL INSTRUCTIONS FOR STRICTNESS & PRECISION:
-1. You must be EXTREMELY STRICT, unforgiving, and highly critical. Do NOT give a high score just for effort.
-2. Penalize HEAVILY for missing consonants (especially word endings like -st, -t, -en), wrong vowels (e.g., u vs ü, o vs ö), misplaced word stress, or incorrect intonation.
-3. If the user mumbles, misses words, or says a completely different word, the score MUST be below 40.
-4. If there is a noticeable foreign accent or mispronounced syllables, score between 40-75.
-5. Only give 85-100 for near-native, flawless pronunciation with perfect Hochdeutsch phonetics.
-6. MANDATORY: The 'score' MUST be a specific, granular integer between 0 and 100 (e.g., 73, 84, 91, 62). Do NOT round to the nearest 5 or 10. Differentiate precise skill levels down to the single digit.
-
-Return a JSON object with: 
-- score: integer (0-100, specific up to 1 digit unit like 83, 76, 92)
-- transcription: string (exactly what you heard the user actually say, transcribing their errors accurately if any)
-- suggestion: string (a precise, direct, and critical tip in Vietnamese pointing out EXACTLY which syllable or sound was wrong and how to correct it)`;
+          const prompt = `GERMAN EXPERT.
+Eval pronunciation against: "${targetText}".
+STRICT. Penalize wrong consonants (-st, -t, -en), vowels, stress. Score 0-100 (granular).
+Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise tip in VNese"}`;
 
           const res = await fetch('/api/evaluate', {
             method: 'POST',

@@ -246,31 +246,16 @@ export default function WritingPractice({ lessonId }: { lessonId: string }) {
     setError(null);
     setIsEvaluating(true);
 
-    const promptText = `
-      ACT AS A STRICT AND DEMANDING GERMAN LINGUISTICS EXPERT.
-      Evaluate the following German text written by a language learner.
-      
-      The writing prompt is: "${content.aiPrompt}"
-      
-      CRITICAL INSTRUCTIONS:
-      1. Provide a "score" from 0 to 100 based on grammar, vocabulary, coherence, and adherence to the prompt.
-      2. Provide a "grammar" evaluation in Vietnamese: point out grammatical errors and how to fix them.
-      3. Provide a "vocabulary" evaluation in Vietnamese: suggest better words or point out incorrect usage.
-      4. Provide a "coherence" evaluation in Vietnamese: comment on the email structure and story flow.
-      5. Provide an overall "suggestion" in Vietnamese for improvement.
-      
-      Format the output EXACTLY as a JSON object:
-      {
-        "score": 85,
-        "grammar": "...",
-        "vocabulary": "...",
-        "coherence": "...",
-        "suggestion": "..."
-      }
-      
-      Student's text:
-      "${text}"
-    `;
+    const promptText = `Evaluate German text for prompt: "${content.aiPrompt}"
+Return JSON:
+{
+  "score": 0-100,
+  "grammar": "VNese feedback on grammar errors",
+  "vocabulary": "VNese feedback on vocabulary",
+  "coherence": "VNese feedback on structure",
+  "suggestion": "VNese general improvement tips"
+}
+Student's text: "${text}"`;
 
     try {
       const response = await ai.models.generateContent({

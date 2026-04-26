@@ -4,8 +4,9 @@ export interface VocabularyItem {
   ipa?: string;
   meaning: string;
   example: string;
-  exampleTranslation: string;
+  exampleTranslation?: string;
   category?: string;
+  grammar?: string;
 }
 
 export interface GrammarItem extends VocabularyItem {
