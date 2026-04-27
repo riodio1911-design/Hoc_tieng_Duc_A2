@@ -430,7 +430,7 @@ export default function App() {
         
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout for better UX
+          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
           
           const res = await fetch('/api/tts', {
             method: 'POST',
@@ -440,7 +440,14 @@ export default function App() {
           });
           clearTimeout(timeoutId);
           
-          if (!res.ok) throw new Error("Failed to fetch audio from server (" + res.status + ")");
+          if (!res.ok) {
+            let errMsg = "Failed to fetch audio from server (" + res.status + ")";
+            try {
+              const errData = await res.json();
+              if (errData.error) errMsg += " - " + errData.error;
+            } catch(e) {}
+            throw new Error(errMsg);
+          }
           
           const data = await res.json();
           if (data.fileUrl && !data.pcmBase64) {
@@ -464,8 +471,8 @@ export default function App() {
              throw e; // pass to outer catch for quota handling
            }
            // For aborts or fetch failures, warn the user we're falling back
-           setQuotaWarning('Hệ thống AI đang phản hồi chậm. Tạm thời kết nối với giọng đọc máy dự phòng...');
-           setTimeout(() => setQuotaWarning(null), 5000);
+           setQuotaWarning('AI đang quá tải hoặc phản hồi chậm. Tạm thời dùng giọng đọc máy dự phòng (chất lượng sẽ kém tự nhiên hơn)...');
+           setTimeout(() => setQuotaWarning(null), 7000);
         }
 
         if (pcmData) {
@@ -484,7 +491,7 @@ export default function App() {
         }
         isFetchingAudio.current = false;
       } else if (!pcmData && isQuotaLimited) {
-        setQuotaWarning('Hệ thống AI đang tạm nghỉ (hết hạn mức). Đang dùng giọng đọc máy dự phòng...');
+        setQuotaWarning('AI đã hết hạn mức. Đang phát bằng giọng đọc máy dự phòng (sẽ kém tự nhiên hơn)...');
         useSystemTTS();
         return;
       }

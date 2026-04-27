@@ -1,5 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 
+export const maxDuration = 60; // Allow longer execution on Vercel
+
 let aiClient = null;
 function getAI() {
   if (!aiClient) {
@@ -48,8 +50,9 @@ export default async function handler(req, res) {
     } else {
       res.status(500).json({ error: "No audio generated from AI" });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("TTS API Error:", error);
-    res.status(500).json({ error: error.message });
+    const status = error.status || (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') ? 429 : 500);
+    res.status(status).json({ error: error.message });
   }
 }
