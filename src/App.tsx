@@ -334,6 +334,31 @@ export default function App() {
   const playAudio = useCallback(async (text: string, id: string, lang: 'de-DE' | 'vi-VN' = 'de-DE', overrideVoiceName?: string) => {
     if (playingId === id || isFetchingAudio.current) return;
     
+    // --> SYNCHRONOUS UNLOCK FOR MOBILE SAFARI/EDGE/BRAVE <--
+    // Mobile browsers require AudioContext & SpeechSynthesis to be unlocked synchronously inside a user gesture event handler
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+    }
+    const audioContext = audioContextRef.current;
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().catch(() => {});
+    }
+    // Play a silent buffer to guarantee AudioContext is active
+    try {
+      const silentBuffer = audioContext.createBuffer(1, 1, 24000);
+      const silentSource = audioContext.createBufferSource();
+      silentSource.buffer = silentBuffer;
+      silentSource.connect(audioContext.destination);
+      silentSource.start(0);
+    } catch(e) {}
+    
+    // Unlock SpeechSynthesis synchronously
+    try {
+      const unlockUtterance = new SpeechSynthesisUtterance('');
+      unlockUtterance.volume = 0;
+      window.speechSynthesis.speak(unlockUtterance);
+    } catch(e) {}
+
     const currentVoiceName = overrideVoiceName || voiceName;
     const cacheKey = `${id}-${voiceEffect}-${text}-${lang}-v5`;
 
@@ -346,8 +371,19 @@ export default function App() {
         const targetVoice = voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices[0];
         if (targetVoice) utterance.voice = targetVoice;
         
-        utterance.onend = () => setPlayingId(null);
-        utterance.onerror = () => setPlayingId(null);
+        let hasEnded = false;
+        const resetPlaying = () => {
+          if (!hasEnded) {
+            hasEnded = true;
+            setPlayingId(null);
+            clearTimeout(fallbackTimer);
+          }
+        };
+
+        const fallbackTimer = setTimeout(resetPlaying, 15000); // Max 15s wait to avoid eternal hang on mobile
+        
+        utterance.onend = resetPlaying;
+        utterance.onerror = resetPlaying;
         window.speechSynthesis.speak(utterance);
       } catch (fallbackError) {
         console.error('System TTS failed:', fallbackError);
@@ -391,11 +427,16 @@ export default function App() {
         isFetchingAudio.current = true;
         
         try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+          
           const res = await fetch('/api/tts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, lang, voiceName: currentVoiceName, voiceEffect })
+            body: JSON.stringify({ text, lang, voiceName: currentVoiceName, voiceEffect }),
+            signal: controller.signal
           });
+          clearTimeout(timeoutId);
           
           if (!res.ok) throw new Error("Failed to fetch audio from server");
           

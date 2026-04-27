@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/tts/(.*)", "destination": "/tts/$1" },
     { "source": "/(.*\\.pdf)", "destination": "/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
