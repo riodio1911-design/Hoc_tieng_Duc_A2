@@ -419,6 +419,8 @@ export default function App() {
 
       // If not offline and network is totally disconnected, immediately fallback
       if (!pcmData && !navigator.onLine) {
+        setQuotaWarning('Mất kết nối mạng. Đang dùng giọng đọc máy dự phòng...');
+        setTimeout(() => setQuotaWarning(null), 4000);
         useSystemTTS();
         return;
       }
@@ -428,7 +430,7 @@ export default function App() {
         
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+          const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout for better UX
           
           const res = await fetch('/api/tts', {
             method: 'POST',
@@ -438,7 +440,7 @@ export default function App() {
           });
           clearTimeout(timeoutId);
           
-          if (!res.ok) throw new Error("Failed to fetch audio from server");
+          if (!res.ok) throw new Error("Failed to fetch audio from server (" + res.status + ")");
           
           const data = await res.json();
           if (data.fileUrl && !data.pcmBase64) {
@@ -461,6 +463,9 @@ export default function App() {
            if (errorString.includes('429') || errorString.includes('RESOURCE_EXHAUSTED')) {
              throw e; // pass to outer catch for quota handling
            }
+           // For aborts or fetch failures, warn the user we're falling back
+           setQuotaWarning('Hệ thống AI đang phản hồi chậm. Tạm thời kết nối với giọng đọc máy dự phòng...');
+           setTimeout(() => setQuotaWarning(null), 5000);
         }
 
         if (pcmData) {
@@ -479,6 +484,7 @@ export default function App() {
         }
         isFetchingAudio.current = false;
       } else if (!pcmData && isQuotaLimited) {
+        setQuotaWarning('Hệ thống AI đang tạm nghỉ (hết hạn mức). Đang dùng giọng đọc máy dự phòng...');
         useSystemTTS();
         return;
       }
