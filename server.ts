@@ -5,7 +5,7 @@ import path from "path";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ override: true });
 
 const app = express();
 const PORT = 3000;
@@ -20,9 +20,10 @@ if (!fs.existsSync(TTS_CACHE_DIR)) {
 
 let aiClient: GoogleGenAI | null = null;
 function getAI() {
-  if (!aiClient) {
-    const key = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
-    if (!key) throw new Error("Missing GEMINI_API_KEY environment variable. Please make sure VITE_GEMINI_API_KEY is defined in AI Studio config or .env");
+  const rawKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
+  const key = rawKey?.trim();
+  if (!key) throw new Error("Missing GEMINI_API_KEY environment variable. Please make sure VITE_GEMINI_API_KEY is defined in AI Studio config or .env");
+  if (!aiClient || aiClient.apiKey !== key) {
     aiClient = new GoogleGenAI({ apiKey: key });
   }
   return aiClient;
@@ -50,6 +51,7 @@ app.post("/api/tts", async (req, res) => {
 
     // Call API (first time)
     const ai = getAI();
+    console.log("TTS Using Key:", ai.apiKey?.substring(0, 5) + "..." + ai.apiKey?.substring(ai.apiKey.length - 4));
     let promptText = "";
     if (lang === 'vi-VN') {
       promptText = `Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${text}`;
@@ -81,7 +83,8 @@ app.post("/api/tts", async (req, res) => {
     }
   } catch (error: any) {
     console.error("TTS API Error:", error);
-    res.status(500).json({ error: error.message });
+    const status = error.status || (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') ? 429 : 500);
+    res.status(status).json({ error: error.message });
   }
 });
 
@@ -103,7 +106,8 @@ app.post("/api/evaluate", async (req, res) => {
     return res.json({ result: response.text });
   } catch (error: any) {
     console.error("Evaluate API Error:", error);
-    res.status(500).json({ error: error.message });
+    const status = error.status || (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') ? 429 : 500);
+    res.status(status).json({ error: error.message });
   }
 });
 

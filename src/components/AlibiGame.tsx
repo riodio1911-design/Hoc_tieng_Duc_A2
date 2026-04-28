@@ -85,19 +85,33 @@ export default function AlibiGame({ onBack, playAudio, playingId }: AlibiGamePro
     // Generate a hidden reality at the start
     const generateReality = async () => {
       setIsLoading(true);
-      try {
-        const response = await ai.models.generateContent({
-          model: "gemini-3.1-pro-preview",
-          contents: "Generate a detailed 'alibi story' for two friends (Heiner and Klaus) who claim they were together during a robbery on Saturday at 16:00. The story should include: location, witnesses, arrival time, duration, activities, conversation topics, food/drink, and transportation. Most importantly, create ONE specific, subtle contradiction in their story (e.g., Klaus says they had coffee, Heiner says they had beer; or different transportation). Return the story in English for internal use.",
-        });
-        setRealitySeed(response.text || '');
-      } catch (error: any) {
-        console.error('Failed to generate reality:', error);
+      
+      let success = false;
+      for (let i = 0; i < 3; i++) {
+        try {
+          const response = await ai.models.generateContent({
+            model: "gemini-3.1-pro-preview",
+            contents: "Generate a detailed 'alibi story' for two friends (Heiner and Klaus) who claim they were together during a robbery on Saturday at 16:00. The story should include: location, witnesses, arrival time, duration, activities, conversation topics, food/drink, and transportation. Most importantly, create ONE specific, subtle contradiction in their story (e.g., Klaus says they had coffee, Heiner says they had beer; or different transportation). Return the story in English for internal use.",
+          });
+          setRealitySeed(response.text || '');
+          success = true;
+          break;
+        } catch (error: any) {
+          const errorMsg = error.message || JSON.stringify(error) || '';
+          if (i < 2 && (errorMsg.includes('503') || errorMsg.includes('high demand') || errorMsg.includes('UNAVAILABLE') || errorMsg.includes('429'))) {
+            await new Promise(r => setTimeout(r, 2000 * (i + 1))); // Wait before retry
+            continue;
+          }
+          console.warn('Failed to generate reality:', error);
+          break;
+        }
+      }
+      
+      if (!success) {
         // Fallback reality so the application doesn't break
         setRealitySeed("They claim they were at 'Café am Park' together from 15:30 to 17:00 on Saturday. They walked there. The contradiction: Heiner explicitly says they drank 'schwarzen Kaffee' (black coffee). Klaus explicitly says they drank 'ein kühles Bier' (a cold beer).");
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
 
     generateReality();

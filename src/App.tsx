@@ -82,12 +82,11 @@ import { getAI } from './ai';
 const ai = getAI();
 
 const VOICES = [
-  { id: 'Kore', name: 'Nữ 1 (Kore)', gender: 'Female' },
-  { id: 'Aoede', name: 'Nữ 2 (Aoede)', gender: 'Female' },
-  { id: 'Zephyr', name: 'Nam 1 (Zephyr)', gender: 'Male' },
-  { id: 'Puck', name: 'Nam 2 (Puck)', gender: 'Male' },
-  { id: 'Charon', name: 'Nam 3 (Charon)', gender: 'Male' },
-  { id: 'Fenrir', name: 'Nam 4 (Fenrir)', gender: 'Male' },
+  { id: 'Aoede', name: 'Nữ 1 (Aoede - Chuẩn)', gender: 'Female' },
+  { id: 'Kore', name: 'Nữ 2 (Kore - Trầm)', gender: 'Female' },
+  { id: 'Fenrir', name: 'Nam 1 (Fenrir - Chuẩn)', gender: 'Male' },
+  { id: 'Charon', name: 'Nam 2 (Charon - Trầm)', gender: 'Male' },
+  { id: 'Puck', name: 'Nam 3 (Puck - Sáng)', gender: 'Male' },
 ];
 
 const EFFECTS = [
@@ -354,9 +353,9 @@ export default function App() {
     
     // Unlock SpeechSynthesis synchronously
     try {
-      const unlockUtterance = new SpeechSynthesisUtterance('');
-      unlockUtterance.volume = 0;
-      window.speechSynthesis.speak(unlockUtterance);
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
     } catch(e) {}
 
     const currentVoiceName = overrideVoiceName || voiceName;
@@ -430,7 +429,7 @@ export default function App() {
         
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+          const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
           
           const res = await fetch('/api/tts', {
             method: 'POST',
@@ -467,8 +466,8 @@ export default function App() {
         } catch (e: any) {
            console.error("Error calling /api/tts:", e);
            const errorString = e.message || String(e);
-           if (errorString.includes('429') || errorString.includes('RESOURCE_EXHAUSTED')) {
-             throw e; // pass to outer catch for quota handling
+           if (errorString.includes('429') || errorString.includes('RESOURCE_EXHAUSTED') || errorString.includes('400') || errorString.includes('API key not valid') || errorString.includes('API_KEY_INVALID') || errorString.includes('Unexpected token')) {
+             throw e; // pass to outer catch for quota or key handling
            }
            // For aborts or fetch failures, warn the user we're falling back
            setQuotaWarning('AI đang quá tải hoặc phản hồi chậm. Tạm thời dùng giọng đọc máy dự phòng (chất lượng sẽ kém tự nhiên hơn)...');
@@ -533,6 +532,10 @@ export default function App() {
         setIsQuotaLimited(true);
         setQuotaResetTime(resetTime);
         setQuotaWarning('Hệ thống AI đang tạm nghỉ (hết hạn mức). Đang dùng giọng đọc máy thay thế...');
+        useSystemTTS();
+      } else if (errorString.includes('400') || errorString.includes('API_KEY_INVALID') || errorString.includes('API key not valid') || errorString.includes('Unexpected token')) {
+        console.error('API Key error or Server issue');
+        setQuotaWarning('Lỗi kết nối máy chủ hoặc API Key không hợp lệ. Đang dùng giọng máy.');
         useSystemTTS();
       } else {
         console.error('Error playing audio:', err);
@@ -792,20 +795,39 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
             body: JSON.stringify({ prompt, mimeType: "audio/webm", audioBase64: base64Audio })
           });
 
-          if (!res.ok) throw new Error("Evaluation failed at server");
-          const data = await res.json();
+          if (!res.ok) {
+            let errMsg = "Evaluation failed at server";
+            try {
+              const errText = await res.text();
+              const errData = JSON.parse(errText);
+              if (errData.error) errMsg += " - " + JSON.stringify(errData.error);
+            } catch(e) {
+               throw new Error("Unexpected server response, possibly missing API Key or misconfigured server.");
+            }
+            throw new Error(errMsg);
+          }
+          const text = await res.text();
+          let data;
+          try {
+             data = JSON.parse(text);
+          } catch(e) {
+             throw new Error("Unexpected API response format");
+          }
           const result = JSON.parse(data.result || '{}');
           setFeedback(prev => ({ ...prev, [id]: result }));
         } catch (error: any) {
           console.error('Evaluation API error:', error);
-          if (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') || error.message?.includes('Failed to fetch')) {
+          if (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED')) {
             const resetTime = Date.now() + 30000;
             setIsQuotaLimited(true);
             setQuotaResetTime(resetTime);
             setQuotaWarning('Hệ thống AI đang lỗi mạng hoặc quá tải. Đã tự động chuyển sang chế độ bảo trì Offline để tiếp tục chấm điểm.');
             executeFastLocalGrading();
+          } else if (error.message?.includes('400') || error.message?.includes('API_KEY_INVALID') || error.message?.includes('API key not valid')) {
+            setMicError(`Lỗi API Key không hợp lệ. Vui lòng cập nhật API Key mới.`);
+            executeFastLocalGrading(); // also fallback to offline grading so they can still see it
           } else {
-            setMicError('Có lỗi xảy ra khi chấm điểm. Vui lòng thử lại.');
+            setMicError(`Có lỗi xảy ra khi chấm điểm: ${error.message}`);
             setIsEvaluating(false);
           }
         }
@@ -1016,7 +1038,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               exit={{ opacity: 0, x: -20 }}
               className="space-y-8"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-start justify-between">
                 <div className="space-y-2">
                   <h2 className="text-4xl font-display font-black text-theme-dark flex max-md:flex-col max-md:items-start items-center gap-4">
                     <span>{selectedLesson.title}</span>
@@ -1095,7 +1117,62 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   </h2>
                   <p className="text-theme-dark/80 font-black text-sm uppercase tracking-widest">{selectedLesson.subtitle}</p>
                 </div>
+                {selectedLesson.id !== 'review' && (
+                  <div className="flex flex-col items-end gap-2 shrink-0 ml-4 max-md:hidden">
+                    {downloadProgress ? (
+                      <div className="w-48 bg-zinc-50 border border-zinc-100 rounded-xl p-3 shadow-sm">
+                        <div className="flex justify-between text-[10px] font-black text-theme-dark/60 uppercase mb-2">
+                           <span>Đang tải: {downloadProgress.current}/{downloadProgress.total}</span>
+                           <span>{Math.round((downloadProgress.current/downloadProgress.total)*100)}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-theme-dark/5 rounded-full overflow-hidden">
+                           <div 
+                             className="h-full bg-emerald-500 transition-all duration-300"
+                             style={{width: `${(downloadProgress.current/downloadProgress.total)*100}%`}}
+                           />
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={downloadAllAudioForLesson}
+                        className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 px-4 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm flex items-center gap-2"
+                        title="Tải mọi âm thanh trong bài học này về bộ nhớ máy để học khi mất mạng"
+                      >
+                        <Download className="w-4 h-4" />
+                        Tải Audio Offline
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
+              
+              {/* Mobile offline download button */}
+              {selectedLesson.id !== 'review' && (
+                  <div className="md:hidden">
+                    {downloadProgress ? (
+                      <div className="w-full bg-zinc-50 border border-zinc-100 rounded-xl p-3 shadow-sm">
+                        <div className="flex justify-between text-[10px] font-black text-theme-dark/60 uppercase mb-2">
+                           <span>Đang tải: {downloadProgress.current}/{downloadProgress.total}</span>
+                           <span>{Math.round((downloadProgress.current/downloadProgress.total)*100)}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-theme-dark/5 rounded-full overflow-hidden">
+                           <div 
+                             className="h-full bg-emerald-500 transition-all duration-300"
+                             style={{width: `${(downloadProgress.current/downloadProgress.total)*100}%`}}
+                           />
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={downloadAllAudioForLesson}
+                        className="w-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                      >
+                        <Download className="w-5 h-5" />
+                        Tải Audio Offline cho bài này
+                      </button>
+                    )}
+                  </div>
+              )}
 
               {/* Tab Bar */}
               {selectedLesson.id === 'review' ? (
@@ -1571,7 +1648,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       onClick={() => {
                         setVoiceGender('Female');
                         if (!VOICES.find(v => v.id === voiceName && v.gender === 'Female')) {
-                          setVoiceName('Kore');
+                          setVoiceName('Aoede');
                         }
                       }}
                       className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${
@@ -1584,7 +1661,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       onClick={() => {
                         setVoiceGender('Male');
                         if (!VOICES.find(v => v.id === voiceName && v.gender === 'Male')) {
-                          setVoiceName('Zephyr');
+                          setVoiceName('Fenrir');
                         }
                       }}
                       className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${
@@ -1637,44 +1714,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   </div>
                 </div>
 
-                {/* Offline Cache Notice & Controls */}
-                <div className="space-y-3">
-                  <p className="text-xs font-bold text-zinc-800 uppercase tracking-widest border-b border-zinc-100 pb-1">Chế độ Offline (PWA)</p>
-                  <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl mb-2">
-                    <p className="text-[11px] font-medium text-emerald-800 leading-relaxed">
-                      💡 Những từ bạn đã nghe sẽ được tự động lưu offline. <br/>
-                      💡 Khi mất mạng, AI chấm điểm tự động chuyển sang cơ chế nhận diện máy nội bộ siêu tốc.
-                    </p>
-                  </div>
-                  
-                  {selectedLesson ? (
-                    downloadProgress ? (
-                       <div className="space-y-2 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl">
-                         <div className="flex justify-between text-[11px] font-black text-theme-dark/60 uppercase">
-                            <span>Đang Tải Gói Audio: {downloadProgress.current}/{downloadProgress.total}</span>
-                            <span>{Math.round((downloadProgress.current/downloadProgress.total)*100)}%</span>
-                         </div>
-                         <div className="h-2 w-full bg-theme-dark/5 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-emerald-500 transition-all duration-300"
-                              style={{width: `${(downloadProgress.current/downloadProgress.total)*100}%`}}
-                            />
-                         </div>
-                       </div>
-                    ) : (
-                       <button
-                         onClick={downloadAllAudioForLesson}
-                         className="w-full p-4 bg-theme-dark/5 border border-theme-dark/10 hover:bg-theme-dark/10 text-sm font-bold text-theme-dark rounded-2xl transition-all shadow-sm flex items-center justify-center gap-2"
-                       >
-                         Tải sẵn Audio Offline cho Bài {selectedLesson.title.replace('Lektion ', '')}
-                       </button>
-                    )
-                  ) : (
-                    <div className="p-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-center">
-                      <p className="text-[11px] font-medium text-zinc-400">Hãy chọn 1 bài học (ở menu chính) để tải tải audio.</p>
-                    </div>
-                  )}
-                </div>
+
               </div>
 
               <div className="p-6 bg-zinc-50">
@@ -1684,6 +1724,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 >
                   Áp dụng
                 </button>
+
               </div>
             </motion.div>
           </div>
