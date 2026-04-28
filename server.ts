@@ -19,12 +19,14 @@ if (!fs.existsSync(TTS_CACHE_DIR)) {
 }
 
 let aiClient: GoogleGenAI | null = null;
+let currentKey: string | null = null;
 function getAI() {
   const rawKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
   const key = rawKey?.trim();
   if (!key) throw new Error("Missing GEMINI_API_KEY environment variable. Please make sure VITE_GEMINI_API_KEY is defined in AI Studio config or .env");
-  if (!aiClient || aiClient.apiKey !== key) {
+  if (!aiClient || currentKey !== key) {
     aiClient = new GoogleGenAI({ apiKey: key });
+    currentKey = key;
   }
   return aiClient;
 }
@@ -51,7 +53,6 @@ app.post("/api/tts", async (req, res) => {
 
     // Call API (first time)
     const ai = getAI();
-    console.log("TTS Using Key:", ai.apiKey?.substring(0, 5) + "..." + ai.apiKey?.substring(ai.apiKey.length - 4));
     let promptText = "";
     if (lang === 'vi-VN') {
       promptText = `Please read the following text naturally. The main language is Vietnamese, but make sure to pronounce any German words correctly in German: ${text}`;

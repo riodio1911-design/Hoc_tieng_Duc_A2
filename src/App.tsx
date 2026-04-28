@@ -22,6 +22,31 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { VOCABULARY_DATA, Lesson, VocabularyItem, L21_INTRO_SCRIPT, L22_GRAMMAR_SCRIPT, L23_GRAMMAR_SCRIPT, L23_INTRO_SCRIPT, L22_INTRO_SCRIPT, L24_GRAMMAR_SCRIPT, L24_INTRO_SCRIPT } from './constants';
 import AlibiGame from './components/AlibiGame';
 import Kartenspiel from './components/Kartenspiel';
+import Lektion1Slides from './components/Lektion1Slides';
+import Lektion1VocabTheory from './components/Lektion1VocabTheory';
+import Lektion1VocabEx from './components/Lektion1VocabEx';
+import Lektion1GrammarTheory from './components/Lektion1GrammarTheory';
+import Lektion1GrammarEx from './components/Lektion1GrammarEx';
+import Lektion2VocabTheory from './components/Lektion2VocabTheory';
+import Lektion2VocabEx from './components/Lektion2VocabEx';
+import Lektion2GrammarTheory from './components/Lektion2GrammarTheory';
+import Lektion2GrammarEx from './components/Lektion2GrammarEx';
+import Lektion2Slides from './components/Lektion2Slides';
+import Lektion3VocabTheory from './components/Lektion3VocabTheory';
+import Lektion3VocabEx from './components/Lektion3VocabEx';
+import Lektion3GrammarTheory from './components/Lektion3GrammarTheory';
+import Lektion3GrammarEx from './components/Lektion3GrammarEx';
+import Lektion3Slides from './components/Lektion3Slides';
+import Lektion13VocabTheory from './components/Lektion13VocabTheory';
+import Lektion13VocabEx from './components/Lektion13VocabEx';
+import Lektion13GrammarTheory from './components/Lektion13GrammarTheory';
+import Lektion13GrammarEx from './components/Lektion13GrammarEx';
+import Lektion13Slides from './components/Lektion13Slides';
+import Lektion14VocabTheory from './components/Lektion14VocabTheory';
+import Lektion14VocabEx from './components/Lektion14VocabEx';
+import Lektion14GrammarTheory from './components/Lektion14GrammarTheory';
+import Lektion14GrammarEx from './components/Lektion14GrammarEx';
+import Lektion14Slides from './components/Lektion14Slides';
 import Lektion15Slides from './components/Lektion15Slides';
 import Lektion15VocabEx from './components/Lektion15VocabEx';
 import Lektion15GrammarEx from './components/Lektion15GrammarEx';
@@ -890,61 +915,73 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               </div>
 
               <div className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {VOCABULARY_DATA.slice((currentPage - 1) * 4, currentPage * 4).map((lesson) => (
-                    <button
-                      key={lesson.id}
-                      onClick={() => {
-                        setSelectedLesson(lesson);
-                        setActiveTab('vocabulary');
-                      }}
-                      className="group relative flex items-start gap-4 p-8 slide-card hover:border-theme-primary transition-all duration-300 text-left overflow-hidden hover:shadow-xl hover:shadow-theme-primary/5 cursor-pointer"
-                    >
-                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-theme-primary">
-                        <BookOpen size={100} />
-                      </div>
-                      <div className="p-4 bg-theme-cream rounded-2xl group-hover:bg-theme-primary group-hover:text-white transition-all">
-                        <BookOpen className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-display font-black text-2xl text-theme-dark group-hover:text-theme-primary transition-colors">{lesson.title}</h3>
-                        <p className="text-sm text-theme-dark/80 font-bold line-clamp-1">{lesson.subtitle}</p>
-                        <div className="flex items-center gap-3 mt-6">
-                          <div className="flex items-center text-[10px] font-black text-theme-primary bg-theme-primary/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                            {lesson.items.length} từ vựng
-                          </div>
-                          {lesson.grammar && (
-                            <div className="flex items-center text-[10px] font-black text-theme-secondary bg-theme-secondary/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                              {lesson.grammar.length} ngữ pháp
-                            </div>
-                          )}
-                          <div className="ml-auto flex items-center text-xs font-black text-theme-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                            Bắt đầu <ChevronRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+                {[
+                  { id: 1, title: 'Modul 1', label: 'Berufe, Familie, Wohnen, Tourismus', bg: 'bg-emerald-500', color: 'text-emerald-600', border: 'border-emerald-500/20', hover: 'hover:border-emerald-500' },
+                  { id: 2, title: 'Modul 2', label: 'Einkaufen, Stadt, Kultur', bg: 'bg-teal-500', color: 'text-teal-600', border: 'border-teal-500/20', hover: 'hover:border-teal-500' },
+                  { id: 3, title: 'Modul 3', label: 'Sport, Gesundheit, Arbeitsleben', bg: 'bg-cyan-600', color: 'text-cyan-700', border: 'border-cyan-600/20', hover: 'hover:border-cyan-600' },
+                  { id: 4, title: 'Modul 4', label: 'Restaurant, Firmenporträt, Ernährung', bg: 'bg-blue-500', color: 'text-blue-600', border: 'border-blue-500/20', hover: 'hover:border-blue-500' },
+                  { id: 5, title: 'Modul 5', label: 'Sprachen, Post, Reisen', bg: 'bg-indigo-500', color: 'text-indigo-600', border: 'border-indigo-500/20', hover: 'hover:border-indigo-500' },
+                  { id: 6, title: 'Modul 6', label: 'Informationen, Klima, Wetter', bg: 'bg-violet-500', color: 'text-violet-600', border: 'border-violet-500/20', hover: 'hover:border-violet-500' },
+                  { id: 7, title: 'Modul 7', label: 'Medien, Musik, Bücher', bg: 'bg-amber-600', color: 'text-amber-700', border: 'border-amber-600/20', hover: 'hover:border-amber-600' },
+                  { id: 8, title: 'Modul 8', label: 'Auto, Berufe, Alltag', bg: 'bg-rose-500', color: 'text-rose-600', border: 'border-rose-500/20', hover: 'hover:border-rose-500' },
+                ].map(modul => {
+                  const moduleLessons = VOCABULARY_DATA.filter(l => {
+                    if (l.id.startsWith('l')) {
+                      const num = parseInt(l.id.replace('l', ''), 10);
+                      return Math.ceil(num / 3) === modul.id;
+                    }
+                    return false;
+                  });
 
-                {/* Pagination Controls */}
-                {Math.ceil(VOCABULARY_DATA.length / 4) > 1 && (
-                  <div className="flex items-center justify-center gap-2 mt-8">
-                    {Array.from({ length: Math.ceil(VOCABULARY_DATA.length / 4) }).map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentPage(idx + 1)}
-                        className={`w-10 h-10 rounded-full font-bold transition-all ${
-                          currentPage === idx + 1
-                            ? 'bg-theme-primary text-white shadow-md cursor-default'
-                            : 'bg-theme-cream text-theme-dark/60 hover:bg-theme-primary/20 hover:text-theme-primary cursor-pointer'
-                        }`}
-                      >
-                        {idx + 1}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  if (moduleLessons.length === 0) return null;
+
+                  return (
+                    <div key={modul.id} className={`bg-white rounded-3xl p-6 md:p-8 shadow-sm border-2 ${modul.border}`}>
+                      <div className="mb-6 xl:mb-8">
+                        <h3 className={`text-2xl md:text-3xl font-black flex items-center gap-3 ${modul.color} font-display`}>
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${modul.bg} flex items-center justify-center text-white text-xl shadow-sm shrink-0`}>{modul.id}</div>
+                          {modul.title}
+                        </h3>
+                        <p className="text-theme-dark/60 font-bold mt-2 ml-14 md:ml-16">{modul.label}</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 xl:gap-6">
+                        {moduleLessons.map((lesson) => (
+                          <button
+                            key={lesson.id}
+                            onClick={() => {
+                              setSelectedLesson(lesson);
+                              setActiveTab('lecture');
+                            }}
+                            className={`group relative flex items-start gap-4 p-5 md:p-6 bg-theme-cream/30 rounded-[2rem] border-2 border-transparent ${modul.hover} transition-all duration-300 text-left overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-${modul.color.replace('text-', '')}/10 cursor-pointer`}
+                          >
+                            <div className={`absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity ${modul.color}`}>
+                              <BookOpen size={80} />
+                            </div>
+                            <div className="p-3 md:p-4 bg-white rounded-2xl shadow-sm group-hover:scale-110 transition-transform shrink-0 relative z-10">
+                              <BookOpen className={`w-6 h-6 md:w-7 md:h-7 ${modul.color}`} />
+                            </div>
+                            <div className="flex-1 relative z-10">
+                              <h4 className={`font-display font-black text-lg md:text-xl text-theme-dark group-hover:${modul.color} transition-colors leading-tight`}>{lesson.title}</h4>
+                              <p className="text-[11px] md:text-xs text-theme-dark/70 font-bold mt-2 line-clamp-2 md:line-clamp-none">{lesson.subtitle}</p>
+                              
+                              <div className="flex flex-wrap items-center gap-2 mt-4">
+                                <div className={`flex items-center text-[10px] font-black ${modul.color} bg-white px-2 py-1 md:py-1.5 rounded-md shadow-sm uppercase tracking-wider`}>
+                                  {lesson.items.length} từ
+                                </div>
+                                {lesson.grammar && lesson.grammar.length > 0 && (
+                                  <div className="flex items-center text-[10px] font-black text-theme-secondary bg-white px-2 py-1 md:py-1.5 rounded-md shadow-sm uppercase tracking-wider">
+                                    {lesson.grammar.length} ngữ pháp
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
 
                 {/* Review Module Button */}
                 <button
@@ -1212,7 +1249,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 >
                   <Languages className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Ngữ pháp</span>
                 </button>
-                {(['l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l1', 'l2', 'l3', 'l13', 'l14', 'l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('lecture')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1268,6 +1305,16 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               <div className="space-y-4 pb-20">
                 {selectedLesson.id === 'review' || activeTab === 'review' ? (
                    activeSubTab === 'ai_roleplay' ? <ReviewAIRoleplay /> : <ReviewDailyMix />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l1' ? (
+                  <Lektion1Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l2' ? (
+                  <Lektion2Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l3' ? (
+                  <Lektion3Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l13' ? (
+                  <Lektion13Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l14' ? (
+                  <Lektion14Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l15' ? (
                   <Lektion15Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l16' ? (
@@ -1458,10 +1505,10 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 ) : (
                   activeTab === 'vocabulary' ? (
                     <div>
-                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
-                            {(selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20') && (
+                            {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20') && (
                               <button 
                                 onClick={() => setActiveSubTab('theory')}
                                 className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'theory' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
@@ -1479,13 +1526,23 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                               onClick={() => setActiveSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : ['l19', 'l20'].includes(selectedLesson.id) ? 'Bài tập Từ vựng' : 'Bài tập đại trà (10 bài)'}
+                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : ['l1', 'l2', 'l3', 'l13', 'l14', 'l19', 'l20'].includes(selectedLesson.id) ? 'Bài tập Từ vựng' : 'Bài tập đại trà (10 bài)'}
                             </button>
                           </div>
                         </div>
                       )}
                       
-                      {selectedLesson.id === 'l17' && activeSubTab === 'theory' ? (
+                      {selectedLesson.id === 'l1' && activeSubTab === 'theory' ? (
+                        <Lektion1VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l2' && activeSubTab === 'theory' ? (
+                        <Lektion2VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l3' && activeSubTab === 'theory' ? (
+                        <Lektion3VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l13' && activeSubTab === 'theory' ? (
+                        <Lektion13VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l14' && activeSubTab === 'theory' ? (
+                        <Lektion14VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l17' && activeSubTab === 'theory' ? (
                         <Lektion17VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l18' && activeSubTab === 'theory' ? (
                         <Lektion18VocabTheory playAudio={playAudio} playingId={playingId} />
@@ -1499,6 +1556,16 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         <Lektion23Exercises playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l24' && activeSubTab === 'exercises' ? (
                         <Lektion24Exercises playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l1' && activeSubTab === 'exercises' ? (
+                        <Lektion1VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l2' && activeSubTab === 'exercises' ? (
+                        <Lektion2VocabEx />
+                      ) : selectedLesson.id === 'l3' && activeSubTab === 'exercises' ? (
+                        <Lektion3VocabEx />
+                      ) : selectedLesson.id === 'l13' && activeSubTab === 'exercises' ? (
+                        <Lektion13VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l14' && activeSubTab === 'exercises' ? (
+                        <Lektion14VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l17' && activeSubTab === 'exercises' ? (
                         <Lektion17VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l18' && activeSubTab === 'exercises' ? (
@@ -1527,7 +1594,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     </div>
                   ) : (
                     <div>
-                      {(selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -1540,13 +1607,33 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                               onClick={() => setGrammarSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-secondary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l19' ? 'Bài tập Ngữ pháp Woher/Wohin' : selectedLesson.id === 'l20' ? 'Bài tập Präteritum' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l15' ? 'Bài tập Passiv' : 'Bài tập Ngữ pháp'}
+                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l19' ? 'Bài tập Ngữ pháp Woher/Wohin' : selectedLesson.id === 'l20' ? 'Bài tập Präteritum' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : ['l14', 'l15'].includes(selectedLesson.id) ? 'Bài tập Passiv' : selectedLesson.id === 'l13' ? 'Bài tập Ngữ pháp (Als & Wenn)' : selectedLesson.id === 'l3' ? 'Bài tập Ngữ pháp (-ung, -er)' : selectedLesson.id === 'l2' ? 'Bài tập Ngữ pháp (Chỉ vị trí)' : selectedLesson.id === 'l1' ? 'Bài tập Ngữ pháp (Sở hữu, Quá khứ)' : 'Bài tập Ngữ pháp'}
                             </button>
                           </div>
                         </div>
                       )}
 
-                      {selectedLesson.id === 'l22' && grammarSubTab === 'exercises' ? (
+                      {selectedLesson.id === 'l1' && grammarSubTab === 'exercises' ? (
+                        <Lektion1GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l1' && grammarSubTab === 'theory' ? (
+                        <Lektion1GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l2' && grammarSubTab === 'exercises' ? (
+                        <Lektion2GrammarEx />
+                      ) : selectedLesson.id === 'l2' && grammarSubTab === 'theory' ? (
+                        <Lektion2GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l3' && grammarSubTab === 'exercises' ? (
+                        <Lektion3GrammarEx />
+                      ) : selectedLesson.id === 'l3' && grammarSubTab === 'theory' ? (
+                        <Lektion3GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l13' && grammarSubTab === 'exercises' ? (
+                        <Lektion13GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l13' && grammarSubTab === 'theory' ? (
+                        <Lektion13GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l14' && grammarSubTab === 'exercises' ? (
+                        <Lektion14GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l14' && grammarSubTab === 'theory' ? (
+                        <Lektion14GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l22' && grammarSubTab === 'exercises' ? (
                         <Lektion22GrammarEx />
                       ) : selectedLesson.id === 'l23' && grammarSubTab === 'exercises' ? (
                         <Lektion23GrammarEx playAudio={playAudio} playingId={playingId} />
