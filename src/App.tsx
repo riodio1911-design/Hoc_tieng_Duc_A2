@@ -37,10 +37,56 @@ import Lektion3VocabEx from './components/Lektion3VocabEx';
 import Lektion3GrammarTheory from './components/Lektion3GrammarTheory';
 import Lektion3GrammarEx from './components/Lektion3GrammarEx';
 import Lektion3Slides from './components/Lektion3Slides';
+import Lektion4VocabTheory from './components/Lektion4VocabTheory';
+import Lektion4VocabEx from './components/Lektion4VocabEx';
+import Lektion4GrammarTheory from './components/Lektion4GrammarTheory';
+import Lektion4GrammarEx from './components/Lektion4GrammarEx';
+import Lektion4Slides from './components/Lektion4Slides';
+import Lektion5VocabTheory from './components/Lektion5VocabTheory';
+import Lektion5VocabEx from './components/Lektion5VocabEx';
+import Lektion5GrammarTheory from './components/Lektion5GrammarTheory';
+import Lektion5GrammarEx from './components/Lektion5GrammarEx';
+import Lektion5Slides from './components/Lektion5Slides';
+import Lektion6VocabTheory from './components/Lektion6VocabTheory';
+import Lektion6VocabEx from './components/Lektion6VocabEx';
+import Lektion6GrammarTheory from './components/Lektion6GrammarTheory';
+import Lektion6GrammarEx from './components/Lektion6GrammarEx';
+import Lektion6Slides from './components/Lektion6Slides';
+import Lektion7VocabTheory from './components/Lektion7VocabTheory';
+import Lektion7VocabEx from './components/Lektion7VocabEx';
+import Lektion7GrammarTheory from './components/Lektion7GrammarTheory';
+import Lektion7GrammarEx from './components/Lektion7GrammarEx';
+import Lektion7Slides from './components/Lektion7Slides';
+import Lektion8VocabTheory from './components/Lektion8VocabTheory';
+import Lektion8VocabEx from './components/Lektion8VocabEx';
+import Lektion8GrammarTheory from './components/Lektion8GrammarTheory';
+import Lektion8GrammarEx from './components/Lektion8GrammarEx';
+import Lektion8Slides from './components/Lektion8Slides';
+import Lektion9VocabTheory from './components/Lektion9VocabTheory';
+import Lektion9VocabEx from './components/Lektion9VocabEx';
+import Lektion9GrammarTheory from './components/Lektion9GrammarTheory';
+import Lektion9GrammarEx from './components/Lektion9GrammarEx';
+import Lektion9Slides from './components/Lektion9Slides';
+import Lektion10VocabTheory from './components/Lektion10VocabTheory';
+import Lektion10VocabEx from './components/Lektion10VocabEx';
+import Lektion10GrammarTheory from './components/Lektion10GrammarTheory';
+import Lektion10GrammarEx from './components/Lektion10GrammarEx';
+import Lektion10Slides from './components/Lektion10Slides';
+
+import Lektion11VocabTheory from './components/Lektion11VocabTheory';
+import Lektion11VocabEx from './components/Lektion11VocabEx';
+import Lektion11GrammarTheory from './components/Lektion11GrammarTheory';
+import Lektion11GrammarEx from './components/Lektion11GrammarEx';
+import Lektion11Slides from './components/Lektion11Slides';
 import Lektion13VocabTheory from './components/Lektion13VocabTheory';
 import Lektion13VocabEx from './components/Lektion13VocabEx';
 import Lektion13GrammarTheory from './components/Lektion13GrammarTheory';
 import Lektion13GrammarEx from './components/Lektion13GrammarEx';
+import Lektion12Slides from './components/Lektion12Slides';
+import Lektion12VocabTheory from './components/Lektion12VocabTheory';
+import Lektion12VocabEx from './components/Lektion12VocabEx';
+import Lektion12GrammarTheory from './components/Lektion12GrammarTheory';
+import Lektion12GrammarEx from './components/Lektion12GrammarEx';
 import Lektion13Slides from './components/Lektion13Slides';
 import Lektion14VocabTheory from './components/Lektion14VocabTheory';
 import Lektion14VocabEx from './components/Lektion14VocabEx';
@@ -1249,7 +1295,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 >
                   <Languages className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" /> <span className="text-center leading-tight">Ngữ pháp</span>
                 </button>
-                {(['l1', 'l2', 'l3', 'l13', 'l14', 'l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
+                {(['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9', 'l10', 'l11', 'l12', 'l13', 'l14', 'l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                   <button
                     onClick={() => setActiveTab('lecture')}
                     className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
@@ -1311,6 +1357,24 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   <Lektion2Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l3' ? (
                   <Lektion3Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l4' ? (
+                  <Lektion4Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l5' ? (
+                  <Lektion5Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l6' ? (
+                  <Lektion6Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l7' ? (
+                  <Lektion7Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l8' ? (
+                  <Lektion8Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l9' ? (
+                  <Lektion9Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l10' ? (
+                  <Lektion10Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l11' ? (
+                  <Lektion11Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
+                ) : activeTab === 'lecture' && selectedLesson.id === 'l12' ? (
+                  <Lektion12Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l13' ? (
                   <Lektion13Slides playAudio={playAudio} playingId={playingId} onBack={() => setSelectedLesson(null)} />
                 ) : activeTab === 'lecture' && selectedLesson.id === 'l14' ? (
@@ -1505,10 +1569,10 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 ) : (
                   activeTab === 'vocabulary' ? (
                     <div>
-                      {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l4' || selectedLesson.id === 'l5' || selectedLesson.id === 'l6' || selectedLesson.id === 'l7' || selectedLesson.id === 'l8' || selectedLesson.id === 'l9' || selectedLesson.id === 'l10' || selectedLesson.id === 'l11' || selectedLesson.id === 'l12' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
-                            {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20') && (
+                            {(['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9', 'l10', 'l11', 'l12', 'l13', 'l14', 'l17', 'l18', 'l19', 'l20'].includes(selectedLesson.id)) && (
                               <button 
                                 onClick={() => setActiveSubTab('theory')}
                                 className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'theory' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
@@ -1526,7 +1590,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                               onClick={() => setActiveSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : ['l1', 'l2', 'l3', 'l13', 'l14', 'l19', 'l20'].includes(selectedLesson.id) ? 'Bài tập Từ vựng' : 'Bài tập đại trà (10 bài)'}
+                              {selectedLesson.id === 'l24' ? 'Bài tập nâng cấp (10 bài)' : ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l13', 'l14', 'l19', 'l20'].includes(selectedLesson.id) ? 'Bài tập Từ vựng' : 'Bài tập đại trà (10 bài)'}
                             </button>
                           </div>
                         </div>
@@ -1538,6 +1602,18 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         <Lektion2VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l3' && activeSubTab === 'theory' ? (
                         <Lektion3VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l4' && activeSubTab === 'theory' ? (
+                        <Lektion4VocabTheory />
+                      ) : selectedLesson.id === 'l5' && activeSubTab === 'theory' ? (
+                        <Lektion5VocabTheory />
+                      ) : selectedLesson.id === 'l6' && activeSubTab === 'theory' ? (
+                        <Lektion6VocabTheory />
+                      ) : selectedLesson.id === 'l7' && activeSubTab === 'theory' ? (
+                        <Lektion7VocabTheory />
+                      ) : selectedLesson.id === 'l8' && activeSubTab === 'theory' ? (
+                        <Lektion8VocabTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l9' && activeSubTab === 'theory' ? (
+                        <Lektion9VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l13' && activeSubTab === 'theory' ? (
                         <Lektion13VocabTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l14' && activeSubTab === 'theory' ? (
@@ -1562,6 +1638,18 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         <Lektion2VocabEx />
                       ) : selectedLesson.id === 'l3' && activeSubTab === 'exercises' ? (
                         <Lektion3VocabEx />
+                      ) : selectedLesson.id === 'l4' && activeSubTab === 'exercises' ? (
+                        <Lektion4VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l5' && activeSubTab === 'exercises' ? (
+                        <Lektion5VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l6' && activeSubTab === 'exercises' ? (
+                        <Lektion6VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l7' && activeSubTab === 'exercises' ? (
+                        <Lektion7VocabEx />
+                      ) : selectedLesson.id === 'l8' && activeSubTab === 'exercises' ? (
+                        <Lektion8VocabEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l9' && activeSubTab === 'exercises' ? (
+                        <Lektion9VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l13' && activeSubTab === 'exercises' ? (
                         <Lektion13VocabEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l14' && activeSubTab === 'exercises' ? (
@@ -1594,7 +1682,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     </div>
                   ) : (
                     <div>
-                      {(selectedLesson.id === 'l1' || selectedLesson.id === 'l2' || selectedLesson.id === 'l3' || selectedLesson.id === 'l13' || selectedLesson.id === 'l14' || selectedLesson.id === 'l15' || selectedLesson.id === 'l16' || selectedLesson.id === 'l17' || selectedLesson.id === 'l18' || selectedLesson.id === 'l19' || selectedLesson.id === 'l20' || selectedLesson.id === 'l22' || selectedLesson.id === 'l21' || selectedLesson.id === 'l23' || selectedLesson.id === 'l24') && (
+                      {(['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9', 'l10', 'l13', 'l14', 'l15', 'l16', 'l17', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24'].includes(selectedLesson.id)) && (
                         <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
                           <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
                             <button 
@@ -1607,7 +1695,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                               onClick={() => setGrammarSubTab('exercises')}
                               className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === 'exercises' ? 'bg-white shadow-sm text-theme-secondary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}
                             >
-                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l19' ? 'Bài tập Ngữ pháp Woher/Wohin' : selectedLesson.id === 'l20' ? 'Bài tập Präteritum' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : ['l14', 'l15'].includes(selectedLesson.id) ? 'Bài tập Passiv' : selectedLesson.id === 'l13' ? 'Bài tập Ngữ pháp (Als & Wenn)' : selectedLesson.id === 'l3' ? 'Bài tập Ngữ pháp (-ung, -er)' : selectedLesson.id === 'l2' ? 'Bài tập Ngữ pháp (Chỉ vị trí)' : selectedLesson.id === 'l1' ? 'Bài tập Ngữ pháp (Sở hữu, Quá khứ)' : 'Bài tập Ngữ pháp'}
+                              {selectedLesson.id === 'l22' ? 'Bài tập Ngữ pháp (5 Phần)' : selectedLesson.id === 'l23' ? 'Bài tập Ngữ pháp (15 Phần)' : selectedLesson.id === 'l24' ? 'Bài tập Ngữ pháp (8 Phần)' : selectedLesson.id === 'l18' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l19' ? 'Bài tập Ngữ pháp Woher/Wohin' : selectedLesson.id === 'l20' ? 'Bài tập Präteritum' : selectedLesson.id === 'l17' ? 'Bài tập & Test Ngữ pháp' : selectedLesson.id === 'l16' ? 'Bài tập & Test Ngữ pháp' : ['l14', 'l15'].includes(selectedLesson.id) ? 'Bài tập Passiv' : selectedLesson.id === 'l13' ? 'Bài tập Ngữ pháp (Als & Wenn)' : selectedLesson.id === 'l10' ? 'Bài tập Ngữ pháp (dass)' : selectedLesson.id === 'l9' ? 'Bài tập Ngữ pháp (So sánh)' : selectedLesson.id === 'l8' ? 'Bài tập Ngữ pháp (weil, deshalb)' : selectedLesson.id === 'l7' ? 'Bài tập Ngữ pháp (Câu mệnh lệnh)' : selectedLesson.id === 'l6' ? 'Bài tập Ngữ pháp (Giới từ t/g)' : selectedLesson.id === 'l5' ? 'Bài tập Ngữ pháp (Tính từ)' : selectedLesson.id === 'l4' ? 'Bài tập Ngữ pháp (Adjektive)' : selectedLesson.id === 'l3' ? 'Bài tập Ngữ pháp (-ung, -er)' : selectedLesson.id === 'l2' ? 'Bài tập Ngữ pháp (Chỉ vị trí)' : selectedLesson.id === 'l1' ? 'Bài tập Ngữ pháp (Sở hữu, Quá khứ)' : 'Bài tập Ngữ pháp'}
                             </button>
                           </div>
                         </div>
@@ -1625,6 +1713,30 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         <Lektion3GrammarEx />
                       ) : selectedLesson.id === 'l3' && grammarSubTab === 'theory' ? (
                         <Lektion3GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l4' && grammarSubTab === 'exercises' ? (
+                        <Lektion4GrammarEx />
+                      ) : selectedLesson.id === 'l4' && grammarSubTab === 'theory' ? (
+                        <Lektion4GrammarTheory />
+                      ) : selectedLesson.id === 'l5' && grammarSubTab === 'exercises' ? (
+                        <Lektion5GrammarEx />
+                      ) : selectedLesson.id === 'l5' && grammarSubTab === 'theory' ? (
+                        <Lektion5GrammarTheory />
+                      ) : selectedLesson.id === 'l6' && grammarSubTab === 'exercises' ? (
+                        <Lektion6GrammarEx />
+                      ) : selectedLesson.id === 'l6' && grammarSubTab === 'theory' ? (
+                        <Lektion6GrammarTheory />
+                      ) : selectedLesson.id === 'l7' && grammarSubTab === 'exercises' ? (
+                        <Lektion7GrammarEx />
+                      ) : selectedLesson.id === 'l7' && grammarSubTab === 'theory' ? (
+                        <Lektion7GrammarTheory />
+                      ) : selectedLesson.id === 'l8' && grammarSubTab === 'exercises' ? (
+                        <Lektion8GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l8' && grammarSubTab === 'theory' ? (
+                        <Lektion8GrammarTheory playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l9' && grammarSubTab === 'exercises' ? (
+                        <Lektion9GrammarEx playAudio={playAudio} playingId={playingId} />
+                      ) : selectedLesson.id === 'l9' && grammarSubTab === 'theory' ? (
+                        <Lektion9GrammarTheory playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l13' && grammarSubTab === 'exercises' ? (
                         <Lektion13GrammarEx playAudio={playAudio} playingId={playingId} />
                       ) : selectedLesson.id === 'l13' && grammarSubTab === 'theory' ? (
