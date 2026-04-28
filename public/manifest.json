@@ -1,0 +1,17 @@
+{
+  "name": "Học tiếng Đức AI",
+  "short_name": "Tiếng Đức AI",
+  "description": "Ứng dụng luyện phát âm và học tiếng Đức với trí tuệ nhân tạo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/197/197571.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
