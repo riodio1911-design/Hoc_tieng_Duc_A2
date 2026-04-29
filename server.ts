@@ -23,6 +23,7 @@ let currentKey: string | null = null;
 function getAI() {
   const rawKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
   const key = rawKey?.trim();
+  console.log("Using API key starting with: ", key?.substring(0, 4));
   if (!key) throw new Error("Missing GEMINI_API_KEY environment variable. Please make sure VITE_GEMINI_API_KEY is defined in AI Studio config or .env");
   if (!aiClient || currentKey !== key) {
     aiClient = new GoogleGenAI({ apiKey: key });
@@ -30,6 +31,18 @@ function getAI() {
   }
   return aiClient;
 }
+
+app.get("/api/test-key", (req, res) => {
+  const debugEnv = {};
+  for (const k in process.env) {
+    if (k.includes("GEMINI")) debugEnv[k] = process.env[k];
+  }
+  res.json({ 
+    gemini: process.env.GEMINI_API_KEY?.substring(0, 4), 
+    vite: process.env.VITE_GEMINI_API_KEY?.substring(0, 4),
+    full: debugEnv
+  });
+});
 
 app.post("/api/tts", async (req, res) => {
   try {

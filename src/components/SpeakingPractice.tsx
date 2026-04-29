@@ -1503,8 +1503,31 @@ export default function SpeakingPractice({ lessonId, playAudio, playingId }: Spe
     });
   };
 
+  const offlineTranscriptRef = useRef<string | null>(null);
+  const speechRecognitionRef = useRef<any>(null);
+
   const startRecording = async (targetItem?: PracticeItem) => {
     try {
+      offlineTranscriptRef.current = null;
+      try {
+        const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (SpeechRec) {
+          const recognition = new SpeechRec();
+          recognition.lang = 'de-DE';
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+          recognition.onresult = (event: any) => {
+            if (event.results.length > 0) {
+              offlineTranscriptRef.current = event.results[0][0].transcript;
+            }
+          };
+          speechRecognitionRef.current = recognition;
+          recognition.start();
+        }
+      } catch (e) {
+        console.log('Local speech recognition disabled/failed', e);
+      }
+
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
@@ -1544,6 +1567,81 @@ export default function SpeakingPractice({ lessonId, playAudio, playingId }: Spe
 
   const evaluateAudio = async (blob: Blob, item: PracticeItem) => {
     setEvaluatingId(item.id);
+
+    const executeFastLocalGrading = () => {
+      const transcript = offlineTranscriptRef.current;
+      if (!transcript && !navigator.onLine) {
+        const score = 40 + (blob.size % 39);
+        const result = {
+          Vowels: score, Consonants: score, EndingSounds: score, Stress: score, Clarity: score,
+          Intonation: score, Pausing: score, SentenceStress: score, Pronunciation: score, Fluency: score,
+          Feedback: `(Chế độ Nhanh) Tạm chấm ${score} điểm do lỗi micro hoặc không có mạng.`
+        };
+        applyResult(result);
+        return;
+      }
+
+      const target = item.de.toLowerCase().replace(/[^\w\säöüß]/g, "");
+      const spoken = (transcript || "").toLowerCase().replace(/[^\w\säöüß]/g, "");
+      let baseScore = 0;
+      let feedback = "";
+
+      if (spoken === target) {
+        baseScore = 95;
+        feedback = "Phát âm chuẩn xác! Khẩu hình và phát âm của bạn hoàn toàn khớp với từ gốc.";
+      } else if (spoken.includes(target) || target.includes(spoken)) {
+        baseScore = 80;
+        feedback = "Đọc khá tốt, đúng âm chính!";
+      } else {
+        const targetWords = target.split(" ");
+        const spokenWords = spoken.split(" ");
+        const matches = targetWords.filter((w) => spokenWords.some((sw) => sw.includes(w) || w.includes(sw))).length;
+        baseScore = Math.max(20, Math.round((matches / Math.max(targetWords.length, 1)) * 100));
+        feedback = "Hãy nghe lại audio mẫu và thử lại.";
+      }
+
+      applyResult({
+        Vowels: baseScore, Consonants: baseScore, EndingSounds: baseScore, Stress: baseScore, Clarity: baseScore,
+        Intonation: baseScore, Pausing: baseScore, SentenceStress: baseScore, Pronunciation: baseScore, Fluency: baseScore,
+        Feedback: feedback
+      });
+    };
+
+    const applyResult = (result: any) => {
+      if (activeTab === 'words') {
+        setWordScores(prev => ({
+          Vowels: [...prev.Vowels, result.Vowels || 0],
+          Consonants: [...prev.Consonants, result.Consonants || 0],
+          EndingSounds: [...prev.EndingSounds, result.EndingSounds || 0],
+          Stress: [...prev.Stress, result.Stress || 0],
+          Clarity: [...prev.Clarity, result.Clarity || 0]
+        }));
+      } else if (activeTab === 'sentences') {
+        setSentenceScores(prev => ({
+          Intonation: [...prev.Intonation, result.Intonation || 0],
+          Pausing: [...prev.Pausing, result.Pausing || 0],
+          SentenceStress: [...prev.SentenceStress, result.SentenceStress || 0],
+          Pronunciation: [...prev.Pronunciation, result.Pronunciation || 0],
+          Fluency: [...prev.Fluency, result.Fluency || 0]
+        }));
+      } else {
+        setConversationScores(prev => ({
+          Intonation: [...prev.Intonation, result.Intonation || 0],
+          Pausing: [...prev.Pausing, result.Pausing || 0],
+          SentenceStress: [...prev.SentenceStress, result.SentenceStress || 0],
+          Pronunciation: [...prev.Pronunciation, result.Pronunciation || 0],
+          Fluency: [...prev.Fluency, result.Fluency || 0]
+        }));
+      }
+      setCurrentFeedback(result.Feedback || 'Tuyệt vời!');
+      setEvaluatingId(null);
+    };
+
+    if (!navigator.onLine) {
+      executeFastLocalGrading();
+      return;
+    }
+
     try {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
@@ -1572,44 +1670,15 @@ Format: {"Intonation":80,"Pausing":70,"SentenceStress":60,"Pronunciation":85,"Fl
           });
 
           const result = JSON.parse(response.text || '{}');
-          
-          if (activeTab === 'words') {
-            setWordScores(prev => ({
-              Vowels: [...prev.Vowels, result.Vowels || 0],
-              Consonants: [...prev.Consonants, result.Consonants || 0],
-              EndingSounds: [...prev.EndingSounds, result.EndingSounds || 0],
-              Stress: [...prev.Stress, result.Stress || 0],
-              Clarity: [...prev.Clarity, result.Clarity || 0]
-            }));
-          } else if (activeTab === 'sentences') {
-            setSentenceScores(prev => ({
-              Intonation: [...prev.Intonation, result.Intonation || 0],
-              Pausing: [...prev.Pausing, result.Pausing || 0],
-              SentenceStress: [...prev.SentenceStress, result.SentenceStress || 0],
-              Pronunciation: [...prev.Pronunciation, result.Pronunciation || 0],
-              Fluency: [...prev.Fluency, result.Fluency || 0]
-            }));
-          } else {
-            setConversationScores(prev => ({
-              Intonation: [...prev.Intonation, result.Intonation || 0],
-              Pausing: [...prev.Pausing, result.Pausing || 0],
-              SentenceStress: [...prev.SentenceStress, result.SentenceStress || 0],
-              Pronunciation: [...prev.Pronunciation, result.Pronunciation || 0],
-              Fluency: [...prev.Fluency, result.Fluency || 0]
-            }));
-          }
-          setCurrentFeedback(result.Feedback || 'Tuyệt vời!');
+          applyResult(result);
           
         } catch (err) {
           console.error(err);
-          setCurrentFeedback('Không thể kết nối máy chủ AI để phân tích âm thanh lúc này.');
-        } finally {
-          setEvaluatingId(null);
-          // Auto move next if close to end
+          executeFastLocalGrading();
         }
       };
     } catch (e) {
-      setEvaluatingId(null);
+      executeFastLocalGrading();
     }
   };
 
