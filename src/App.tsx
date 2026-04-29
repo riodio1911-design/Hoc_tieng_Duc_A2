@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Volume2,
@@ -17,6 +17,9 @@ import {
   Download,
   Bot,
   FileText,
+  ChevronUp,
+  Menu,
+  Hand,
 } from "lucide-react";
 import { GoogleGenAI, Modality } from "@google/genai";
 import {
@@ -293,6 +296,11 @@ export default function App() {
   const [isQuotaLimited, setIsQuotaLimited] = useState(false);
   const [quotaResetTime, setQuotaResetTime] = useState<number>(0);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [activeTab, activeSubTab]);
+
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [recordingId, setRecordingId] = useState<string | null>(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, Feedback>>({});
@@ -1322,185 +1330,102 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               </div>
 
               <div className="space-y-8">
-                {selectedModuleId === null ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
-                    {MODULE_DATA.map((modul) => {
-                      const moduleLessons = VOCABULARY_DATA.filter((l) => {
-                        if (l.id.startsWith("l")) {
-                          const num = parseInt(l.id.replace("l", ""), 10);
-                          return Math.ceil(num / 3) === modul.id;
-                        }
-                        return false;
-                      });
+                {MODULE_DATA.map((modul) => {
+                  const moduleLessons = VOCABULARY_DATA.filter((l) => {
+                    if (l.id.startsWith("l")) {
+                      const num = parseInt(l.id.replace("l", ""), 10);
+                      return Math.ceil(num / 3) === modul.id;
+                    }
+                    return false;
+                  });
 
-                      return (
-                        <button
-                          key={modul.id}
-                          onClick={() => setSelectedModuleId(modul.id)}
-                          className={`bg-white rounded-[2rem] p-6 shadow-sm border-2 ${modul.border} text-left transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-${modul.color.replace("text-", "")}/10 ${modul.hover} cursor-pointer group flex flex-col items-start h-full`}
+                  if (moduleLessons.length === 0) return null;
+
+                  return (
+                    <div
+                      key={modul.id}
+                      className={`bg-white rounded-3xl p-6 md:p-8 shadow-sm border-2 ${modul.border}`}
+                    >
+                      <div className="mb-6 xl:mb-8">
+                        <h3
+                          className={`text-2xl md:text-3xl font-black flex items-center gap-3 ${modul.color} font-display`}
                         >
                           <div
-                            className={`w-12 h-12 rounded-2xl ${modul.bg} flex items-center justify-center text-white text-xl font-black shadow-sm mb-5 group-hover:scale-110 transition-transform`}
+                            className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${modul.bg} flex items-center justify-center text-white text-xl shadow-sm shrink-0`}
                           >
                             {modul.id}
                           </div>
-                          <h3
-                            className={`text-2xl font-black ${modul.color} font-display mb-2`}
-                          >
-                            {modul.title}
-                          </h3>
-                          <p className="text-xs text-theme-dark/60 font-bold leading-relaxed mb-4 flex-grow">
-                            {modul.label}
-                          </p>
+                          {modul.title}
+                        </h3>
+                        <p className="text-theme-dark/60 font-bold mt-2 ml-14 md:ml-16">
+                          {modul.label}
+                        </p>
+                      </div>
 
-                          <div className="flex flex-col w-full mt-auto pt-4 border-t border-black/5">
-                            <div className="flex flex-wrap gap-2.5">
-                              {moduleLessons.map((lesson) => {
-                                const num = lesson.id.replace("l", "");
-                                return (
-                                  <div
-                                    key={lesson.id}
-                                    className={`flex items-center gap-2.5 px-3 py-1.5 rounded-full border-2 ${modul.border} bg-white group-hover:border-${modul.color.replace("text-", "")}/40 group-hover:-translate-y-0.5 group-hover:shadow-md transition-all`}
-                                  >
-                                    <div
-                                      className={`w-6 h-6 rounded-full ${modul.bg} flex items-center justify-center text-white text-[12px] font-black shrink-0 shadow-sm`}
-                                    >
-                                      {num}
-                                    </div>
-                                    <span
-                                      className={`text-[12px] font-black ${modul.color} uppercase tracking-widest`}
-                                    >
-                                      Lektion {num}
-                                    </span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="animate-in slide-in-from-right-4 fade-in duration-300">
-                    <button
-                      onClick={() => setSelectedModuleId(null)}
-                      className="mb-8 flex items-center gap-2 text-theme-dark/60 hover:text-theme-dark font-black tracking-wide text-sm transition-colors py-2 px-4 rounded-full bg-black/5 hover:bg-black/10 w-fit"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="m15 18-6-6 6-6" />
-                      </svg>
-                      QUAY LẠI
-                    </button>
-                    {MODULE_DATA.filter((m) => m.id === selectedModuleId).map(
-                      (modul) => {
-                        const moduleLessons = VOCABULARY_DATA.filter((l) => {
-                          if (l.id.startsWith("l")) {
-                            const num = parseInt(l.id.replace("l", ""), 10);
-                            return Math.ceil(num / 3) === modul.id;
-                          }
-                          return false;
-                        });
-
-                        if (moduleLessons.length === 0) return null;
-
-                        return (
-                          <div
-                            key={modul.id}
-                            className={`bg-white rounded-3xl p-6 md:p-8 shadow-sm border-2 ${modul.border}`}
-                          >
-                            <div className="mb-6 xl:mb-8">
-                              <h3
-                                className={`text-2xl md:text-3xl font-black flex items-center gap-3 ${modul.color} font-display`}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
+                        {moduleLessons.map((lesson) => {
+                          const num = lesson.id.replace("l", "");
+                          return (
+                            <button
+                              key={lesson.id}
+                              onClick={() => {
+                                setSelectedLesson(lesson);
+                                setActiveTab("lecture");
+                              }}
+                              className={`group relative flex items-center gap-4 p-4 md:p-5 bg-white rounded-[2rem] border-2 ${modul.border} ${modul.hover} transition-all duration-300 text-left overflow-hidden hover:-translate-y-1 hover:shadow-xl focus:outline-none`}
+                            >
+                              {/* The Square Lektion Button-like Icon */}
+                              <div
+                                className={`flex flex-col items-center justify-center w-[70px] h-[70px] md:w-[80px] md:h-[80px] shrink-0 rounded-2xl border-2 ${modul.border} bg-white group-hover:scale-105 transition-transform overflow-hidden relative`}
                               >
                                 <div
-                                  className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${modul.bg} flex items-center justify-center text-white text-xl shadow-sm shrink-0`}
+                                  className={`absolute inset-0 opacity-5 group-hover:opacity-10 ${modul.bg} transition-opacity`}
+                                ></div>
+                                <span
+                                  className={`text-[9px] md:text-[10px] font-black ${modul.color} opacity-70 uppercase tracking-widest mb-1 z-10`}
                                 >
-                                  {modul.id}
-                                </div>
-                                {modul.title}
-                              </h3>
-                              <p className="text-theme-dark/60 font-bold mt-2 ml-14 md:ml-16">
-                                {modul.label}
-                              </p>
-                            </div>
+                                  Lektion
+                                </span>
+                                <span
+                                  className={`text-2xl md:text-3xl font-black ${modul.color} leading-none z-10`}
+                                >
+                                  {num}
+                                </span>
+                              </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
-                              {moduleLessons.map((lesson) => {
-                                const num = lesson.id.replace("l", "");
-                                return (
-                                  <button
-                                    key={lesson.id}
-                                    onClick={() => {
-                                      setSelectedLesson(lesson);
-                                      setActiveTab("lecture");
-                                    }}
-                                    className={`group relative flex items-center gap-4 p-4 md:p-5 bg-white rounded-[2rem] border-2 ${modul.border} ${modul.hover} transition-all duration-300 text-left overflow-hidden hover:-translate-y-1 hover:shadow-xl focus:outline-none`}
+                              {/* Detailed Info */}
+                              <div className="flex-1 relative z-10">
+                                <h4
+                                  className={`font-display font-black text-lg text-theme-dark group-hover:${modul.color.replace("text-", "")} transition-colors leading-tight`}
+                                >
+                                  {lesson.title}
+                                </h4>
+                                <p className="text-[11px] md:text-xs text-theme-dark/70 font-bold mt-1.5 line-clamp-2 md:line-clamp-none">
+                                  {lesson.subtitle}
+                                </p>
+
+                                <div className="flex flex-wrap items-center gap-2 mt-3">
+                                  <div
+                                    className={`flex items-center text-[10px] font-black ${modul.color} bg-${modul.color.replace("text-", "")}/10 px-2 py-1 rounded-md uppercase tracking-wider`}
                                   >
-                                    {/* The Square Lektion Button-like Icon */}
-                                    <div
-                                      className={`flex flex-col items-center justify-center w-[70px] h-[70px] md:w-[80px] md:h-[80px] shrink-0 rounded-2xl border-2 ${modul.border} bg-white group-hover:scale-105 transition-transform overflow-hidden relative`}
-                                    >
-                                      <div
-                                        className={`absolute inset-0 opacity-5 group-hover:opacity-10 ${modul.bg} transition-opacity`}
-                                      ></div>
-                                      <span
-                                        className={`text-[9px] md:text-[10px] font-black ${modul.color} opacity-70 uppercase tracking-widest mb-1 z-10`}
-                                      >
-                                        Lektion
-                                      </span>
-                                      <span
-                                        className={`text-2xl md:text-3xl font-black ${modul.color} leading-none z-10`}
-                                      >
-                                        {num}
-                                      </span>
-                                    </div>
-
-                                    {/* Detailed Info */}
-                                    <div className="flex-1 relative z-10">
-                                      <h4
-                                        className={`font-display font-black text-lg text-theme-dark group-hover:${modul.color.replace("text-", "")} transition-colors leading-tight`}
-                                      >
-                                        {lesson.title}
-                                      </h4>
-                                      <p className="text-[11px] md:text-xs text-theme-dark/70 font-bold mt-1.5 line-clamp-2 md:line-clamp-none">
-                                        {lesson.subtitle}
-                                      </p>
-
-                                      <div className="flex flex-wrap items-center gap-2 mt-3">
-                                        <div
-                                          className={`flex items-center text-[10px] font-black ${modul.color} bg-${modul.color.replace("text-", "")}/10 px-2 py-1 rounded-md uppercase tracking-wider`}
-                                        >
-                                          {lesson.items.length} từ
-                                        </div>
-                                        {lesson.grammar &&
-                                          lesson.grammar.length > 0 && (
-                                            <div className="flex items-center text-[10px] font-black text-theme-secondary bg-theme-secondary/10 px-2 py-1 rounded-md uppercase tracking-wider">
-                                              {lesson.grammar.length} ngữ pháp
-                                            </div>
-                                          )}
+                                    {lesson.items.length} từ
+                                  </div>
+                                  {lesson.grammar &&
+                                    lesson.grammar.length > 0 && (
+                                      <div className="flex items-center text-[10px] font-black text-theme-secondary bg-theme-secondary/10 px-2 py-1 rounded-md uppercase tracking-wider">
+                                        {lesson.grammar.length} ngữ pháp
                                       </div>
-                                    </div>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      },
-                    )}
-                  </div>
-                )}
+                                    )}
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
                 {/* Review Module Button */}
                 <button
@@ -1544,7 +1469,6 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     </div>
                   </div>
                 </button>
-              </div>
 
               {/* Offline Usage Tip for the Home Screen */}
               <div className="mt-12 bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-indigo-100/50 border border-theme-dark/10 flex flex-col md:flex-row gap-6 items-start">
@@ -1886,199 +1810,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 )}
               </div>
 
-              {/* Tab Bar */}
-              {selectedLesson.id === "review" ? (
-                <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x">
-                  <button
-                    onClick={() => setActiveSubTab("ai_roleplay")}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
-                      activeSubTab === "ai_roleplay"
-                        ? "bg-white shadow-xl shadow-theme-dark/10 text-emerald-600"
-                        : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                    }`}
-                  >
-                    <Bot className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                    <span className="text-center leading-tight">
-                      AI Roleplay
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => setActiveSubTab("daily_mix")}
-                    className={`flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 ${
-                      activeSubTab === "daily_mix"
-                        ? "bg-white shadow-xl shadow-theme-dark/10 text-amber-600"
-                        : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                    }`}
-                  >
-                    <Gamepad2 className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                    <span className="text-center leading-tight">Daily Mix</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="flex p-1.5 bg-theme-dark/5 rounded-[28px] gap-1 border-2 border-theme-dark/5 overflow-x-auto hide-scrollbar touch-pan-x snap-x">
-                  <button
-                    onClick={() => setActiveTab("vocabulary")}
-                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                      activeTab === "vocabulary"
-                        ? "bg-white shadow-xl shadow-theme-dark/10 text-theme-primary"
-                        : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                    }`}
-                  >
-                    <BookOpen className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                    <span className="text-center leading-tight">Từ vựng</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveTab("grammar")}
-                    className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                      activeTab === "grammar"
-                        ? "bg-white shadow-xl shadow-theme-dark/10 text-theme-secondary"
-                        : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                    }`}
-                  >
-                    <Languages className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                    <span className="text-center leading-tight">Ngữ pháp</span>
-                  </button>
-                  {[
-                    "l1",
-                    "l2",
-                    "l3",
-                    "l4",
-                    "l5",
-                    "l6",
-                    "l7",
-                    "l8",
-                    "l9",
-                    "l10",
-                    "l11",
-                    "l12",
-                    "l13",
-                    "l14",
-                    "l15",
-                    "l16",
-                    "l17",
-                    "l18",
-                    "l19",
-                    "l20",
-                    "l21",
-                    "l22",
-                    "l23",
-                    "l24",
-                  ].includes(selectedLesson.id) && (
-                    <button
-                      onClick={() => setActiveTab("lecture")}
-                      className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                        activeTab === "lecture"
-                          ? "bg-white shadow-xl shadow-theme-dark/10 text-amber-600"
-                          : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                      }`}
-                    >
-                      <MonitorPlay className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                      <span className="text-center leading-tight">
-                        Bài giảng
-                      </span>
-                    </button>
-                  )}
-                  {[
-                    "l15",
-                    "l16",
-                    "l17",
-                    "l18",
-                    "l19",
-                    "l20",
-                    "l21",
-                    "l22",
-                    "l23",
-                    "l24",
-                  ].includes(selectedLesson.id) && (
-                    <button
-                      onClick={() => setActiveTab("game")}
-                      className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                        activeTab === "game"
-                          ? "bg-white shadow-xl shadow-theme-dark/10 text-theme-accent"
-                          : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                      }`}
-                    >
-                      <Gamepad2 className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                      <span className="text-center leading-tight">
-                        Trò chơi
-                      </span>
-                    </button>
-                  )}
-                  {[
-                    "l15",
-                    "l16",
-                    "l17",
-                    "l18",
-                    "l19",
-                    "l20",
-                    "l21",
-                    "l22",
-                    "l23",
-                    "l24",
-                  ].includes(selectedLesson.id) && (
-                    <button
-                      onClick={() => setActiveTab("speaking")}
-                      className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                        activeTab === "speaking"
-                          ? "bg-white shadow-xl shadow-theme-dark/10 text-emerald-500"
-                          : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                      }`}
-                    >
-                      <Mic className="w-6 h-6 md:w-5 md:h-5 mb-1 md:mb-0" />{" "}
-                      <span className="text-center leading-tight">
-                        Luyện nói
-                      </span>
-                    </button>
-                  )}
-                  {["l15", "l16", "l18", "l22", "l23", "l24"].includes(
-                    selectedLesson.id,
-                  ) && (
-                    <button
-                      onClick={() => setActiveTab("reading")}
-                      className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                        activeTab === "reading"
-                          ? "bg-white shadow-xl shadow-theme-dark/10 text-rose-500"
-                          : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                      }`}
-                    >
-                      <span className="text-xl md:text-lg mb-1 md:mb-0">
-                        📖
-                      </span>{" "}
-                      <span className="text-center leading-tight">
-                        Đọc hiểu
-                      </span>
-                    </button>
-                  )}
-                  {[
-                    "l15",
-                    "l16",
-                    "l17",
-                    "l18",
-                    "l19",
-                    "l20",
-                    "l21",
-                    "l22",
-                    "l23",
-                    "l24",
-                  ].includes(selectedLesson.id) && (
-                    <button
-                      onClick={() => setActiveTab("writing")}
-                      className={`snap-start flex-1 min-w-[70px] py-3 md:py-4 rounded-[22px] text-xs md:text-sm font-black transition-all flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 whitespace-nowrap px-4 ${
-                        activeTab === "writing"
-                          ? "bg-white shadow-xl shadow-theme-dark/10 text-indigo-500"
-                          : "text-theme-dark/70 hover:text-theme-dark hover:bg-white/50"
-                      }`}
-                    >
-                      <span className="text-xl md:text-lg mb-1 md:mb-0">
-                        📝
-                      </span>{" "}
-                      <span className="text-center leading-tight">
-                        Luyện viết
-                      </span>
-                    </button>
-                  )}
-                </div>
-              )}
+
 
               <div className="space-y-4 pb-20">
                 {selectedLesson.id === "review" || activeTab === "review" ? (
@@ -2260,7 +1992,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   <div className="space-y-6">
                     {selectedLesson.id === "l15" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("kartenspiel")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "kartenspiel" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2279,7 +2011,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
                     {selectedLesson.id === "l16" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("kartenspiel")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "kartenspiel" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2298,7 +2030,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
                     {selectedLesson.id === "l21" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("flashcard")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "flashcard" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2317,7 +2049,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
                     {selectedLesson.id === "l17" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("kartenspiel")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "kartenspiel" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2336,7 +2068,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
                     {selectedLesson.id === "l18" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("kartenspiel")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "kartenspiel" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2355,7 +2087,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
                     {selectedLesson.id === "l24" && (
                       <div className="flex justify-center mb-6">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setActiveSubTab("kartenspiel")}
                             className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSubTab === "kartenspiel" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
@@ -2449,8 +2181,8 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       selectedLesson.id === "l22" ||
                       selectedLesson.id === "l23" ||
                       selectedLesson.id === "l24") && (
-                      <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
+                      <div className="flex justify-center mb-6 w-full">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           {[
                             "l1",
                             "l2",
@@ -2473,20 +2205,20 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                           ].includes(selectedLesson.id) && (
                             <button
                               onClick={() => setActiveSubTab("theory")}
-                              className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === "theory" ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
+                              className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-normal sm:whitespace-nowrap leading-tight text-center flex items-center justify-center text-sm ${activeSubTab === "theory" ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
                             >
                               Lý thuyết Từ vựng
                             </button>
                           )}
                           <button
                             onClick={() => setActiveSubTab("flashcard")}
-                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === "flashcard" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-normal sm:whitespace-nowrap leading-tight text-center flex items-center justify-center text-sm ${activeSubTab === "flashcard" || !activeSubTab ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
                           >
                             Học từ vựng
                           </button>
                           <button
                             onClick={() => setActiveSubTab("exercises")}
-                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${activeSubTab === "exercises" ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-normal sm:whitespace-nowrap leading-tight text-center flex items-center justify-center text-sm ${activeSubTab === "exercises" ? "bg-white shadow-sm text-theme-primary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
                           >
                             {selectedLesson.id === "l24"
                               ? "Bài tập nâng cấp (10 bài)"
@@ -2763,17 +2495,17 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       "l23",
                       "l24",
                     ].includes(selectedLesson.id) && (
-                      <div className="flex justify-center mb-6 overflow-x-auto hide-scrollbar">
-                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner min-w-max">
+                      <div className="flex justify-center mb-6 w-full">
+                        <div className="bg-theme-cream/50 p-1.5 rounded-2xl flex flex-wrap justify-center gap-1 shadow-inner max-w-full">
                           <button
                             onClick={() => setGrammarSubTab("theory")}
-                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === "theory" ? "bg-white shadow-sm text-theme-secondary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-normal sm:whitespace-nowrap leading-tight text-center flex items-center justify-center text-sm ${grammarSubTab === "theory" ? "bg-white shadow-sm text-theme-secondary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
                           >
                             Lý thuyết Ngữ pháp
                           </button>
                           <button
                             onClick={() => setGrammarSubTab("exercises")}
-                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-nowrap text-sm ${grammarSubTab === "exercises" ? "bg-white shadow-sm text-theme-secondary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
+                            className={`px-6 py-2 rounded-xl font-bold transition-all whitespace-normal sm:whitespace-nowrap leading-tight text-center flex items-center justify-center text-sm ${grammarSubTab === "exercises" ? "bg-white shadow-sm text-theme-secondary" : "text-theme-dark/40 hover:text-theme-dark/80"}`}
                           >
                             {selectedLesson.id === "l22"
                               ? "Bài tập Ngữ pháp (5 Phần)"
@@ -3110,6 +2842,47 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     )}
                   </div>
                 )}
+
+                {(() => {
+                  const lessons = VOCABULARY_DATA.filter(l => l.id.startsWith("l"));
+                  const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
+                  if (currentIndex === -1) return null;
+                  const prev = currentIndex > 0 ? lessons[currentIndex - 1] : null;
+                  const next = currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
+
+                  return (
+                    <div className="pt-8 mt-8 border-t border-theme-dark/10 flex items-center justify-between gap-4">
+                       <button
+                         onClick={() => { if(prev) { setSelectedLesson(prev); setActiveTab("lecture"); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                         disabled={!prev}
+                         className={`flex-1 min-w-0 pr-4 py-4 rounded-2xl flex items-center gap-3 transition-all ${!prev ? "opacity-30 cursor-not-allowed" : "hover:bg-white shadow-sm text-theme-dark bg-theme-cream/50"}`}
+                       >
+                         <div className="w-10 h-10 shrink-0 bg-white rounded-full shadow-sm flex items-center justify-center ml-2 border border-theme-dark/5">
+                           <ChevronRight className="w-5 h-5 rotate-180"/>
+                         </div>
+                         <div className="text-left overflow-hidden">
+                           <div className="text-[10px] font-black tracking-widest uppercase text-theme-dark/40 mb-1">Bài trước</div>
+                           <div className="font-bold text-sm truncate">{prev?.title.split('|')[0] || "Không có"}</div>
+                         </div>
+                       </button>
+
+                       <button
+                         onClick={() => { if(next) { setSelectedLesson(next); setActiveTab("lecture"); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                         disabled={!next}
+                         className={`flex-1 min-w-0 pl-4 py-4 rounded-2xl flex items-center flex-row-reverse gap-3 transition-all ${!next ? "opacity-30 cursor-not-allowed" : "hover:bg-theme-primary/95 shadow-lg shadow-theme-primary/20 text-white bg-theme-primary"}`}
+                       >
+                         <div className="w-10 h-10 shrink-0 bg-white/20 rounded-full flex items-center justify-center mr-2">
+                           <ChevronRight className="w-5 h-5"/>
+                         </div>
+                         <div className="text-right overflow-hidden">
+                           <div className={`text-[10px] font-black tracking-widest uppercase mb-1 ${next ? 'text-white/60' : 'text-theme-dark/40'}`}>Bài sau</div>
+                           <div className="font-bold text-sm truncate">{next?.title.split('|')[0] || "Không có"}</div>
+                         </div>
+                       </button>
+                    </div>
+                  );
+                })()}
+
               </div>
             </motion.div>
           )}
@@ -3245,20 +3018,142 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button for Home if in detail */}
+      {/* Main Bottom Nav */}
       {selectedLesson && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed bottom-8 right-8 z-20"
-        >
-          <button
-            onClick={() => setSelectedLesson(null)}
-            className="w-14 h-14 bg-indigo-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-indigo-700 transition-colors"
-          >
-            <BookOpen className="w-6 h-6" />
-          </button>
-        </motion.div>
+        <AnimatePresence>
+          {(() => {
+            const tabs = [];
+            
+            if (selectedLesson.id === "review") {
+              tabs.push(
+                { id: "ai_roleplay", icon: <Bot className="w-5 h-5 mb-0.5" />, label: "AI Roleplay", active: activeSubTab === "ai_roleplay", onClick: () => setActiveSubTab("ai_roleplay") },
+                { id: "daily_mix", icon: <Gamepad2 className="w-5 h-5 mb-0.5" />, label: "Daily Mix", active: activeSubTab === "daily_mix", onClick: () => setActiveSubTab("daily_mix") }
+              );
+            } else {
+              tabs.push({ id: "vocabulary", icon: <BookOpen className="w-5 h-5 mb-0.5" />, label: "Từ vựng", active: activeTab === "vocabulary", onClick: () => setActiveTab("vocabulary") });
+              tabs.push({ id: "grammar", icon: <Languages className="w-5 h-5 mb-0.5" />, label: "Ngữ pháp", active: activeTab === "grammar", onClick: () => setActiveTab("grammar") });
+              
+              const hasLecture = ["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10","l11","l12","l13","l14","l15","l16","l17","l18","l19","l20","l21","l22","l23","l24"].includes(selectedLesson.id);
+              if (hasLecture) tabs.push({ id: "lecture", icon: <MonitorPlay className="w-5 h-5 mb-0.5" />, label: "Bài giảng", active: activeTab === "lecture", onClick: () => setActiveTab("lecture") });
+              
+              const hasGameAndSpeaking = ["l15","l16","l17","l18","l19","l20","l21","l22","l23","l24"].includes(selectedLesson.id);
+              if (hasGameAndSpeaking) {
+                tabs.push({ id: "game", icon: <Gamepad2 className="w-5 h-5 mb-0.5" />, label: "Trò chơi", active: activeTab === "game", onClick: () => setActiveTab("game") });
+                tabs.push({ id: "speaking", icon: <Mic className="w-5 h-5 mb-0.5" />, label: "Luyện nói", active: activeTab === "speaking", onClick: () => setActiveTab("speaking") });
+              }
+              const hasReading = ["l15", "l16", "l18", "l22", "l23", "l24"].includes(selectedLesson.id);
+              if (hasReading) tabs.push({ id: "reading", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">📖</span>, label: "Đọc", active: activeTab === "reading", onClick: () => setActiveTab("reading") });
+              if (hasGameAndSpeaking) tabs.push({ id: "writing", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">✍️</span>, label: "Viết", active: activeTab === "writing", onClick: () => setActiveTab("writing") });
+            }
+
+            const mobileVisibleTabs = tabs.length > 5 ? tabs.slice(0, 5) : tabs;
+            const mobileHiddenTabs = tabs.length > 5 ? tabs.slice(5) : [];
+            const isMoreActive = mobileHiddenTabs.some(t => t.active);
+
+            return (
+              <>
+                <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-theme-dark/10 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] pb-safe">
+                  {/* Mobile View: Max 4 tabs + Thêm */}
+                  <div className="sm:hidden max-w-md mx-auto flex justify-between px-1">
+                    {mobileVisibleTabs.map(t => (
+                      <button
+                        key={t.id}
+                        onClick={() => { t.onClick(); setIsNavExpanded(false); }}
+                        className={`flex-1 flex flex-col items-center justify-center py-2 h-[60px] transition-all rounded-xl my-1 ${
+                          t.active ? "text-theme-primary bg-theme-primary/5" : "text-theme-dark/60 hover:text-theme-dark hover:bg-theme-dark/5"
+                        }`}
+                      >
+                        {t.active ? React.cloneElement(t.icon as React.ReactElement, { className: 'w-6 h-6 mb-0.5 text-theme-primary' }) : t.icon}
+                        <span className={`text-[10px] uppercase font-black tracking-wider ${t.active ? "text-theme-primary" : ""}`}>
+                          {t.label}
+                        </span>
+                      </button>
+                    ))}
+                    {mobileHiddenTabs.length > 0 && (
+                      <button
+                        onClick={() => setIsNavExpanded(true)}
+                        className={`flex-1 flex flex-col items-center justify-center py-2 h-[60px] transition-all rounded-xl my-1 ${
+                          isNavExpanded || isMoreActive ? "text-theme-primary bg-theme-primary/5" : "text-theme-dark/60 hover:text-theme-dark hover:bg-theme-dark/5"
+                        }`}
+                      >
+                        <Menu className="w-5 h-5 mb-0.5" />
+                        <span className="text-[10px] uppercase font-black tracking-wider">Thêm</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Desktop View: All tabs */}
+                  <div className="hidden sm:flex max-w-4xl mx-auto justify-center gap-2 px-4">
+                    {tabs.map(t => (
+                      <button
+                        key={t.id}
+                        onClick={() => { t.onClick(); setIsNavExpanded(false); }}
+                        className={`flex-1 max-w-[120px] flex flex-col items-center justify-center py-2 h-[64px] transition-all rounded-xl my-2 ${
+                          t.active ? "text-theme-primary bg-theme-primary/10 shadow-sm border border-theme-primary/20" : "text-theme-dark/60 hover:text-theme-dark hover:bg-theme-dark/5"
+                        }`}
+                      >
+                        {t.active ? React.cloneElement(t.icon as React.ReactElement, { className: 'w-6 h-6 mb-1 text-theme-primary' }) : t.icon}
+                        <span className={`text-[10px] uppercase font-black tracking-wider ${t.active ? "text-theme-primary" : ""}`}>
+                          {t.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mobile Bottom Sheet for Extra Tabs */}
+                <AnimatePresence>
+                  {isNavExpanded && mobileHiddenTabs.length > 0 && (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsNavExpanded(false)}
+                        className="sm:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                      />
+                      <motion.div
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="sm:hidden fixed bottom-[68px] left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-theme-dark/10 shadow-[0_-20px_40px_rgba(0,0,0,0.1)] rounded-t-3xl pb-4 max-h-[80vh] overflow-y-auto"
+                      >
+                        <div className="max-w-md mx-auto px-4 pt-3">
+                          <div
+                            className="flex justify-center mb-5 cursor-pointer py-2"
+                            onClick={() => setIsNavExpanded(false)}
+                          >
+                            <div className="w-16 h-1.5 bg-theme-dark/20 rounded-full hover:bg-theme-dark/40 transition-colors" />
+                          </div>
+
+                          <div className="grid grid-cols-4 gap-3">
+                            {tabs.map(t => (
+                               <button
+                                 key={t.id}
+                                 onClick={() => { t.onClick(); setIsNavExpanded(false); }}
+                                 className={`flex flex-col items-center justify-center p-3 rounded-2xl transition-all ${
+                                   t.active
+                                     ? "bg-theme-primary/10 text-theme-primary shadow-sm border border-theme-primary/20"
+                                     : "bg-theme-dark/5 text-theme-dark/70 hover:text-theme-dark hover:bg-theme-dark/10"
+                                 }`}
+                               >
+                                 {t.active ? React.cloneElement(t.icon as React.ReactElement, { className: 'w-6 h-6 mb-1 text-theme-primary' }) : React.cloneElement(t.icon as React.ReactElement, { className: 'w-6 h-6 mb-1' })}
+                                 <span className="text-[9px] font-black uppercase tracking-wider text-center leading-tight">
+                                   {t.label}
+                                 </span>
+                               </button>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </>
+            );
+          })()}
+        </AnimatePresence>
       )}
 
       {/* Mic Error Modal */}

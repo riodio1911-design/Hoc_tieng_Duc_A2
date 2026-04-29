@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, ChevronLeft, Play, Volume2, CheckCircle2, MessageSquare, BookOpen, PenTool, CheckSquare, Gamepad2, Mic, Headphones, Eye, Gift } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Play, Volume2, CheckCircle2, MessageSquare, BookOpen, PenTool, CheckSquare, Gamepad2, Mic, Headphones, Eye, Gift, FileText } from 'lucide-react';
 
 interface SlideProps {
   playAudio: (text: string, id: string, lang?: 'de-DE' | 'vi-VN', overrideVoiceName?: string) => void;
@@ -25,6 +25,7 @@ const backgrounds: Record<number, { bgImage?: string, bgColor?: string }> = {
 
 export default function Lektion14Slides({ playAudio, playingId, onBack }: SlideProps) {
   const [currentSlide, setCurrentSlide] = useState(-1);
+  const [activeSlideTab, setActiveSlideTab] = useState<'roadmap'|'downloads'>('roadmap');
   const totalSlides = 21; 
 
   const nextSlide = () => {
@@ -43,11 +44,18 @@ export default function Lektion14Slides({ playAudio, playingId, onBack }: SlideP
         return (
           <div className="space-y-6 flex flex-col h-full max-w-5xl mx-auto py-4">
             <div className="text-center space-y-2 mb-4">
-              <h2 className="text-4xl font-display font-black text-theme-dark uppercase tracking-wide">Bản Đồ Lộ Trình Lektion 14</h2>
+              <h2 className="text-4xl font-display font-black text-theme-dark uppercase tracking-wide">Bản Đồ Lộ Trình / Tải Xuống</h2>
               <p className="font-bold text-theme-dark/60">Hành trình 8 tiết học chuyên sâu</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8 w-full h-full pb-8">
+            <div className="flex justify-center mb-4">
+<div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
+<button onClick={() => setActiveSlideTab('roadmap')} className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSlideTab === 'roadmap' || !activeSlideTab ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}>Bản đồ lộ trình</button>
+<button disabled className="px-6 py-2 rounded-xl font-bold text-sm text-theme-dark/30 cursor-not-allowed" title="Tính năng này đang được cập nhật">Tải các bài giảng</button>
+</div>
+</div>
+{activeSlideTab === 'roadmap' ? (
+<div className="grid md:grid-cols-2 gap-8 w-full h-full pb-8">
               {/* Buổi 1 */}
               <div className="bg-theme-cream/30 p-6 rounded-3xl border-2 border-theme-primary/10 relative overflow-hidden flex flex-col">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-theme-primary/5 rounded-bl-full -z-10" />
@@ -117,8 +125,30 @@ export default function Lektion14Slides({ playAudio, playingId, onBack }: SlideP
                       </button>
                   ))}
                 </div>
-              </div>
-            </div>
+              </div></div>
+) : (
+<div className="flex flex-col items-center justify-center space-y-6 flex-1 bg-white p-10 rounded-[32px] border border-theme-primary/10 shadow-xl shadow-theme-dark/5">
+<div className="w-20 h-20 bg-theme-primary/10 text-theme-primary rounded-full flex items-center justify-center">
+<BookOpen size={40} />
+</div>
+<h3 className="text-2xl font-black text-theme-dark">Tài liệu Bài giảng 14</h3>
+<p className="text-theme-dark/70 font-medium text-center max-w-md">Bạn có thể tải trực tiếp file PDF bài giảng và bài tập Lektion 14 dưới đây:</p>
+<div className="grid md:grid-cols-2 gap-4 w-full max-w-2xl mt-4">
+<a href="/Leitfaden-L14-Teil1.pdf" target="_blank" rel="noopener noreferrer" className="bg-theme-cream/30 p-6 rounded-2xl flex flex-col items-center justify-center border border-theme-primary/20 hover:border-theme-primary hover:shadow-lg transition-all group gap-4 relative overflow-hidden">
+<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-theme-primary to-blue-400 group-hover:h-full group-hover:opacity-10 transition-all"></div>
+<div className="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-sm"><FileText className="text-theme-primary w-8 h-8" /></div>
+<div className="text-center"><span className="font-black text-theme-dark block text-lg">Bài Giảng L14</span><span className="text-xs font-bold text-theme-dark/50 uppercase">phần 1</span></div>
+<div className="flex items-center gap-2 mt-2 bg-theme-primary/10 text-theme-primary px-4 py-2 rounded-full font-bold text-sm"><Eye size={16} /> Xem PDF</div>
+</a>
+<a href="/Leitfaden-L14-Teil2.pdf" target="_blank" rel="noopener noreferrer" className="bg-theme-cream/30 p-6 rounded-2xl flex flex-col items-center justify-center border border-theme-primary/20 hover:border-theme-primary hover:shadow-lg transition-all group gap-4 relative overflow-hidden">
+<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-400 group-hover:h-full group-hover:opacity-10 transition-all"></div>
+<div className="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-sm"><FileText className="text-emerald-500 w-8 h-8" /></div>
+<div className="text-center"><span className="font-black text-theme-dark block text-lg">Bài Giảng L14</span><span className="text-xs font-bold text-theme-dark/50 uppercase">phần 2</span></div>
+<div className="flex items-center gap-2 mt-2 bg-emerald-500/10 text-emerald-600 px-4 py-2 rounded-full font-bold text-sm"><Eye size={16} /> Xem PDF</div>
+</a>
+</div>
+</div>
+            )}
           </div>
         );
       case 0:
