@@ -1296,7 +1296,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
           {selectedLesson && (
             <button
               onClick={() => setSelectedLesson(null)}
-              className="text-sm font-black text-theme-secondary hover:text-theme-primary transition-all flex items-center gap-1"
+              className="hidden sm:flex text-sm font-black text-theme-secondary hover:text-theme-primary transition-all items-center gap-1"
             >
               <ChevronRight className="w-4 h-4 rotate-180" /> Quay lại
             </button>
@@ -1823,145 +1823,145 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   <Lektion1Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l2" ? (
                   <Lektion2Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l3" ? (
                   <Lektion3Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l4" ? (
                   <Lektion4Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l5" ? (
                   <Lektion5Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l6" ? (
                   <Lektion6Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l7" ? (
                   <Lektion7Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l8" ? (
                   <Lektion8Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l9" ? (
                   <Lektion9Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l10" ? (
                   <Lektion10Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l11" ? (
                   <Lektion11Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l12" ? (
                   <Lektion12Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l13" ? (
                   <Lektion13Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l14" ? (
                   <Lektion14Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l15" ? (
                   <Lektion15Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l16" ? (
                   <Lektion16Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l17" ? (
                   <Lektion17Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l18" ? (
                   <Lektion18Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l19" ? (
                   <Lektion19Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l20" ? (
                   <Lektion20Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l21" ? (
                   <Lektion21Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l22" ? (
                   <Lektion22Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l23" ? (
                   <Lektion23Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "lecture" && selectedLesson.id === "l24" ? (
                   <Lektion24Slides
                     playAudio={playAudio}
                     playingId={playingId}
-                    onBack={() => setSelectedLesson(null)}
+                    
                   />
                 ) : activeTab === "speaking" ? (
                   <SpeakingPractice
@@ -3046,15 +3046,22 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               if (hasGameAndSpeaking) tabs.push({ id: "writing", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">✍️</span>, label: "Viết", active: activeTab === "writing", onClick: () => setActiveTab("writing") });
             }
 
-            const mobileVisibleTabs = tabs.length > 5 ? tabs.slice(0, 5) : tabs;
-            const mobileHiddenTabs = tabs.length > 5 ? tabs.slice(5) : [];
+            const mobileVisibleTabs = tabs.length > 4 ? tabs.slice(0, 3) : tabs;
+            const mobileHiddenTabs = tabs.length > 4 ? tabs.slice(3) : [];
             const isMoreActive = mobileHiddenTabs.some(t => t.active);
 
             return (
               <>
                 <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-theme-dark/10 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] pb-safe">
-                  {/* Mobile View: Max 4 tabs + Thêm */}
+                  {/* Mobile View: Close + Max 3 tabs + Thêm */}
                   <div className="sm:hidden max-w-md mx-auto flex justify-between px-1">
+                    <button
+                      onClick={() => { setSelectedLesson(null); setIsNavExpanded(false); }}
+                      className="flex-1 flex flex-col items-center justify-center py-2 h-[60px] transition-all rounded-xl my-1 text-theme-dark/60 hover:text-theme-dark hover:bg-theme-dark/5"
+                    >
+                      <ChevronRight className="w-5 h-5 mb-0.5 rotate-180" />
+                      <span className="text-[10px] uppercase font-black tracking-wider">Trở lại</span>
+                    </button>
                     {mobileVisibleTabs.map(t => (
                       <button
                         key={t.id}
