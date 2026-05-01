@@ -51,7 +51,7 @@ export default function Lektion15Slides({ playAudio, playingId, onBack }: SlideP
             <div className="flex justify-center mb-4">
 <div className="bg-theme-cream/50 p-1.5 rounded-2xl inline-flex shadow-inner">
 <button onClick={() => setActiveSlideTab('roadmap')} className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSlideTab === 'roadmap' || !activeSlideTab ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}>Bản đồ lộ trình</button>
-<button disabled className="px-6 py-2 rounded-xl font-bold text-sm text-theme-dark/30 cursor-not-allowed" title="Tính năng này đang được cập nhật">Tải các bài giảng</button>
+<button onClick={() => setActiveSlideTab('download')} className={`px-6 py-2 rounded-xl font-bold transition-all text-sm ${activeSlideTab === 'download' ? 'bg-white shadow-sm text-theme-primary' : 'text-theme-dark/40 hover:text-theme-dark/80'}`}>Tải các bài giảng</button>
 </div>
 </div>
 {activeSlideTab === 'roadmap' ? (
@@ -580,14 +580,7 @@ export default function Lektion15Slides({ playAudio, playingId, onBack }: SlideP
         {/* Navigation */}
         {currentSlide === -1 ? (
           <div className="p-4 flex items-center justify-between border-t border-theme-dark/5 bg-theme-cream/50 z-10">
-            {onBack ? (
-              <button
-                onClick={onBack}
-                className="px-4 md:px-6 py-2 md:py-3 rounded-[20px] font-black tracking-wide transition-all flex items-center gap-1 md:gap-2 bg-white border border-theme-dark/10 hover:bg-theme-dark/5 active:scale-95 text-theme-dark text-xs md:text-base shadow-sm"
-              >
-                <ChevronLeft size={18} className="md:w-5 md:h-5" /> <span className="hidden sm:inline">Trở lại</span>
-              </button>
-            ) : <div />}
+            
             <div className="text-[10px] md:text-xs font-bold text-theme-dark/50 tracking-widest uppercase text-right">
               Sơ đồ Lektion 15
             </div>

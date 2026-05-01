@@ -463,14 +463,7 @@ export default function Lektion19Slides({ playAudio, playingId, onBack }: SlideP
         {/* Navigation */}
         {currentSlide === -1 ? (
           <div className="p-4 flex items-center justify-between border-t border-theme-dark/5 bg-theme-cream/50 z-10 w-full">
-            {onBack ? (
-              <button
-                onClick={onBack}
-                className="px-4 md:px-6 py-2 md:py-3 rounded-[20px] font-black tracking-wide transition-all flex items-center gap-1 md:gap-2 bg-white border border-theme-dark/10 hover:bg-theme-dark/5 active:scale-95 text-theme-dark text-xs md:text-base shadow-sm"
-              >
-                <ChevronLeft size={18} className="md:w-5 md:h-5" /> <span className="hidden sm:inline">Trở lại</span>
-              </button>
-            ) : <div />}
+            
             <div className="text-[10px] md:text-xs font-bold text-theme-dark/50 tracking-widest uppercase text-right">
               Sơ đồ Lektion 19
             </div>
