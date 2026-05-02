@@ -3,6 +3,219 @@ import { BookOpenText, CheckCircle2, XCircle, ArrowRight, RotateCcw } from 'luci
 import { motion } from 'motion/react';
 
 const LESSON_CONTENT: Record<string, any> = {
+
+  'l1': {
+     title: 'Die Bäckerei von Opa',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Mein Opa heißt Hans. Er war 40 Jahre lang Bäcker in München. Er ist jeden Tag um 3 Uhr morgens aufgestanden, um frisches Brot und Brötchen zu backen.",
+       "Heute ist Opa 70 Jahre alt und arbeitet nicht mehr. Aber er backt sonntags immer noch gerne Kuchen für die ganze Familie."
+     ],
+     questions: [
+       { id: 1, question: "Was war der Beruf von Opa Hans?", options: ["Lehrer", "Bäcker", "Mechaniker", "Arzt"], correct: 1, explanation: "Im Text steht, dass er Bäcker war." },
+       { id: 2, question: "Wann ist er jeden Tag aufgestanden?", options: ["Um 5 Uhr", "Um 7 Uhr", "Um 3 Uhr", "Um 4 Uhr"], correct: 2, explanation: "Im Text steht: Er ist jeden Tag um 3 Uhr morgens aufgestanden." }
+     ]
+  },
+  'l2': {
+     title: 'Die neue Wohnung',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Wir sind gestern in unsere neue Wohnung gezogen. Im Wohnzimmer steht jetzt ein großes graues Sofa und ein Fernseher.",
+       "Aber wir wissen noch nicht: Wohin mit der Kommode? Sie ist sehr groß. Vielleicht stellen wir sie ins Schlafzimmer neben das Bett?"
+     ],
+     questions: [
+       { id: 1, question: "Wo steht das Sofa?", options: ["Im Schlafzimmer", "In der Küche", "Im Wohnzimmer", "Im Flur"], correct: 2, explanation: "Im Wohnzimmer steht jetzt ein großes graues Sofa." },
+       { id: 2, question: "Wo soll die Kommode vielleicht stehen?", options: ["Vor dem Fenster", "Neben dem Bett", "Auf dem Balkon", "Im Bad"], correct: 1, explanation: "Vielleicht stellen wir sie ins Schlafzimmer neben das Bett." }
+     ]
+  },
+  'l3': {
+     title: 'Urlaub an der Ostsee',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Unsere Familie macht dieses Jahr Urlaub an der Ostsee. Wir haben ein kleines Ferienhaus gemietet.",
+       "Der Ort ist sehr ruhig. Hier finden wir viel Ruhe und Erholung. Jeden Tag gehen wir am Strand spazieren."
+     ],
+     questions: [
+       { id: 1, question: "Wo macht die Familie Urlaub?", options: ["In den Bergen", "In der Stadt", "An der Ostsee", "Am See"], correct: 2, explanation: "Urlaub an der Ostsee." },
+       { id: 2, question: "Was machen sie jeden Tag?", options: ["Sie gehen schwimmen", "Sie gehen spazieren", "Sie schlafen lange", "Sie lesen"], correct: 1, explanation: "Jeden Tag gehen wir am Strand spazieren." }
+     ]
+  },
+  'l4': {
+     title: 'Auf dem Markt',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Jeden Samstag gehe ich auf den Markt. Ich mag frische Lebensmittel. 'Was darf es sein?', fragt die Verkäuferin.",
+       "Ich kaufe zwei Kilo Äpfel, frisches Gemüse und ein halbes Kilo Käse."
+     ],
+     questions: [
+       { id: 1, question: "Wann geht die Person auf den Markt?", options: ["Am Montag", "Am Freitag", "Am Wochenende (Samstag)", "Jeden Tag"], correct: 2, explanation: "Jeden Samstag gehe ich auf den Markt." },
+       { id: 2, question: "Was fragt die Verkäuferin?", options: ["Was kostet das?", "Was darf es sein?", "Wie geht es Ihnen?", "Wo ist das Geld?"], correct: 1, explanation: "Was darf es sein?, fragt die Verkäuferin." }
+     ]
+  },
+  'l5': {
+     title: 'Tour durch Köln',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Wir machen heute eine Stadttour in Köln. Unser Reiseführer sagt: 'Schaut mal, der schöne Dom!'",
+       "Der Kölner Dom ist wirklich sehr hoch und sieht beeindruckend aus. Danach gehen wir ins Museum."
+     ],
+     questions: [
+       { id: 1, question: "Welche Stadt besuchen sie?", options: ["Berlin", "Hamburg", "Köln", "München"], correct: 2, explanation: "Wir machen heute eine Stadttour in Köln." },
+       { id: 2, question: "Was machen sie nach dem Besuch des Doms?", options: ["Sie gehen ins Kino", "Sie gehen essen", "Sie gehen ins Museum", "Sie gehen nach Hause"], correct: 2, explanation: "Danach gehen wir ins Museum." }
+     ]
+  },
+  'l6': {
+     title: 'Musikfestival im Sommer',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Das Sommerfestival ist meine Lieblingsveranstaltung. Es findet jedes Jahr im Juli statt.",
+       "Es gibt viele Bands, gutes Essen und eine tolle Atmosphäre. Ich gehe immer mit meinen Freunden dorthin."
+     ],
+     questions: [
+       { id: 1, question: "In welchem Monat findet das Festival statt?", options: ["Im Juni", "Im Juli", "Im August", "Im Mai"], correct: 1, explanation: "Es findet jedes Jahr im Juli statt." },
+       { id: 2, question: "Mit wem geht die Person zum Festival?", options: ["Mit der Familie", "Alleine", "Mit Freunden", "Mit dem Hund"], correct: 2, explanation: "Ich gehe immer mit meinen Freunden dorthin." }
+     ]
+  },
+  'l7': {
+     title: 'Fitness am Abend',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Thomas arbeitet viel am Computer. Er braucht Bewegung. Sein Kollege sagt: 'Wir könnten montags joggen gehen.'",
+       "Thomas findet die Idee gut. Sie wollen nächste Woche am Montag im Park starten."
+     ],
+     questions: [
+       { id: 1, question: "Warum braucht Thomas Bewegung?", options: ["Er isst zu viel", "Er schläft schlecht", "Er arbeitet viel am Computer", "Er ist krank"], correct: 2, explanation: "Thomas arbeitet viel am Computer. Er braucht Bewegung." },
+       { id: 2, question: "An welchem Tag wollen sie joggen gehen?", options: ["Am Sonntag", "Am Dienstag", "Am Montag", "Am Freitag"], correct: 2, explanation: "Wir könnten montags joggen gehen." }
+     ]
+  },
+  'l8': {
+     title: 'Beim Arzt',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Herr Müller hat starke Schmerzen in der Brust. Er ist beim Arzt und macht sich Sorgen.",
+       "'Hoffentlich ist es nicht das Herz!', denkt er. Der Arzt untersucht ihn und sagt: 'Es ist nur eine Erkältung.'"
+     ],
+     questions: [
+       { id: 1, question: "Wo hat Herr Müller Schmerzen?", options: ["Im Bauch", "Im Kopf", "In der Brust", "Im Bein"], correct: 2, explanation: "Herr Müller hat starke Schmerzen in der Brust." },
+       { id: 2, question: "Was sagt der Arzt?", options: ["Er muss ins Krankenhaus", "Es ist das Herz", "Es ist nur eine Erkältung", "Er braucht Operation"], correct: 2, explanation: "Der Arzt sagt: 'Es ist nur eine Erkältung.'" }
+     ]
+  },
+  'l9': {
+     title: 'Die deutsche Automobilindustrie',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Deutschland ist weltweit für seine Autos bekannt. Firmen wie VW, BMW und Mercedes beschäftigen tausende Menschen.",
+       "'Bei guten Autos sind wir ganz vorn', sagt ein Ingenieur, der seit 20 Jahren in der Industrie arbeitet."
+     ],
+     questions: [
+       { id: 1, question: "Wofür ist Deutschland weltweit bekannt?", options: ["Für Bier", "Für Autos", "Für Mode", "Für Schokolade"], correct: 1, explanation: "Deutschland ist weltweit für seine Autos bekannt." },
+       { id: 2, question: "Wie lange arbeitet der Ingenieur in der Industrie?", options: ["10 Jahre", "5 Jahre", "20 Jahre", "30 Jahre"], correct: 2, explanation: "Ein Ingenieur, der seit 20 Jahren in der Industrie arbeitet." }
+     ]
+  },
+  'l10': {
+     title: 'Abendessen zu zweit',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Das Restaurant ist heute sehr voll. Fast alle Tische sind besetzt.",
+       "Lisa sagt zu Markus: 'Gut, dass du reserviert hast!' Sie bestellen beide ein Steak und ein Glas Wein."
+     ],
+     questions: [
+       { id: 1, question: "Warum war es gut, dass Markus reserviert hat?", options: ["Weil das Essen teuer ist", "Weil das Restaurant sehr voll ist", "Weil sie Hunger haben", "Weil Lisa spät kam"], correct: 1, explanation: "Das Restaurant ist heute sehr voll. Fast alle Tische sind besetzt." },
+       { id: 2, question: "Was trinken Lisa und Markus?", options: ["Bier", "Wasser", "Wein", "Cola"], correct: 2, explanation: "Sie bestellen beide ein Steak und ein Glas Wein." }
+     ]
+  },
+  'l11': {
+     title: 'Eine gute Nachricht',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Sarah hat heute einen Brief bekommen. Sie hat ihre Deutschprüfung bestanden!",
+       "Sie ruft sofort ihre Mutter an und sagt: 'Ich freue mich so! Endlich habe ich das Zertifikat B1.'"
+     ],
+     questions: [
+       { id: 1, question: "Welche Prüfung hat Sarah bestanden?", options: ["Die Führerscheinprüfung", "Die Matheprüfung", "Die Deutschprüfung", "Die Englischprüfung"], correct: 2, explanation: "Sie hat ihre Deutschprüfung bestanden." },
+       { id: 2, question: "Welches Zertifikat bekommt sie?", options: ["A1", "A2", "B1", "B2"], correct: 2, explanation: "Endlich habe ich das Zertifikat B1." }
+     ]
+  },
+  'l12': {
+     title: 'Gemeinsam kochen',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Felix und Anna kochen heute Abend zusammen. Sie machen Spaghetti Bolognese.",
+       "Felix findet Kochen sehr romantisch und sagt: 'Liebe geht durch den Magen!'"
+     ],
+     questions: [
+       { id: 1, question: "Was kochen Felix und Anna?", options: ["Pizza", "Salat", "Spaghetti Bolognese", "Suppe"], correct: 2, explanation: "Sie machen Spaghetti Bolognese." },
+       { id: 2, question: "Was findet Felix romantisch?", options: ["Musik", "Tanzen", "Kochen", "Essen gehen"], correct: 2, explanation: "Felix findet Kochen sehr romantisch." }
+     ]
+  },
+
+  'l13': {
+     title: 'Mein freiwilliges soziales Jahr',
+     instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',
+     text: [
+       "Ich habe im letzten Jahr mein freiwilliges soziales Jahr in Brasilien gemacht. Dort habe ich in einem Kindergarten gearbeitet. Zuerst habe ich morgens immer die Räume geputzt und dann in der Küche geholfen oder mit den Kindern gespielt.",
+       "Später habe ich auch die Familien besucht und Berichte geschrieben. Am Anfang war die Stadt sehr fremd und laut, aber ich habe mich schnell eingelebt.",
+       "Ich war froh, dass ich schon ein bisschen Portugiesisch verstanden habe. Ich habe in der zwölften Klasse schon Portugiesisch an der Volkshochschule gelernt und deshalb habe ich mich schon bald zu Hause gefühlt.",
+       "Für mich war es ein wundervolles Jahr. Ich erinnere mich noch immer gern an die vielen freundlichen Kinderaugen. Und würde sofort wieder dort arbeiten."
+     ],
+     questions: [
+       {
+         id: 'q1',
+         question: 'Was hat Jo morgens im Kindergarten gemacht?',
+         options: [
+           'Sie hat die Räume geputzt und in der Küche geholfen.',
+           'Sie hat Portugiesisch gelernt.',
+           'Sie hat den Familien Berichte geschickt.'
+         ],
+         correctAnswer: 0,
+         explanation: 'Im Text steht: "Zuerst habe ich morgens immer die Räume geputzt und dann in der Küche geholfen..."'
+       },
+       {
+         id: 'q2',
+         question: 'Warum hat sich Jo bald zu Hause gefühlt?',
+         options: [
+           'Weil die Stadt nicht laut war.',
+           'Weil sie schon an der Volkshochschule Portugiesisch gelernt hatte.',
+           'Weil sie nicht arbeiten musste.'
+         ],
+         correctAnswer: 1,
+         explanation: 'Sie verstand schon Portugiesisch, weil sie es in der 12. Klasse an der Volkshochschule gelernt hatte.'
+       }
+     ]
+  },
+  'l14': {
+     title: 'Weihnachten und Pakete',
+     instruction: 'Lesen Sie den kurzen Text und beantworten Sie die Fragen.',
+     text: [
+       "In der Vorweihnachtszeit ist bei der Post immer viel los. Überall werden fleißig Päckchen und Pakete gepackt. Pro Tag werden in Deutschland ungefähr 7,2 Millionen Pakete verschickt.",
+       "Viele Menschen verschicken Geschenke an ihre Verwandten und Freunde, die in anderen Städten oder Ländern wohnen. Die Postämter sind voll, und die Mitarbeiter müssen viel arbeiten.",
+       "Auch viele Weihnachtskarten werden geschrieben und verschickt. Schon im November beginnen einige Leute, ihre Karten zu schreiben, damit sie rechtzeitig ankommen."
+     ],
+     questions: [
+       {
+         id: 'q1',
+         question: 'Wie viele Pakete werden in Deutschland pro Tag verschickt?',
+         options: [
+           'ungefähr 7,2 Millionen',
+           'ungefähr 24 Millionen',
+           'ungefähr 12 Millionen'
+         ],
+         correctAnswer: 0,
+         explanation: 'Im Text steht: "Pro Tag werden in Deutschland ungefähr 7,2 Millionen Pakete verschickt."'
+       },
+       {
+         id: 'q2',
+         question: 'Wann beginnen einige Leute, ihre Weihnachtskarten zu schreiben?',
+         options: [
+           'Erst im Dezember',
+           'Schon im November',
+           'Nach Weihnachten'
+         ],
+         correctAnswer: 1,
+         explanation: 'Der Text sagt: "Schon im November beginnen einige Leute, ihre Karten zu schreiben..."'
+       }
+     ]
+  },
   'l15': {
      title: 'Der Tatort',
      instruction: 'Lesen Sie den Text und beantworten Sie die Fragen.',

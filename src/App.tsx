@@ -1969,24 +1969,9 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     playAudio={playAudio}
                     playingId={playingId}
                   />
-                ) : activeTab === "reading" &&
-                  ["l15", "l16", "l18", "l22", "l23", "l24"].includes(
-                    selectedLesson.id,
-                  ) ? (
+                ) : activeTab === "reading" ? (
                   <ReadingPractice lessonId={selectedLesson.id} />
-                ) : activeTab === "writing" &&
-                  [
-                    "l15",
-                    "l16",
-                    "l17",
-                    "l18",
-                    "l19",
-                    "l20",
-                    "l21",
-                    "l22",
-                    "l23",
-                    "l24",
-                  ].includes(selectedLesson.id) ? (
+                ) : activeTab === "writing" ? (
                   <WritingPractice lessonId={selectedLesson.id} />
                 ) : activeTab === "game" ? (
                   <div className="space-y-6">
@@ -3036,14 +3021,19 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               const hasLecture = ["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10","l11","l12","l13","l14","l15","l16","l17","l18","l19","l20","l21","l22","l23","l24"].includes(selectedLesson.id);
               if (hasLecture) tabs.push({ id: "lecture", icon: <MonitorPlay className="w-5 h-5 mb-0.5" />, label: "Bài giảng", active: activeTab === "lecture", onClick: () => setActiveTab("lecture") });
               
-              const hasGameAndSpeaking = ["l15","l16","l17","l18","l19","l20","l21","l22","l23","l24"].includes(selectedLesson.id);
-              if (hasGameAndSpeaking) {
+              const hasGame = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24"].includes(selectedLesson.id);
+              const hasSpeaking = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24"].includes(selectedLesson.id);
+              if (hasGame) {
                 tabs.push({ id: "game", icon: <Gamepad2 className="w-5 h-5 mb-0.5" />, label: "Trò chơi", active: activeTab === "game", onClick: () => setActiveTab("game") });
+              }
+              if (hasSpeaking) {
                 tabs.push({ id: "speaking", icon: <Mic className="w-5 h-5 mb-0.5" />, label: "Luyện nói", active: activeTab === "speaking", onClick: () => setActiveTab("speaking") });
               }
-              const hasReading = ["l15", "l16", "l18", "l22", "l23", "l24"].includes(selectedLesson.id);
+              const hasReading = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l15", "l16", "l18", "l22", "l23", "l24"].includes(selectedLesson.id);
               if (hasReading) tabs.push({ id: "reading", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">📖</span>, label: "Đọc", active: activeTab === "reading", onClick: () => setActiveTab("reading") });
-              if (hasGameAndSpeaking) tabs.push({ id: "writing", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">✍️</span>, label: "Viết", active: activeTab === "writing", onClick: () => setActiveTab("writing") });
+              
+              const hasWriting = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24"].includes(selectedLesson.id);
+              if (hasWriting) tabs.push({ id: "writing", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">✍️</span>, label: "Viết", active: activeTab === "writing", onClick: () => setActiveTab("writing") });
             }
 
             const mobileVisibleTabs = tabs.length > 4 ? tabs.slice(0, 3) : tabs;

@@ -62,6 +62,150 @@ const TeachingNotation = ({ syllables, notation, isSentence }: { syllables?: str
 }
 
 export const SPEAKING_DATA: Record<string, { words: PracticeItem[], sentences: PracticeItem[], conversations?: PracticeItem[] }> = {
+
+  "l1": {
+    "words": [
+      { "id": "w1", "de": "Bäcker", "vi": "Thợ làm bánh", "ipa": "/ˈbɛkɐ/", "syllables": ["Bä", "cker"], "notation": [80, 40] },
+      { "id": "w2", "de": "Beruf", "vi": "Nghề nghiệp", "ipa": "/bəˈʁuːf/", "syllables": ["Be", "ruf"], "notation": [40, 80] },
+      { "id": "w3", "de": "Arbeit", "vi": "Công việc", "ipa": "/ˈaʁbaɪ̯t/", "syllables": ["Ar", "beit"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Mein Opa war auch schon Bäcker.", "vi": "Ông nội tôi cũng là thợ làm bánh.", "ipa": "/maɪ̯n ˈoːpa vaːɐ̯ aʊ̯x ʃoːn ˈbɛkɐ/", "syllables": ["Mein", "O", "pa", "war", "auch", "schon", "Bä", "cker."], "notation": [40, 80, 40, 40, 40, 40, 80, 40] }
+    ]
+  },
+  "l2": {
+    "words": [
+      { "id": "w1", "de": "Kommode", "vi": "Tủ có ngăn kéo", "ipa": "/kɔˈmoːdə/", "syllables": ["Kom", "mo", "de"], "notation": [40, 80, 40] },
+      { "id": "w2", "de": "Stuhl", "vi": "Cái ghế", "ipa": "/ʃtuːl/", "syllables": ["Stuhl"], "notation": [80] },
+      { "id": "w3", "de": "stellen", "vi": "Đặt (đứng)", "ipa": "/ˈʃtɛlən/", "syllables": ["stel", "len"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Wohin mit der Kommode?", "vi": "Cái tủ nên để đâu?", "ipa": "/voˈhɪn mɪt deːɐ̯ kɔˈmoːdə/", "syllables": ["Wo", "hin", "mit", "der", "Kom", "mo", "de?"], "notation": [40, 80, 40, 40, 40, 80, 40] }
+    ]
+  },
+  "l3": {
+    "words": [
+      { "id": "w1", "de": "Erholung", "vi": "Sự nghỉ ngơi", "ipa": "/ɛɐ̯ˈhoːlʊŋ/", "syllables": ["Er", "ho", "lung"], "notation": [40, 80, 40] },
+      { "id": "w2", "de": "Ruhe", "vi": "Sự yên tĩnh", "ipa": "/ˈʁuːə/", "syllables": ["Ru", "he"], "notation": [80, 40] },
+      { "id": "w3", "de": "Strand", "vi": "Bãi biển", "ipa": "/ʃtʁant/", "syllables": ["Strand"], "notation": [80] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Hier finden Sie Ruhe und Erholung.", "vi": "Tại đây bạn sẽ tìm thấy sự tĩnh lặng và nghỉ ngơi.", "ipa": "/hiːɐ̯ ˈfɪndən ziː ˈʁuːə ʊnt ɛɐ̯ˈhoːlʊŋ/", "syllables": ["Hier", "fin", "den", "Sie", "Ru", "he", "und", "Er", "ho", "lung."], "notation": [40, 80, 40, 40, 80, 40, 40, 40, 80, 40] }
+    ]
+  },
+  "l4": {
+    "words": [
+      { "id": "w1", "de": "Apfel", "vi": "Quả táo", "ipa": "/ˈapfl̩/", "syllables": ["Ap", "fel"], "notation": [80, 40] },
+      { "id": "w2", "de": "kaufen", "vi": "Mua", "ipa": "/ˈkaʊ̯fn̩/", "syllables": ["kau", "fen"], "notation": [80, 40] },
+      { "id": "w3", "de": "Brot", "vi": "Bánh mì", "ipa": "/bʁoːt/", "syllables": ["Brot"], "notation": [80] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Was darf es sein?", "vi": "Quý khách muốn mua gì ạ?", "ipa": "/vas daʁf ɛs zaɪ̯n/", "syllables": ["Was", "darf", "es", "sein?"], "notation": [40, 80, 40, 40] }
+    ]
+  },
+  "l5": {
+    "words": [
+      { "id": "w1", "de": "Dom", "vi": "Nhà thờ lớn", "ipa": "/doːm/", "syllables": ["Dom"], "notation": [80] },
+      { "id": "w2", "de": "schön", "vi": "Đẹp", "ipa": "/ʃøːn/", "syllables": ["schön"], "notation": [80] },
+      { "id": "w3", "de": "schauen", "vi": "Nhìn, xem", "ipa": "/ˈʃaʊ̯ən/", "syllables": ["schau", "en"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Schaut mal, der schöne Dom!", "vi": "Nhìn kìa, ngôi nhà thờ đẹp quá!", "ipa": "/ʃaʊ̯t maːl, deːɐ̯ ˈʃøːnə doːm/", "syllables": ["Schaut", "mal,", "der", "schö", "ne", "Dom!"], "notation": [80, 40, 40, 80, 40, 80] }
+    ]
+  },
+  "l6": {
+    "words": [
+      { "id": "w1", "de": "Veranstaltung", "vi": "Sự kiện", "ipa": "/fɛɐ̯ˈʔanʃtaltʊŋ/", "syllables": ["Ver", "an", "stal", "tung"], "notation": [40, 80, 40, 40] },
+      { "id": "w2", "de": "Konzert", "vi": "Buổi hòa nhạc", "ipa": "/kɔnˈt͡sɛʁt/", "syllables": ["Kon", "zert"], "notation": [40, 80] },
+      { "id": "w3", "de": "Theater", "vi": "Nhà hát", "ipa": "/teˈaːtɐ/", "syllables": ["The", "a", "ter"], "notation": [40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Das ist meine Lieblingsveranstaltung.", "vi": "Đó là sự kiện yêu thích của tôi.", "ipa": "/das ɪst ˈmaɪ̯nə ˈliːplɪŋsfɛɐ̯ˌʔanʃtaltʊŋ/", "syllables": ["Das", "ist", "mei", "ne", "Lieb", "lings", "ver", "an", "stal", "tung."], "notation": [40, 40, 80, 40, 80, 40, 40, 80, 40, 40] }
+    ]
+  },
+  "l7": {
+    "words": [
+      { "id": "w1", "de": "joggen", "vi": "Chạy bộ", "ipa": "/ˈd͡ʒɔɡn̩/", "syllables": ["jog", "gen"], "notation": [80, 40] },
+      { "id": "w2", "de": "montags", "vi": "Vào các ngày thứ hai", "ipa": "/ˈmoːntaːks/", "syllables": ["mon", "tags"], "notation": [80, 40] },
+      { "id": "w3", "de": "Tennis", "vi": "Quần vợt", "ipa": "/ˈtɛnɪs/", "syllables": ["Ten", "nis"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Wir könnten montags joggen gehen.", "vi": "Chúng ta có thể đi chạy bộ vào các ngày thứ hai.", "ipa": "/viːɐ̯ ˈkœntən ˈmoːntaːks ˈd͡ʒɔɡn̩ ˈɡeːən/", "syllables": ["Wir", "könn", "ten", "mon", "tags", "jog", "gen", "ge", "hen."], "notation": [40, 80, 40, 80, 40, 80, 40, 80, 40] }
+    ]
+  },
+  "l8": {
+    "words": [
+      { "id": "w1", "de": "Herz", "vi": "Trái tim", "ipa": "/hɛʁt͡s/", "syllables": ["Herz"], "notation": [80] },
+      { "id": "w2", "de": "hoffentlich", "vi": "Hy vọng là", "ipa": "/ˈhɔfn̩tlɪç/", "syllables": ["hof", "fent", "lich"], "notation": [80, 40, 40] },
+      { "id": "w3", "de": "Schmerzen", "vi": "Cơn đau", "ipa": "/ˈʃmɛʁt͡sn̩/", "syllables": ["Schmer", "zen"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Hoffentlich ist es nicht das Herz!", "vi": "Hi vọng là không phải do tim!", "ipa": "/ˈhɔfn̩tlɪç ɪst ɛs nɪçt das hɛʁt͡s/", "syllables": ["Hof", "fent", "lich", "ist", "es", "nicht", "das", "Herz!"], "notation": [80, 40, 40, 40, 40, 60, 40, 80] }
+    ]
+  },
+  "l9": {
+    "words": [
+      { "id": "w1", "de": "Auto", "vi": "Ô tô", "ipa": "/ˈaʊ̯to/", "syllables": ["Au", "to"], "notation": [80, 40] },
+      { "id": "w2", "de": "Firma", "vi": "Công ty", "ipa": "/ˈfɪʁma/", "syllables": ["Fir", "ma"], "notation": [80, 40] },
+      { "id": "w3", "de": "Kollegen", "vi": "Đồng nghiệp", "ipa": "/kɔˈleːɡn̩/", "syllables": ["Kol", "le", "gen"], "notation": [40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Bei guten Autos sind wir ganz vorn.", "vi": "Trong lĩnh vực xe hơi tốt, chúng tôi đứng hàng đầu.", "ipa": "/baɪ̯ ˈɡuːtən ˈaʊ̯toːs zɪnt viːɐ̯ ɡant͡s fɔʁn/", "syllables": ["Bei", "gu", "ten", "Au", "tos", "sind", "wir", "ganz", "vorn."], "notation": [40, 80, 40, 80, 40, 40, 40, 60, 80] }
+    ]
+  },
+  "l10": {
+    "words": [
+      { "id": "w1", "de": "reservieren", "vi": "Đặt trước", "ipa": "/ʁezɛʁˈviːʁən/", "syllables": ["re", "ser", "vie", "ren"], "notation": [40, 40, 80, 40] },
+      { "id": "w2", "de": "Tisch", "vi": "Cái bàn", "ipa": "/tɪʃ/", "syllables": ["Tisch"], "notation": [80] },
+      { "id": "w3", "de": "Menü", "vi": "Thực đơn", "ipa": "/meˈnyː/", "syllables": ["Me", "nü"], "notation": [40, 80] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Gut, dass du reserviert hast.", "vi": "Tốt quá, thật may vì bạn đã đặt chỗ trước.", "ipa": "/ɡuːt, das du ʁezɛʁˈviːɐ̯t hast/", "syllables": ["Gut,", "dass", "du", "re", "ser", "viert", "hast."], "notation": [80, 40, 40, 40, 40, 80, 40] }
+    ]
+  },
+  "l11": {
+    "words": [
+      { "id": "w1", "de": "freuen", "vi": "Vui vẻ", "ipa": "/ˈfʁɔʏ̯ən/", "syllables": ["freu", "en"], "notation": [80, 40] },
+      { "id": "w2", "de": "lachen", "vi": "Cười", "ipa": "/ˈlaxn̩/", "syllables": ["la", "chen"], "notation": [80, 40] },
+      { "id": "w3", "de": "glücklich", "vi": "Hạnh phúc", "ipa": "/ˈɡlʏklɪç/", "syllables": ["glück", "lich"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Ich freue mich so.", "vi": "Tôi vui quá.", "ipa": "/ɪç ˈfʁɔʏ̯ə mɪç zoː/", "syllables": ["Ich", "freu", "e", "mich", "so."], "notation": [40, 80, 40, 40, 80] }
+    ]
+  },
+  "l12": {
+    "words": [
+      { "id": "w1", "de": "Liebe", "vi": "Tình yêu", "ipa": "/ˈliːbə/", "syllables": ["Lie", "be"], "notation": [80, 40] },
+      { "id": "w2", "de": "Magen", "vi": "Dạ dày", "ipa": "/ˈmaːɡn̩/", "syllables": ["Ma", "gen"], "notation": [80, 40] },
+      { "id": "w3", "de": "Rezept", "vi": "Công thức nấu ăn", "ipa": "/ʁeˈt͡sɛpt/", "syllables": ["Re", "zept"], "notation": [40, 80] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Liebe geht durch den Magen.", "vi": "Tình yêu đi qua dạ dày.", "ipa": "/ˈliːbə ɡeːt dʊʁç deːn ˈmaːɡn̩/", "syllables": ["Lie", "be", "geht", "durch", "den", "Ma", "gen."], "notation": [80, 40, 40, 40, 40, 80, 40] }
+    ]
+  },
+
+  "l13": {
+    "words": [
+      { "id": "w1", "de": "wichtig", "vi": "quan trọng", "ipa": "/ˈvɪçtɪç/", "syllables": ["wich", "tig"], "notation": [80, 40] },
+      { "id": "w2", "de": "richtig", "vi": "đúng", "ipa": "/ˈʁɪçtɪç/", "syllables": ["rich", "tig"], "notation": [80, 40] },
+      { "id": "w3", "de": "häufig", "vi": "thường xuyên", "ipa": "/ˈhɔɪ̯fɪç/", "syllables": ["häu", "fig"], "notation": [80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Mein Name ist Piotr, ich bin 22 Jahre alt.", "vi": "Tên tôi là Piotr, tôi 22 tuổi.", "ipa": "/maɪ̯n ˈnaːmə ɪst ˌpjoːtɐ, ɪç bɪn ˈtsvaɪ̯ʊntˌtsvant͡sɪç ˈjaːʁə alt/", "syllables": ["Mein", "Na", "me", "ist", "Pi", "otr", ",", "ich", "bin", "zwei", "und", "zwan", "zig", "Jah", "re", "alt", "."], "notation": [40, 80, 40, 40, 60, 40, 0, 40, 40, 80, 40, 80, 40, 80, 40, 80, 0] },
+      { "id": "s2", "de": "Zurzeit studiere ich hier und wohne in einer WG.", "vi": "Hiện tại tôi học ở đây và sống trong một căn hộ chia sẻ.", "ipa": "/t͡sʊɐ̯ˈt͡saɪ̯t ʃtuˈdiːʁə ɪç hiːɐ̯ ʊnt ˈvoːnə ɪn ˈaɪ̯nɐ veːˈɡeː/", "syllables": ["Zur", "zeit", "stu", "die", "re", "ich", "hier", "und", "woh", "ne", "in", "ei", "ner", "W", "G", "."], "notation": [40, 80, 40, 80, 40, 40, 80, 40, 80, 40, 40, 80, 40, 40, 80, 0] }
+    ]
+  },
+  "l14": {
+    "words": [
+      { "id": "w1", "de": "Weihnachtskarte", "vi": "Thiệp Giáng sinh", "ipa": "/ˈvaɪ̯naxtsˌkaʁtə/", "syllables": ["Weih", "nachts", "kar", "te"], "notation": [80, 40, 80, 40] },
+      { "id": "w2", "de": "verschicken", "vi": "gửi đi", "ipa": "/fɛɐ̯ˈʃɪkən/", "syllables": ["ver", "schi", "cken"], "notation": [40, 80, 40] },
+      { "id": "w3", "de": "geschrieben", "vi": "đã viết", "ipa": "/ɡəˈʃʁiːbən/", "syllables": ["ge", "schrie", "ben"], "notation": [40, 80, 40] }
+    ],
+    "sentences": [
+      { "id": "s1", "de": "Weihnachtskarten werden geschrieben.", "vi": "Thiệp Giáng sinh đang được viết.", "ipa": "/ˈvaɪ̯naxtsˌkaʁtən ˈveːɐ̯dən ɡəˈʃʁiːbən/", "syllables": ["Weih", "nachts", "kar", "ten", "wer", "den", "ge", "schrie", "ben", "."], "notation": [80, 40, 80, 40, 80, 40, 40, 80, 40, 0] },
+      { "id": "s2", "de": "Es werden viele E-Mails verschickt.", "vi": "Nhiều email đang được gửi đi.", "ipa": "/ɛs ˈveːɐ̯dən ˈfiːlə ˈiːmɛɪ̯ls fɛɐ̯ˈʃɪkt/", "syllables": ["Es", "wer", "den", "vie", "le", "E", "-", "Mails", "ver", "schickt", "."], "notation": [40, 80, 40, 80, 40, 80, 0, 80, 40, 80, 0] }
+    ]
+  },
   "l15": {
     "words": [
       { "id": "w1", "de": "Fernseher", "vi": "Ti-vi", "ipa": "/ˈfɛʁnˌzeːɐ/", "syllables": ["Fern", "se", "her"], "notation": [80, 40, 40] },

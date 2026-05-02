@@ -12,6 +12,156 @@ const LESSON_CONTENT: Record<string, {
   aiPrompt: string;
   redemittel: { de: string; vi: string }[];
 }> = {
+
+  'l1': {
+    topicTitle: 'Dein Traumjob',
+    topicDesc: 'Viết một đoạn văn ngắn về nghề nghiệp mơ ước của bạn. Bạn muốn làm gì? Tại sao? Công việc đó như thế nào?',
+    placeholder: 'Ich möchte gerne als ... arbeiten, weil...',
+    aiPrompt: 'The writing prompt asks for their dream job and their reasons. Evaluate their vocabulary related to professions and reasons.',
+    redemittel: [
+      { de: 'Ich möchte ... werden.', vi: 'Tôi muốn trở thành...' },
+      { de: 'Mein Traumjob ist...', vi: 'Công việc mơ ước của tôi là...' },
+      { de: 'Ich finde diesen Beruf interessant, weil...', vi: 'Tôi thấy công việc này thú vị vì...' }
+    ]
+  },
+  'l2': {
+    topicTitle: 'Meine neue Wohnung',
+    topicDesc: 'Mô tả căn hộ hoặc phòng mới của bạn. Có những đồ nội thất nào và bạn đặt chúng ở đâu?',
+    placeholder: 'In meinem neuen Zimmer gibt es...',
+    aiPrompt: 'Evaluate their use of furniture vocabulary and two-way prepositions (Wechselpräpositionen) with dative/accusative.',
+    redemittel: [
+      { de: 'Das Bett steht an der Wand.', vi: 'Cái giường nằm sát tường.' },
+      { de: 'Ich stelle den Schreibtisch vor das Fenster.', vi: 'Tôi đặt bàn học trước cửa sổ.' }
+    ]
+  },
+  'l3': {
+    topicTitle: 'Reisebericht',
+    topicDesc: 'Kể về kỳ nghỉ gần nhất của bạn. Bạn đã đi đâu, kỳ nghỉ thế nào, bạn đã làm gì?',
+    placeholder: 'Letzten Sommer bin ich nach ... gefahren.',
+    aiPrompt: 'Evaluate their ability to recount a trip in the past tense (Perfekt) and use vacation vocabulary.',
+    redemittel: [
+      { de: 'Wir sind nach ... gefahren.', vi: 'Chúng tôi đã đi...' },
+      { de: 'Das Wetter war wunderbar.', vi: 'Thời tiết thật tuyệt vời.' },
+      { de: 'Ich habe mich gut erholt.', vi: 'Tôi đã nghỉ ngơi thư giãn tốt.' }
+    ]
+  },
+  'l4': {
+    topicTitle: 'Einkaufszettel und Partyplanung',
+    topicDesc: 'Bạn chuẩn bị tổ chức tiệc. Viết những thứ bạn cần mua và tại sao.',
+    placeholder: 'Für die Party am Samstag brauche ich...',
+    aiPrompt: 'Evaluate vocabulary related to food and shopping, and expressing quantities.',
+    redemittel: [
+      { de: 'Ich brauche drei Flaschen Saft.', vi: 'Tôi cần 3 chai nước trái cây.' },
+      { de: 'Wir müssen noch Fleisch kaufen.', vi: 'Chúng ta còn phải mua thịt.' }
+    ]
+  },
+  'l5': {
+    topicTitle: 'Tipps für Touristen',
+    topicDesc: 'Đưa ra lời khuyên cho một người bạn đến thăm thành phố của bạn. Họ nên làm gì và xem gì?',
+    placeholder: 'Wenn du in meiner Stadt bist, musst du...',
+    aiPrompt: 'Evaluate the use of imperative and modal verbs to give recommendations about sightseeing.',
+    redemittel: [
+      { de: 'Besuchen Sie den Dom!', vi: 'Hãy thăm nhà thờ lớn!' },
+      { de: 'Du solltest unbedingt in den Park gehen.', vi: 'Bạn nhất định nên đi đến công viên.' }
+    ]
+  },
+  'l6': {
+    topicTitle: 'Einladung zu einer Veranstaltung',
+    topicDesc: 'Viết email mời bạn bè tham gia một sự kiện (hòa nhạc, kịch...)',
+    placeholder: 'Hallo ..., am Freitag gibt es ein Konzert von...',
+    aiPrompt: 'Evaluate the ability to invite someone to an event, including time and place.',
+    redemittel: [
+      { de: 'Hast du Lust, mit mir ins Konzert zu gehen?', vi: 'Bạn có hứng đi xem hòa nhạc với tôi không?' },
+      { de: 'Wir treffen uns um 18 Uhr.', vi: 'Chúng ta gặp lúc 18h.' }
+    ]
+  },
+  'l7': {
+    topicTitle: 'Meine Hobbys',
+    topicDesc: 'Viết về sở thích và các môn thể thao bạn chơi. Bạn chơi bao lâu một lần?',
+    placeholder: 'In meiner Freizeit spiele ich...',
+    aiPrompt: 'Evaluate vocabulary regarding sports, hobbies, and adverbs of frequency.',
+    redemittel: [
+      { de: 'Zweimal pro Woche spiele ich Tennis.', vi: 'Tôi chơi quần vợt 2 lần 1 tuần.' },
+      { de: 'Das macht mir viel Spaß.', vi: 'Nó mang lại cho tôi nhiều niềm vui.' }
+    ]
+  },
+  'l8': {
+    topicTitle: 'Krankmeldung / Beim Arzt',
+    topicDesc: 'Viết email thông báo bạn bị ốm không thể đi làm/đi học, và bạn cảm thấy thế nào.',
+    placeholder: 'Sehr geehrte(r)..., ich bin leider krank...',
+    aiPrompt: 'Evaluate ability to write a sick leave email and describe health problems.',
+    redemittel: [
+      { de: 'Ich bin leider krank und kann heute nicht kommen.', vi: 'Tôi rất tiếc bị ốm nên không đến được.' },
+      { de: 'Ich habe Kopfschmerzen und Fieber.', vi: 'Tôi bị đau đầu và sốt.' }
+    ]
+  },
+  'l9': {
+    topicTitle: 'Mein Arbeitsalltag',
+    topicDesc: 'Công việc hàng ngày của bạn như thế nào? Kể về những nhiệm vụ bạn phải làm.',
+    placeholder: 'Ich arbeite als ..., jeden Tag muss ich...',
+    aiPrompt: 'Evaluate ability to describe daily routines and work tasks.',
+    redemittel: [
+      { de: 'Ich fange um 8 Uhr an.', vi: 'Tôi bắt đầu lúc 8h.' },
+      { de: 'Meine Aufgabe ist es, E-Mails zu beantworten.', vi: 'Nhiệm vụ của tôi là trả lời email.' }
+    ]
+  },
+  'l10': {
+    topicTitle: 'Ein Restaurant bewerten',
+    topicDesc: 'Viết một bài đánh giá (Review) cho một nhà hàng bạn mới ăn gần đây.',
+    placeholder: 'Letzte Woche war ich im Restaurant...',
+    aiPrompt: 'Evaluate evaluation vocabulary: describing food quality, service, and atmosphere.',
+    redemittel: [
+      { de: 'Das Essen war sehr lecker.', vi: 'Thức ăn rất ngon.' },
+      { de: 'Der Kellner war freundlich.', vi: 'Người bồi bàn rất thân thiện.' }
+    ]
+  },
+  'l11': {
+    topicTitle: 'Ein freudiges Ereignis',
+    topicDesc: 'Kể về một sự kiện gần đây khiến bạn rất vui.',
+    placeholder: 'Letztes Wochenende habe ich mich sehr gefreut, weil...',
+    aiPrompt: 'Evaluate expressions of emotion and telling a past event clearly.',
+    redemittel: [
+      { de: 'Ich habe mich so gefreut.', vi: 'Tôi đã rất vui.' },
+      { de: 'Es war ein tolles Erlebnis.', vi: 'Thật là một trải nghiệm tuyệt vời.' }
+    ]
+  },
+  'l12': {
+    topicTitle: 'Mein Lieblingsrezept',
+    topicDesc: 'Viết công thức cho món ăn yêu thích của bạn.',
+    placeholder: 'Für mein Lieblingsgericht braucht man...',
+    aiPrompt: 'Evaluate the use of food ingredients, measurements, and cooking instructions.',
+    redemittel: [
+      { de: 'Zuerst muss man die Zwiebeln schneiden.', vi: 'Đầu tiên phải thái hành.' },
+      { de: 'Danach brät man das Fleisch an.', vi: 'Sau đó rang/chiên thịt.' }
+    ]
+  },
+
+  'l13': {
+    topicTitle: 'Welcher Lerntyp sind Sie?',
+    topicDesc: 'Viết về kiểu học của bạn. Bạn là người học qua thị giác (visuell), thính giác (auditiv), giao tiếp (kommunikativ) hay nhận thức (kognitiv)? Bạn thường làm gì khi học tiếng Đức?',
+    placeholder: 'Ich bin ein...',
+    aiPrompt: 'The writing prompt asks the user to describe their learning type (visual, auditory, communicative, or cognitive) and how they typically learn German. Evaluate their vocabulary usage related to learning strategies and grammar.',
+    redemittel: [
+      { de: 'Ich bin ein visueller / auditiver / kommunikativer Lerntyp.', vi: 'Tôi là người học qua thị giác / thính giác / giao tiếp.' },
+      { de: 'Ich schreibe oft neue Wörter auf und verwende Farben.', vi: 'Tôi thường viết lại các từ mới và sử dụng màu sắc.' },
+      { de: 'Am besten lerne ich, wenn ich mit anderen spreche.', vi: 'Tôi học tốt nhất khi nói chuyện với người khác.' },
+      { de: 'Ich höre oft deutsche Nachrichten oder Podcasts.', vi: 'Tôi thường nghe tin tức tiếng Đức hoặc Podcasts.' },
+      { de: 'Mir hilft es, wenn ich Grammatikregeln lese.', vi: 'Nó giúp ích cho tôi khi tôi đọc các quy tắc ngữ pháp.' }
+    ]
+  },
+  'l14': {
+    topicTitle: 'Dankeschön für ein Päckchen',
+    topicDesc: 'Bạn vừa nhận được một gói quà sinh nhật từ người bạn Anna ở Đức. Hãy viết một tấm bưu thiếp để cảm ơn cô ấy về món quà, và kết thúc bằng việc mong sớm gặp lại.',
+    placeholder: 'Liebe Anna,...',
+    aiPrompt: 'The writing prompt asks the user to write a thank you postcard for a birthday package from their friend Anna in Germany. Evaluate structure (salutation, body, closing) and appropriate expressions of gratitude.',
+    redemittel: [
+      { de: 'Liebe Anna, vielen Dank für Dein Päckchen!', vi: 'Anna thân mến, cảm ơn bạn rất nhiều vì gói quà!' },
+      { de: 'Ich habe mich sehr über das schöne Geschenk gefreut.', vi: 'Tôi rất vui về món quà đẹp đẽ này.' },
+      { de: 'Das war eine tolle Überraschung zu meinem Geburtstag.', vi: 'Đó thực sự là một điều bất ngờ tuyệt vời cho sinh nhật của tôi.' },
+      { de: 'Bis hoffentlich bald!', vi: 'Hy vọng sớm gặp lại!' },
+      { de: 'Herzliche Grüße, ...', vi: 'Thân mến, ...' }
+    ]
+  },
   'l15': {
     topicTitle: 'Ein perfekter Fernseh- oder Kinoabend',
     topicDesc: 'Viết một bài đăng trên diễn đàn về một buổi tối xem phim hoặc TV hoàn hảo của bạn. Bạn thích xem ở nhà hay ở rạp? Tại sao? Bạn xem cùng với ai và ăn/uống gì?',
