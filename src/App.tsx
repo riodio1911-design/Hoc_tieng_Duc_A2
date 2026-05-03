@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { lazy, Suspense, useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Volume2,
@@ -35,134 +35,135 @@ import {
   L24_INTRO_SCRIPT,
 } from "./constants";
 import { AUDIO_MANIFEST } from "./generatedAudioManifest";
-import AlibiGame from "./components/AlibiGame";
-import Kartenspiel from "./components/Kartenspiel";
-import Lektion1Slides from "./components/Lektion1Slides";
-import Lektion1VocabTheory from "./components/Lektion1VocabTheory";
-import Lektion1VocabEx from "./components/Lektion1VocabEx";
-import Lektion1GrammarTheory from "./components/Lektion1GrammarTheory";
-import Lektion1GrammarEx from "./components/Lektion1GrammarEx";
-import Lektion2VocabTheory from "./components/Lektion2VocabTheory";
-import Lektion2VocabEx from "./components/Lektion2VocabEx";
-import Lektion2GrammarTheory from "./components/Lektion2GrammarTheory";
-import Lektion2GrammarEx from "./components/Lektion2GrammarEx";
-import Lektion2Slides from "./components/Lektion2Slides";
-import Lektion3VocabTheory from "./components/Lektion3VocabTheory";
-import Lektion3VocabEx from "./components/Lektion3VocabEx";
-import Lektion3GrammarTheory from "./components/Lektion3GrammarTheory";
-import Lektion3GrammarEx from "./components/Lektion3GrammarEx";
-import Lektion3Slides from "./components/Lektion3Slides";
-import Lektion4VocabTheory from "./components/Lektion4VocabTheory";
-import Lektion4VocabEx from "./components/Lektion4VocabEx";
-import Lektion4GrammarTheory from "./components/Lektion4GrammarTheory";
-import Lektion4GrammarEx from "./components/Lektion4GrammarEx";
-import Lektion4Slides from "./components/Lektion4Slides";
-import Lektion5VocabTheory from "./components/Lektion5VocabTheory";
-import Lektion5VocabEx from "./components/Lektion5VocabEx";
-import Lektion5GrammarTheory from "./components/Lektion5GrammarTheory";
-import Lektion5GrammarEx from "./components/Lektion5GrammarEx";
-import Lektion5Slides from "./components/Lektion5Slides";
-import Lektion6VocabTheory from "./components/Lektion6VocabTheory";
-import Lektion6VocabEx from "./components/Lektion6VocabEx";
-import Lektion6GrammarTheory from "./components/Lektion6GrammarTheory";
-import Lektion6GrammarEx from "./components/Lektion6GrammarEx";
-import Lektion6Slides from "./components/Lektion6Slides";
-import Lektion7VocabTheory from "./components/Lektion7VocabTheory";
-import Lektion7VocabEx from "./components/Lektion7VocabEx";
-import Lektion7GrammarTheory from "./components/Lektion7GrammarTheory";
-import Lektion7GrammarEx from "./components/Lektion7GrammarEx";
-import Lektion7Slides from "./components/Lektion7Slides";
-import Lektion8VocabTheory from "./components/Lektion8VocabTheory";
-import Lektion8VocabEx from "./components/Lektion8VocabEx";
-import Lektion8GrammarTheory from "./components/Lektion8GrammarTheory";
-import Lektion8GrammarEx from "./components/Lektion8GrammarEx";
-import Lektion8Slides from "./components/Lektion8Slides";
-import Lektion9VocabTheory from "./components/Lektion9VocabTheory";
-import Lektion9VocabEx from "./components/Lektion9VocabEx";
-import Lektion9GrammarTheory from "./components/Lektion9GrammarTheory";
-import Lektion9GrammarEx from "./components/Lektion9GrammarEx";
-import Lektion9Slides from "./components/Lektion9Slides";
-import Lektion10VocabTheory from "./components/Lektion10VocabTheory";
-import Lektion10VocabEx from "./components/Lektion10VocabEx";
-import Lektion10GrammarTheory from "./components/Lektion10GrammarTheory";
-import Lektion10GrammarEx from "./components/Lektion10GrammarEx";
-import Lektion10Slides from "./components/Lektion10Slides";
+const AlibiGame = lazy(() => import('./components/AlibiGame'));
+const Kartenspiel = lazy(() => import('./components/Kartenspiel'));
+const Lektion1Slides = lazy(() => import('./components/Lektion1Slides'));
+const Lektion1VocabTheory = lazy(() => import('./components/Lektion1VocabTheory'));
+const Lektion1VocabEx = lazy(() => import('./components/Lektion1VocabEx'));
+const Lektion1GrammarTheory = lazy(() => import('./components/Lektion1GrammarTheory'));
+const Lektion1GrammarEx = lazy(() => import('./components/Lektion1GrammarEx'));
+const Lektion2VocabTheory = lazy(() => import('./components/Lektion2VocabTheory'));
+const Lektion2VocabEx = lazy(() => import('./components/Lektion2VocabEx'));
+const Lektion2GrammarTheory = lazy(() => import('./components/Lektion2GrammarTheory'));
+const Lektion2GrammarEx = lazy(() => import('./components/Lektion2GrammarEx'));
+const Lektion2Slides = lazy(() => import('./components/Lektion2Slides'));
+const Lektion3VocabTheory = lazy(() => import('./components/Lektion3VocabTheory'));
+const Lektion3VocabEx = lazy(() => import('./components/Lektion3VocabEx'));
+const Lektion3GrammarTheory = lazy(() => import('./components/Lektion3GrammarTheory'));
+const Lektion3GrammarEx = lazy(() => import('./components/Lektion3GrammarEx'));
+const Lektion3Slides = lazy(() => import('./components/Lektion3Slides'));
+const Lektion4VocabTheory = lazy(() => import('./components/Lektion4VocabTheory'));
+const Lektion4VocabEx = lazy(() => import('./components/Lektion4VocabEx'));
+const Lektion4GrammarTheory = lazy(() => import('./components/Lektion4GrammarTheory'));
+const Lektion4GrammarEx = lazy(() => import('./components/Lektion4GrammarEx'));
+const Lektion4Slides = lazy(() => import('./components/Lektion4Slides'));
+const Lektion5VocabTheory = lazy(() => import('./components/Lektion5VocabTheory'));
+const Lektion5VocabEx = lazy(() => import('./components/Lektion5VocabEx'));
+const Lektion5GrammarTheory = lazy(() => import('./components/Lektion5GrammarTheory'));
+const Lektion5GrammarEx = lazy(() => import('./components/Lektion5GrammarEx'));
+const Lektion5Slides = lazy(() => import('./components/Lektion5Slides'));
+const Lektion6VocabTheory = lazy(() => import('./components/Lektion6VocabTheory'));
+const Lektion6VocabEx = lazy(() => import('./components/Lektion6VocabEx'));
+const Lektion6GrammarTheory = lazy(() => import('./components/Lektion6GrammarTheory'));
+const Lektion6GrammarEx = lazy(() => import('./components/Lektion6GrammarEx'));
+const Lektion6Slides = lazy(() => import('./components/Lektion6Slides'));
+const Lektion7VocabTheory = lazy(() => import('./components/Lektion7VocabTheory'));
+const Lektion7VocabEx = lazy(() => import('./components/Lektion7VocabEx'));
+const Lektion7GrammarTheory = lazy(() => import('./components/Lektion7GrammarTheory'));
+const Lektion7GrammarEx = lazy(() => import('./components/Lektion7GrammarEx'));
+const Lektion7Slides = lazy(() => import('./components/Lektion7Slides'));
+const Lektion8VocabTheory = lazy(() => import('./components/Lektion8VocabTheory'));
+const Lektion8VocabEx = lazy(() => import('./components/Lektion8VocabEx'));
+const Lektion8GrammarTheory = lazy(() => import('./components/Lektion8GrammarTheory'));
+const Lektion8GrammarEx = lazy(() => import('./components/Lektion8GrammarEx'));
+const Lektion8Slides = lazy(() => import('./components/Lektion8Slides'));
+const Lektion9VocabTheory = lazy(() => import('./components/Lektion9VocabTheory'));
+const Lektion9VocabEx = lazy(() => import('./components/Lektion9VocabEx'));
+const Lektion9GrammarTheory = lazy(() => import('./components/Lektion9GrammarTheory'));
+const Lektion9GrammarEx = lazy(() => import('./components/Lektion9GrammarEx'));
+const Lektion9Slides = lazy(() => import('./components/Lektion9Slides'));
+const Lektion10VocabTheory = lazy(() => import('./components/Lektion10VocabTheory'));
+const Lektion10VocabEx = lazy(() => import('./components/Lektion10VocabEx'));
+const Lektion10GrammarTheory = lazy(() => import('./components/Lektion10GrammarTheory'));
+const Lektion10GrammarEx = lazy(() => import('./components/Lektion10GrammarEx'));
+const Lektion10Slides = lazy(() => import('./components/Lektion10Slides'));
 
-import Lektion11VocabTheory from "./components/Lektion11VocabTheory";
-import Lektion11VocabEx from "./components/Lektion11VocabEx";
-import Lektion11GrammarTheory from "./components/Lektion11GrammarTheory";
-import Lektion11GrammarEx from "./components/Lektion11GrammarEx";
-import Lektion11Slides from "./components/Lektion11Slides";
-import Lektion13VocabTheory from "./components/Lektion13VocabTheory";
-import Lektion13VocabEx from "./components/Lektion13VocabEx";
-import Lektion13GrammarTheory from "./components/Lektion13GrammarTheory";
-import Lektion13GrammarEx from "./components/Lektion13GrammarEx";
-import Lektion12Slides from "./components/Lektion12Slides";
-import Lektion12VocabTheory from "./components/Lektion12VocabTheory";
-import Lektion12VocabEx from "./components/Lektion12VocabEx";
-import Lektion12GrammarTheory from "./components/Lektion12GrammarTheory";
-import Lektion12GrammarEx from "./components/Lektion12GrammarEx";
-import Lektion13Slides from "./components/Lektion13Slides";
-import Lektion14VocabTheory from "./components/Lektion14VocabTheory";
-import Lektion14VocabEx from "./components/Lektion14VocabEx";
-import Lektion14GrammarTheory from "./components/Lektion14GrammarTheory";
-import Lektion14GrammarEx from "./components/Lektion14GrammarEx";
-import Lektion14Slides from "./components/Lektion14Slides";
-import Lektion15Slides from "./components/Lektion15Slides";
-import Lektion15VocabEx from "./components/Lektion15VocabEx";
-import Lektion15GrammarEx from "./components/Lektion15GrammarEx";
-import Lektion15GrammarTheory from "./components/Lektion15GrammarTheory";
-import Lektion15MediaGame from "./components/Lektion15MediaGame";
-import Lektion16Slides from "./components/Lektion16Slides";
-import Lektion16HotelGame from "./components/Lektion16HotelGame";
-import Lektion16VocabEx from "./components/Lektion16VocabEx";
-import Lektion16GrammarEx from "./components/Lektion16GrammarEx";
-import Lektion16GrammarTheory from "./components/Lektion16GrammarTheory";
-import Lektion17Slides from "./components/Lektion17Slides";
-import Lektion17VocabTheory from "./components/Lektion17VocabTheory";
-import Lektion17GrammarTheory from "./components/Lektion17GrammarTheory";
-import Lektion17VocabEx from "./components/Lektion17VocabEx";
-import Lektion17GrammarEx from "./components/Lektion17GrammarEx";
-import Lektion17TravelGame from "./components/Lektion17TravelGame";
-import Lektion18Slides from "./components/Lektion18Slides";
-import Lektion18VocabTheory from "./components/Lektion18VocabTheory";
-import Lektion18GrammarTheory from "./components/Lektion18GrammarTheory";
-import Lektion18VocabEx from "./components/Lektion18VocabEx";
-import Lektion18GrammarEx from "./components/Lektion18GrammarEx";
-import Lektion18NavigatorGame from "./components/Lektion18NavigatorGame";
-import Lektion19Slides from "./components/Lektion19Slides";
-import Lektion19VocabTheory from "./components/Lektion19VocabTheory";
-import Lektion19VocabEx from "./components/Lektion19VocabEx";
-import Lektion19GrammarTheory from "./components/Lektion19GrammarTheory";
-import Lektion19GrammarEx from "./components/Lektion19GrammarEx";
-import Lektion20Slides from "./components/Lektion20Slides";
-import Lektion20VocabTheory from "./components/Lektion20VocabTheory";
-import Lektion20VocabEx from "./components/Lektion20VocabEx";
-import Lektion20GrammarTheory from "./components/Lektion20GrammarTheory";
-import Lektion20GrammarEx from "./components/Lektion20GrammarEx";
-import Lektion21Slides from "./components/Lektion21Slides";
-import Lektion21GrammarTheory from "./components/Lektion21GrammarTheory";
-import Lektion21GrammarEx from "./components/Lektion21GrammarEx";
-import Lektion22Slides from "./components/Lektion22Slides";
-import Lektion23Slides from "./components/Lektion23Slides";
-import Lektion24Slides from "./components/Lektion24Slides";
-import Lektion24Exercises from "./components/Lektion24Exercises";
-import FlashcardGrid from "./components/FlashcardGrid";
-import GrammarTable from "./components/GrammarTable";
+const Lektion11VocabTheory = lazy(() => import('./components/Lektion11VocabTheory'));
+const Lektion11VocabEx = lazy(() => import('./components/Lektion11VocabEx'));
+const Lektion11GrammarTheory = lazy(() => import('./components/Lektion11GrammarTheory'));
+const Lektion11GrammarEx = lazy(() => import('./components/Lektion11GrammarEx'));
+const Lektion11Slides = lazy(() => import('./components/Lektion11Slides'));
+const Lektion13VocabTheory = lazy(() => import('./components/Lektion13VocabTheory'));
+const Lektion13VocabEx = lazy(() => import('./components/Lektion13VocabEx'));
+const Lektion13GrammarTheory = lazy(() => import('./components/Lektion13GrammarTheory'));
+const Lektion13GrammarEx = lazy(() => import('./components/Lektion13GrammarEx'));
+const Lektion12Slides = lazy(() => import('./components/Lektion12Slides'));
+const Lektion12VocabTheory = lazy(() => import('./components/Lektion12VocabTheory'));
+const Lektion12VocabEx = lazy(() => import('./components/Lektion12VocabEx'));
+const Lektion12GrammarTheory = lazy(() => import('./components/Lektion12GrammarTheory'));
+const Lektion12GrammarEx = lazy(() => import('./components/Lektion12GrammarEx'));
+const Lektion13Slides = lazy(() => import('./components/Lektion13Slides'));
+const Lektion14VocabTheory = lazy(() => import('./components/Lektion14VocabTheory'));
+const Lektion14VocabEx = lazy(() => import('./components/Lektion14VocabEx'));
+const Lektion14GrammarTheory = lazy(() => import('./components/Lektion14GrammarTheory'));
+const Lektion14GrammarEx = lazy(() => import('./components/Lektion14GrammarEx'));
+const Lektion14Slides = lazy(() => import('./components/Lektion14Slides'));
+const Lektion15Slides = lazy(() => import('./components/Lektion15Slides'));
+const Lektion15VocabEx = lazy(() => import('./components/Lektion15VocabEx'));
+const Lektion15GrammarEx = lazy(() => import('./components/Lektion15GrammarEx'));
+const Lektion15GrammarTheory = lazy(() => import('./components/Lektion15GrammarTheory'));
+const Lektion15MediaGame = lazy(() => import('./components/Lektion15MediaGame'));
+const Lektion16Slides = lazy(() => import('./components/Lektion16Slides'));
+const Lektion16HotelGame = lazy(() => import('./components/Lektion16HotelGame'));
+const Lektion16VocabEx = lazy(() => import('./components/Lektion16VocabEx'));
+const Lektion16GrammarEx = lazy(() => import('./components/Lektion16GrammarEx'));
+const Lektion16GrammarTheory = lazy(() => import('./components/Lektion16GrammarTheory'));
+const Lektion17Slides = lazy(() => import('./components/Lektion17Slides'));
+const Lektion17VocabTheory = lazy(() => import('./components/Lektion17VocabTheory'));
+const Lektion17GrammarTheory = lazy(() => import('./components/Lektion17GrammarTheory'));
+const Lektion17VocabEx = lazy(() => import('./components/Lektion17VocabEx'));
+const Lektion17GrammarEx = lazy(() => import('./components/Lektion17GrammarEx'));
+const Lektion17TravelGame = lazy(() => import('./components/Lektion17TravelGame'));
+const Lektion18Slides = lazy(() => import('./components/Lektion18Slides'));
+const Lektion18VocabTheory = lazy(() => import('./components/Lektion18VocabTheory'));
+const Lektion18GrammarTheory = lazy(() => import('./components/Lektion18GrammarTheory'));
+const Lektion18VocabEx = lazy(() => import('./components/Lektion18VocabEx'));
+const Lektion18GrammarEx = lazy(() => import('./components/Lektion18GrammarEx'));
+const Lektion18NavigatorGame = lazy(() => import('./components/Lektion18NavigatorGame'));
+const Lektion19Slides = lazy(() => import('./components/Lektion19Slides'));
+const Lektion19VocabTheory = lazy(() => import('./components/Lektion19VocabTheory'));
+const Lektion19VocabEx = lazy(() => import('./components/Lektion19VocabEx'));
+const Lektion19GrammarTheory = lazy(() => import('./components/Lektion19GrammarTheory'));
+const Lektion19GrammarEx = lazy(() => import('./components/Lektion19GrammarEx'));
+const Lektion20Slides = lazy(() => import('./components/Lektion20Slides'));
+const Lektion20VocabTheory = lazy(() => import('./components/Lektion20VocabTheory'));
+const Lektion20VocabEx = lazy(() => import('./components/Lektion20VocabEx'));
+const Lektion20GrammarTheory = lazy(() => import('./components/Lektion20GrammarTheory'));
+const Lektion20GrammarEx = lazy(() => import('./components/Lektion20GrammarEx'));
+const Lektion21Slides = lazy(() => import('./components/Lektion21Slides'));
+const Lektion21GrammarTheory = lazy(() => import('./components/Lektion21GrammarTheory'));
+const Lektion21GrammarEx = lazy(() => import('./components/Lektion21GrammarEx'));
+const Lektion22Slides = lazy(() => import('./components/Lektion22Slides'));
+const Lektion23Slides = lazy(() => import('./components/Lektion23Slides'));
+const Lektion24Slides = lazy(() => import('./components/Lektion24Slides'));
+const Lektion24Exercises = lazy(() => import('./components/Lektion24Exercises'));
+const FlashcardGrid = lazy(() => import('./components/FlashcardGrid'));
+const GrammarTable = lazy(() => import('./components/GrammarTable'));
 import FeedbackDisplay, { Feedback } from "./components/FeedbackDisplay";
-import SpeakingPractice, { SPEAKING_DATA } from "./components/SpeakingPractice";
-import WritingPractice from "./components/WritingPractice";
-import Lektion22Exercises from "./components/Lektion22Exercises";
-import Lektion22GrammarEx from "./components/Lektion22GrammarEx";
-import Lektion23Exercises from "./components/Lektion23Exercises";
-import Lektion23GrammarEx from "./components/Lektion23GrammarEx";
-import Lektion24GrammarEx from "./components/Lektion24GrammarEx";
-import Lektion24WordGuessingGame from "./components/Lektion24WordGuessingGame";
-import Lektion24DACHQuiz from "./components/Lektion24DACHQuiz";
-import ReadingPractice from "./components/ReadingPractice";
+const SpeakingPractice = lazy(() => import('./components/SpeakingPractice'));
+import { SPEAKING_DATA } from "./data/speakingData";
+const WritingPractice = lazy(() => import('./components/WritingPractice'));
+const Lektion22Exercises = lazy(() => import('./components/Lektion22Exercises'));
+const Lektion22GrammarEx = lazy(() => import('./components/Lektion22GrammarEx'));
+const Lektion23Exercises = lazy(() => import('./components/Lektion23Exercises'));
+const Lektion23GrammarEx = lazy(() => import('./components/Lektion23GrammarEx'));
+const Lektion24GrammarEx = lazy(() => import('./components/Lektion24GrammarEx'));
+const Lektion24WordGuessingGame = lazy(() => import('./components/Lektion24WordGuessingGame'));
+const Lektion24DACHQuiz = lazy(() => import('./components/Lektion24DACHQuiz'));
+const ReadingPractice = lazy(() => import('./components/ReadingPractice'));
 
-import ReviewAIRoleplay from "./components/ReviewAIRoleplay";
-import ReviewDailyMix from "./components/ReviewDailyMix";
+const ReviewAIRoleplay = lazy(() => import('./components/ReviewAIRoleplay'));
+const ReviewDailyMix = lazy(() => import('./components/ReviewDailyMix'));
 import { getAI } from "./ai";
 
 const ai = getAI();
@@ -1813,7 +1814,8 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
 
 
               <div className="space-y-4 pb-20">
-                {selectedLesson.id === "review" || activeTab === "review" ? (
+                <Suspense fallback={<div className="p-8 text-center text-theme-dark/50 animate-pulse">Đang tải nội dung...</div>}>
+                  {selectedLesson.id === "review" || activeTab === "review" ? (
                   activeSubTab === "ai_roleplay" ? (
                     <ReviewAIRoleplay />
                   ) : (
@@ -2827,6 +2829,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                     )}
                   </div>
                 )}
+                </Suspense>
 
                 {(() => {
                   const lessons = VOCABULARY_DATA.filter(l => l.id.startsWith("l"));
@@ -3029,7 +3032,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
               if (hasSpeaking) {
                 tabs.push({ id: "speaking", icon: <Mic className="w-5 h-5 mb-0.5" />, label: "Luyện nói", active: activeTab === "speaking", onClick: () => setActiveTab("speaking") });
               }
-              const hasReading = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l15", "l16", "l18", "l22", "l23", "l24"].includes(selectedLesson.id);
+              const hasReading = true; // All 24 lessons now have Reading Practice
               if (hasReading) tabs.push({ id: "reading", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">📖</span>, label: "Đọc", active: activeTab === "reading", onClick: () => setActiveTab("reading") });
               
               const hasWriting = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24"].includes(selectedLesson.id);
