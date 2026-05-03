@@ -116,7 +116,7 @@ export default function ReviewDailyMix() {
               <div className="max-w-md">
                  <h2 className="text-3xl font-black text-theme-dark tracking-tight">Daily Mix <br/> Trạm Ôn Tập</h2>
                  <p className="text-theme-dark/70 font-medium mt-4 bg-white p-4 rounded-xl border border-theme-dark/10">
-                    Mỗi ngày 10 câu hỏi ngẫu nhiên từ khóa Menschen A2 (Lektion 21-24) giúp bạn chống "quên" kiến thức.
+                    Mỗi ngày 10 câu hỏi ngẫu nhiên từ khóa Menschen A2 (Lektion 1 - Lektion 24) giúp bạn chống "quên" kiến thức.
                  </p>
               </div>
               <button onClick={startDailyMix} className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-[24px] shadow-lg shadow-amber-500/20 transition-all text-xl mt-4 flex items-center justify-center gap-2">

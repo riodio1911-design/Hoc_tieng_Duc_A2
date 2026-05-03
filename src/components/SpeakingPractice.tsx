@@ -82,8 +82,17 @@ export default function SpeakingPractice({ lessonId, playAudio, playingId }: Spe
   });
   const [currentFeedback, setCurrentFeedback] = useState<string>('');
 
-  const data = SPEAKING_DATA[lessonId] || SPEAKING_DATA["l21"]; // default fallback
+  const data = SPEAKING_DATA[lessonId];
   
+  if (!data) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+        <Mic className="w-16 h-16 text-theme-dark/10" />
+        <p className="font-bold text-theme-dark/40">Chưa có bài luyện nói cho bài học này.</p>
+      </div>
+    );
+  }
+
   const getConversationGroups = (convItems: PracticeItem[]): ConversationGroup[] => {
     const groups: { [key: string]: PracticeItem[] } = {};
     for (const item of convItems) {

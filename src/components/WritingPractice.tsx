@@ -295,7 +295,7 @@ const LESSON_CONTENT: Record<string, {
 };
 
 export default function WritingPractice({ lessonId }: { lessonId: string }) {
-  const content = LESSON_CONTENT[lessonId] || LESSON_CONTENT['l21'];
+  const content = LESSON_CONTENT[lessonId];
 
   const [text, setText] = useState('');
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -310,6 +310,15 @@ export default function WritingPractice({ lessonId }: { lessonId: string }) {
     suggestion: string;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  if (!content) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+        <Edit3 className="w-16 h-16 text-theme-dark/10" />
+        <p className="font-bold text-theme-dark/40">Chưa có bài luyện viết cho bài học này.</p>
+      </div>
+    );
+  }
 
   useEffect(() => {
     const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;

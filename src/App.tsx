@@ -140,6 +140,20 @@ const Lektion20VocabTheory = lazy(() => import('./components/Lektion20VocabTheor
 const Lektion20VocabEx = lazy(() => import('./components/Lektion20VocabEx'));
 const Lektion20GrammarTheory = lazy(() => import('./components/Lektion20GrammarTheory'));
 const Lektion20GrammarEx = lazy(() => import('./components/Lektion20GrammarEx'));
+const Lektion21VocabTheory = lazy(() => import('./components/Lektion21VocabTheory'));
+const Lektion21VocabEx = lazy(() => import('./components/Lektion21VocabEx'));
+const Lektion22VocabTheory = lazy(() => import('./components/Lektion22VocabTheory'));
+const Lektion22VocabEx = lazy(() => import('./components/Lektion22VocabEx'));
+const Lektion23VocabTheory = lazy(() => import('./components/Lektion23VocabTheory'));
+const Lektion23VocabEx = lazy(() => import('./components/Lektion23VocabEx'));
+const Lektion24VocabTheory = lazy(() => import('./components/Lektion24VocabTheory'));
+const Lektion24VocabEx = lazy(() => import('./components/Lektion24VocabEx'));
+const Lektion15VocabTheory = lazy(() => import('./components/Lektion15VocabTheory'));
+const Lektion16VocabTheory = lazy(() => import('./components/Lektion16VocabTheory'));
+const Lektion22GrammarTheory = lazy(() => import('./components/Lektion22GrammarTheory'));
+const Lektion23GrammarTheory = lazy(() => import('./components/Lektion23GrammarTheory'));
+const Lektion24GrammarTheory = lazy(() => import('./components/Lektion24GrammarTheory'));
+
 const Lektion21Slides = lazy(() => import('./components/Lektion21Slides'));
 const Lektion21GrammarTheory = lazy(() => import('./components/Lektion21GrammarTheory'));
 const Lektion21GrammarEx = lazy(() => import('./components/Lektion21GrammarEx'));
@@ -164,6 +178,7 @@ const ReadingPractice = lazy(() => import('./components/ReadingPractice'));
 
 const ReviewAIRoleplay = lazy(() => import('./components/ReviewAIRoleplay'));
 const ReviewDailyMix = lazy(() => import('./components/ReviewDailyMix'));
+const ReviewModulTests = lazy(() => import('./components/ReviewModulTests'));
 import { getAI } from "./ai";
 
 const ai = getAI();
@@ -276,7 +291,7 @@ export default function App() {
   >("vocabulary");
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSubTab, setActiveSubTab] = useState<
-    "flashcard" | "alibi" | "exercises" | "ai_roleplay" | "daily_mix"
+    "flashcard" | "alibi" | "exercises" | "ai_roleplay" | "daily_mix" | "modul_tests"
   >("flashcard");
   const [grammarSubTab, setGrammarSubTab] = useState<"theory" | "exercises">(
     "theory",
@@ -1464,6 +1479,9 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       <div className="flex items-center text-xs md:text-sm font-black text-amber-700 bg-amber-100 px-5 py-2 rounded-full uppercase tracking-wider shadow-sm">
                         ⚡ Daily Mix
                       </div>
+                      <div className="flex items-center text-xs md:text-sm font-black text-sky-700 bg-sky-100 px-5 py-2 rounded-full uppercase tracking-wider shadow-sm">
+                        📝 Modul Tests
+                      </div>
                       <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-auto flex items-center justify-center md:justify-end text-sm md:text-base font-black text-white bg-theme-primary px-6 py-3 rounded-full uppercase tracking-widest shadow-md group-hover:shadow-lg transition-all group-hover:bg-theme-dark">
                         Khám phá ngay <ChevronRight className="w-5 h-5 ml-2" />
                       </div>
@@ -1818,6 +1836,8 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                   {selectedLesson.id === "review" || activeTab === "review" ? (
                   activeSubTab === "ai_roleplay" ? (
                     <ReviewAIRoleplay />
+                  ) : activeSubTab === "modul_tests" ? (
+                    <ReviewModulTests />
                   ) : (
                     <ReviewDailyMix />
                   )
@@ -2165,6 +2185,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       selectedLesson.id === "l18" ||
                       selectedLesson.id === "l19" ||
                       selectedLesson.id === "l20" ||
+                      selectedLesson.id === "l21" ||
                       selectedLesson.id === "l22" ||
                       selectedLesson.id === "l23" ||
                       selectedLesson.id === "l24") && (
@@ -2185,10 +2206,16 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                             "l12",
                             "l13",
                             "l14",
+                            "l15",
+                            "l16",
                             "l17",
                             "l18",
                             "l19",
                             "l20",
+                            "l21",
+                            "l22",
+                            "l23",
+                            "l24",
                           ].includes(selectedLesson.id) && (
                             <button
                               onClick={() => setActiveSubTab("theory")}
@@ -2222,6 +2249,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                                     "l14",
                                     "l19",
                                     "l20",
+                                    "l21",
                                   ].includes(selectedLesson.id)
                                 ? "Bài tập Từ vựng"
                                 : "Bài tập đại trà (10 bài)"}
@@ -2319,12 +2347,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         playAudio={playAudio}
                         playingId={playingId}
                       />
-                    ) : selectedLesson.id === "l20" &&
-                      activeSubTab === "theory" ? (
-                      <Lektion20VocabTheory
-                        playAudio={playAudio}
-                        playingId={playingId}
-                      />
+                    ) : selectedLesson.id === "l15" && activeSubTab === "theory" ? (<Lektion15VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l16" && activeSubTab === "theory" ? (<Lektion16VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l20" && activeSubTab === "theory" ? (<Lektion20VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l21" && activeSubTab === "theory" ? (<Lektion21VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l22" && activeSubTab === "theory" ? (<Lektion22VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l23" && activeSubTab === "theory" ? (<Lektion23VocabTheory playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l24" && activeSubTab === "theory" ? (<Lektion24VocabTheory playAudio={playAudio} playingId={playingId} />
                     ) : selectedLesson.id === "l22" &&
                       activeSubTab === "exercises" ? (
                       <Lektion22Exercises />
@@ -2424,12 +2447,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         playAudio={playAudio}
                         playingId={playingId}
                       />
-                    ) : selectedLesson.id === "l20" &&
-                      activeSubTab === "exercises" ? (
-                      <Lektion20VocabEx
-                        playAudio={playAudio}
-                        playingId={playingId}
-                      />
+                    ) : selectedLesson.id === "l20" && activeSubTab === "exercises" ? (<Lektion20VocabEx playAudio={playAudio} playingId={playingId} />) : selectedLesson.id === "l21" && activeSubTab === "exercises" ? (<Lektion21VocabEx playAudio={playAudio} playingId={playingId} />
                     ) : selectedLesson.id === "l16" &&
                       activeSubTab === "exercises" ? (
                       <Lektion16VocabEx
@@ -2469,6 +2487,8 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                       "l8",
                       "l9",
                       "l10",
+                      "l11",
+                      "l12",
                       "l13",
                       "l14",
                       "l15",
@@ -2760,6 +2780,24 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                         playAudio={playAudio}
                         playingId={playingId}
                       />
+                    ) : selectedLesson.id === "l22" &&
+                      grammarSubTab === "theory" ? (
+                      <Lektion22GrammarTheory
+                        playAudio={playAudio}
+                        playingId={playingId}
+                      />
+                    ) : selectedLesson.id === "l23" &&
+                      grammarSubTab === "theory" ? (
+                      <Lektion23GrammarTheory
+                        playAudio={playAudio}
+                        playingId={playingId}
+                      />
+                    ) : selectedLesson.id === "l24" &&
+                      grammarSubTab === "theory" ? (
+                      <Lektion24GrammarTheory
+                        playAudio={playAudio}
+                        playingId={playingId}
+                      />
                     ) : selectedLesson.id === "l21" &&
                       grammarSubTab === "exercises" ? (
                       <Lektion21GrammarEx />
@@ -3015,7 +3053,8 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
             if (selectedLesson.id === "review") {
               tabs.push(
                 { id: "ai_roleplay", icon: <Bot className="w-5 h-5 mb-0.5" />, label: "AI Roleplay", active: activeSubTab === "ai_roleplay", onClick: () => setActiveSubTab("ai_roleplay") },
-                { id: "daily_mix", icon: <Gamepad2 className="w-5 h-5 mb-0.5" />, label: "Daily Mix", active: activeSubTab === "daily_mix", onClick: () => setActiveSubTab("daily_mix") }
+                { id: "daily_mix", icon: <Gamepad2 className="w-5 h-5 mb-0.5" />, label: "Daily Mix", active: activeSubTab === "daily_mix", onClick: () => setActiveSubTab("daily_mix") },
+                { id: "modul_tests", icon: <span className="text-[18px] mb-0.5 h-5 flex items-center">📝</span>, label: "Modul Tests", active: activeSubTab === "modul_tests", onClick: () => setActiveSubTab("modul_tests") }
               );
             } else {
               tabs.push({ id: "vocabulary", icon: <BookOpen className="w-5 h-5 mb-0.5" />, label: "Từ vựng", active: activeTab === "vocabulary", onClick: () => setActiveTab("vocabulary") });
