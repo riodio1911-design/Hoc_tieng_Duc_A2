@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { VOCABULARY_DATA, VocabularyItem, GrammarItem } from '../constants';
-import { FileText, CheckCircle2, XCircle, RotateCcw, ChevronRight } from 'lucide-react';
+import { LEKTION_TESTS } from '../data/lektionTestsData';
+import { FileText, CheckCircle2, XCircle, RotateCcw, ChevronRight, ArrowLeft } from 'lucide-react';
 
 type Question = {
   id: string;
-  type: 'vocab' | 'grammar';
+  type: 'vocab' | 'grammar' | 'communication';
   question: string;
   options: string[];
   correctAnswer: string;
@@ -33,72 +34,113 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 export default function ReviewModulTests() {
-  const [selectedModul, setSelectedModul] = useState<number | null>(null);
+  const [selectedModulId, setSelectedModulId] = useState<number | null>(null);
+  const [selectedTestContext, setSelectedTestContext] = useState<string | null>(null); // e.g., "Lektion 1", "Modul 1 Tổng hợp"
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOpt, setSelectedOpt] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
 
-  const startTest = (moduleId: number) => {
-    setSelectedModul(moduleId);
+  const viewModulDetails = (moduleId: number) => {
+    setSelectedModulId(moduleId);
+  };
+
+  const startTest = (moduleId: number, lektionId?: string) => {
     const mod = MODULES.find(m => m.id === moduleId)!;
     
-    let allVocab: VocabularyItem[] = [];
-    let allGrammar: GrammarItem[] = [];
+    let realFinalQs: Question[] = [];
+    
+    if (lektionId) {
+       setSelectedTestContext(`Lektion ${lektionId.replace('l', '')}`);
+       const lNum = parseInt(lektionId.replace('l', ''), 10);
+       
+       if (LEKTION_TESTS[lNum]) {
+          // Use hardcoded transcribed data
+          realFinalQs = [...LEKTION_TESTS[lNum]];
+       } else {
+          // Fallback dynamically generated
+          let allVocab: VocabularyItem[] = [];
+          let allGrammar: GrammarItem[] = [];
+          
+          const lesson = VOCABULARY_DATA.find(l => l.id === lektionId);
+          if (lesson) {
+             allVocab = [...lesson.items];
+             if (lesson.grammar) allGrammar = [...lesson.grammar];
+          }
+          
+          const selectedVocabs = shuffle(allVocab).slice(0, 5);
+          const selectedGrammars = shuffle(allGrammar).slice(0, 3);
+          
+          selectedVocabs.forEach((v, idx) => {
+              const optionPool = shuffle(allVocab.filter(i => i.id !== v.id)).slice(0, 3).map(i => i.meaning);
+              optionPool.push(v.meaning);
+              realFinalQs.push({
+                  id: `fv-${idx}`,
+                  type: 'vocab',
+                  question: `Từ vựng: "${v.word}" có nghĩa là gì?`,
+                  options: shuffle(optionPool),
+                  correctAnswer: v.meaning,
+                  explanation: v.example ? `Ví dụ: ${v.example} (${v.exampleTranslation})` : ''
+              });
+          });
 
-    mod.les.forEach(lId => {
-       const lesson = VOCABULARY_DATA.find(l => l.id === lId);
-       if (lesson) {
-          allVocab = [...allVocab, ...lesson.items];
-          if (lesson.grammar) allGrammar = [...allGrammar, ...lesson.grammar];
+          selectedGrammars.forEach((g, idx) => {
+              const optionPool = shuffle(allGrammar.filter(i => i.id !== g.id)).slice(0, 3).map(i => i.meaning);
+              optionPool.push(g.meaning);
+              realFinalQs.push({
+                  id: `fg-${idx}`,
+                  type: 'grammar',
+                  question: `Ngữ pháp: "${g.word}" dùng để làm gì?`,
+                  options: shuffle(optionPool),
+                  correctAnswer: g.meaning,
+                  explanation: `Quy tắc: ${g.rule}\nVí dụ: ${g.example}`
+              });
+          });
        }
-    });
+    } else {
+       // Tổng hợp test
+       setSelectedTestContext(`Modul ${moduleId} Tổng hợp`);
+       let allVocab: VocabularyItem[] = [];
+       let allGrammar: GrammarItem[] = [];
 
-    const selectedVocabs = shuffle(allVocab).slice(0, 7);
-    const selectedGrammars = shuffle(allGrammar).slice(0, 3);
+       mod.les.forEach(lId => {
+          const lesson = VOCABULARY_DATA.find(l => l.id === lId);
+          if (lesson) {
+             allVocab = [...allVocab, ...lesson.items];
+             if (lesson.grammar) allGrammar = [...allGrammar, ...lesson.grammar];
+          }
+       });
 
-    const generatedQs: Question[] = [];
+       const selectedVocabs = shuffle(allVocab).slice(0, 7);
+       const selectedGrammars = shuffle(allGrammar).slice(0, 3);
 
-    selectedVocabs.forEach((v, index) => {
-        const optionPool = shuffle(allVocab.filter(i => i.id !== v.id)).slice(0, 3).map(i => i.meaning);
-        optionPool.push(v.meaning);
-        generatedQs.push({
-            id: `v-${index}`,
-            type: 'vocab',
-            question: `Ý nghĩa của từ "${v.word}" là gì?`,
-            options: shuffle(optionPool),
-            correctAnswer: v.meaning,
-            explanation: v.example ? `${v.word}: ${v.example} (${v.exampleTranslation})` : ''
-        });
-    });
+       selectedVocabs.forEach((v, idx) => {
+           const optionPool = shuffle(allVocab.filter(i => i.id !== v.id)).slice(0, 3).map(i => i.meaning);
+           optionPool.push(v.meaning);
+           realFinalQs.push({
+               id: `fv-${idx}`,
+               type: 'vocab',
+               question: `Từ vựng: "${v.word}" có nghĩa là gì?`,
+               options: shuffle(optionPool),
+               correctAnswer: v.meaning,
+               explanation: v.example ? `Ví dụ: ${v.example} (${v.exampleTranslation})` : ''
+           });
+       });
 
-    const realFinalQs: Question[] = [];
-    selectedVocabs.forEach((v, idx) => {
-        const optionPool = shuffle(allVocab.filter(i => i.id !== v.id)).slice(0, 3).map(i => i.meaning);
-        optionPool.push(v.meaning);
-        realFinalQs.push({
-            id: `fv-${idx}`,
-            type: 'vocab',
-            question: `Từ vựng: "${v.word}" có nghĩa là gì?`,
-            options: shuffle(optionPool),
-            correctAnswer: v.meaning,
-            explanation: v.example ? `Ví dụ: ${v.example} (${v.exampleTranslation})` : ''
-        });
-    });
-
-    selectedGrammars.forEach((g, idx) => {
-        const optionPool = shuffle(allGrammar.filter(i => i.id !== g.id)).slice(0, 3).map(i => i.meaning);
-        optionPool.push(g.meaning);
-        realFinalQs.push({
-            id: `fg-${idx}`,
-            type: 'grammar',
-            question: `Ngữ pháp: "${g.word}" dùng để làm gì?`,
-            options: shuffle(optionPool),
-            correctAnswer: g.meaning,
-            explanation: `Quy tắc: ${g.rule}\nVí dụ: ${g.example}`
-        });
-    });
+       selectedGrammars.forEach((g, idx) => {
+           const optionPool = shuffle(allGrammar.filter(i => i.id !== g.id)).slice(0, 3).map(i => i.meaning);
+           optionPool.push(g.meaning);
+           realFinalQs.push({
+               id: `fg-${idx}`,
+               type: 'grammar',
+               question: `Ngữ pháp: "${g.word}" dùng để làm gì?`,
+               options: shuffle(optionPool),
+               correctAnswer: g.meaning,
+               explanation: `Quy tắc: ${g.rule}\nVí dụ: ${g.example}`
+           });
+       });
+    }
 
     setQuestions(shuffle(realFinalQs));
     setCurrentIdx(0);
@@ -125,7 +167,8 @@ export default function ReviewModulTests() {
   };
 
   const reset = () => {
-    setSelectedModul(null);
+    setSelectedModulId(null);
+    setSelectedTestContext(null);
     setQuestions([]);
     setCurrentIdx(0);
     setSelectedOpt(null);
@@ -133,21 +176,21 @@ export default function ReviewModulTests() {
     setScore(0);
   };
 
-  if (!selectedModul) {
+  if (!selectedModulId) {
     return (
       <div className="space-y-6">
         <div className="bg-sky-50 border-2 border-sky-200 p-6 rounded-2xl animate-fade-in">
            <h2 className="text-2xl font-black text-sky-700 flex items-center gap-2 mb-2">
               <FileText className="w-8 h-8" /> Kiểm tra Học phần (Modul Tests)
            </h2>
-           <p className="text-theme-dark/80 font-medium">Làm bài kiểm tra tổng hợp (10 câu) cho từng Modul trong sách Menschen A2. Bài tập từ vựng và ngữ pháp giúp bạn củng cố kiến thức trước khi chuyển sang Modul mới.</p>
+           <p className="text-theme-dark/80 font-medium">Làm bài kiểm tra (Test) cho từng Lektion hoặc tổng hợp cho Modul. Các câu hỏi được thiết kế bám sát giáo trình.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in">
            {MODULES.map(m => (
              <button
                 key={m.id}
-                onClick={() => startTest(m.id)}
+                onClick={() => viewModulDetails(m.id)}
                 className="bg-white p-6 rounded-2xl border-2 border-theme-dark/10 hover:border-sky-500 hover:shadow-lg transition-all text-center flex flex-col items-center gap-3"
              >
                 <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center font-black text-xl">
@@ -163,21 +206,63 @@ export default function ReviewModulTests() {
     );
   }
 
+  // Currently viewing a selected module, but hasn't started the test yet
+  if (selectedModulId && !selectedTestContext) {
+     const mod = MODULES.find(m => m.id === selectedModulId)!;
+     return (
+        <div className="bg-white rounded-3xl p-8 border-4 border-theme-dark/5 max-w-3xl mx-auto shadow-xl animate-fade-in">
+           <button onClick={() => setSelectedModulId(null)} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-bold mb-6 transition-colors">
+              <ArrowLeft className="w-5 h-5" /> Trở lại danh sách Modul
+           </button>
+           
+           <h2 className="text-3xl font-black text-theme-dark mb-2">{mod.title}</h2>
+           <p className="text-slate-600 mb-8 font-medium">Vui lòng chọn bài kiểm tra cho từng bài học (Lektion) hoặc làm bài tổng hợp cho toàn bộ Modul.</p>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {mod.les.map(lId => {
+                 const lNum = lId.replace('l', '');
+                 return (
+                    <button
+                       key={lId}
+                       onClick={() => startTest(mod.id, lId)}
+                       className="bg-sky-50 hover:bg-sky-100 border-2 border-sky-200 text-sky-800 p-5 rounded-2xl font-bold transition-all flex items-center justify-between"
+                    >
+                       <span>Test Lektion {lNum}</span>
+                       <ChevronRight className="w-5 h-5 opacity-50" />
+                    </button>
+                 );
+              })}
+              <button
+                 onClick={() => startTest(mod.id)}
+                 className="bg-theme-dark hover:bg-black text-white p-5 rounded-2xl font-bold transition-all flex items-center justify-between md:col-span-2 shadow-lg"
+              >
+                 <span>Test Modul {mod.id} (Tổng hợp)</span>
+                 <ChevronRight className="w-5 h-5 opacity-50" />
+              </button>
+           </div>
+        </div>
+     );
+  }
+
   if (showResult) {
     return (
       <div className="bg-white rounded-[32px] p-8 md:p-12 text-center border-4 border-theme-dark/5 shadow-xl max-w-2xl mx-auto animate-fade-in">
         <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-12 h-12 text-sky-500" />
         </div>
-        <h2 className="text-4xl font-black text-theme-dark mb-4">Hoàn thành Modul!</h2>
+        <h2 className="text-4xl font-black text-theme-dark mb-4">Hoàn thành bài kiểm tra!</h2>
         <p className="text-theme-dark/60 font-medium text-lg mb-8">
            Bạn đã đạt <strong className="text-sky-500 text-2xl mx-2">{score}/{questions.length}</strong> điểm
         </p>
         <button 
-           onClick={reset}
+           onClick={() => {
+              setSelectedTestContext(null);
+              setQuestions([]);
+              setShowResult(false);
+           }}
            className="px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white font-black rounded-2xl shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2 mx-auto"
         >
-           <RotateCcw className="w-5 h-5" /> Trở về danh sách Modul
+           <RotateCcw className="w-5 h-5" /> Trở về danh sách Test
         </button>
       </div>
     );
@@ -185,20 +270,34 @@ export default function ReviewModulTests() {
 
   const q = questions[currentIdx];
 
+  // Rest of rendering remains same, but wait! What if questions.length is 0?
+  if (questions.length === 0) {
+      return (
+         <div className="text-center p-10 bg-white rounded-3xl border-4 border-theme-dark/5 shadow-xl">
+             <h3 className="font-bold text-xl mb-4">Không có dữ liệu câu hỏi cho phần này.</h3>
+             <button onClick={() => setSelectedTestContext(null)} className="px-4 py-2 bg-theme-dark text-white rounded-lg font-bold">Thoát</button>
+         </div>
+      );
+  }
+
   return (
-    <div className="bg-white rounded-[32px] border-4 border-theme-dark/5 overflow-hidden flex flex-col h-[600px] shadow-xl animate-fade-in">
+    <div className="bg-white rounded-[32px] border-4 border-theme-dark/5 overflow-hidden flex flex-col min-h-[600px] shadow-xl animate-fade-in">
        <div className="bg-sky-500 text-white p-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
              <div className="bg-white/20 p-2 rounded-lg">
                 <FileText className="w-6 h-6" />
              </div>
              <div>
-                <h3 className="font-black leading-tight">Modul {selectedModul} Test</h3>
+                <h3 className="font-black leading-tight">Test {selectedTestContext}</h3>
                 <p className="text-xs font-bold opacity-80 uppercase tracking-wider">Câu {currentIdx + 1}/{questions.length}</p>
              </div>
           </div>
           <button 
-             onClick={reset}
+             onClick={() => {
+                setSelectedTestContext(null);
+                setQuestions([]);
+                setShowResult(false);
+             }}
              className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl font-bold transition-colors text-sm"
           >
              Thoát
@@ -208,7 +307,7 @@ export default function ReviewModulTests() {
        <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
           <div className="max-w-3xl mx-auto">
              <div className="inline-block px-3 py-1 bg-sky-100 text-sky-700 text-xs font-black uppercase tracking-wider rounded-lg mb-4">
-                {q.type === 'vocab' ? 'Từ vựng' : 'Ngữ pháp'}
+                {q.type === 'vocab' ? 'Từ vựng' : q.type === 'grammar' ? 'Ngữ pháp' : 'Giao tiếp'}
              </div>
              <h2 className="text-2xl md:text-3xl font-black text-theme-dark mb-8 leading-tight">
                 {q.question}
@@ -248,19 +347,24 @@ export default function ReviewModulTests() {
              </div>
 
              {selectedOpt && (
-                <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-fade-in">
+                <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 animate-fade-in mb-24">
                    <h4 className="font-bold text-slate-700 mb-2">Giải thích / Ví dụ:</h4>
                    <p className="text-slate-600 leading-relaxed font-medium whitespace-pre-wrap">{q.explanation}</p>
-                   <button
-                      onClick={nextQuestion}
-                      className="mt-6 px-6 py-3 bg-theme-dark hover:bg-black text-white font-bold rounded-xl transition-all flex items-center gap-2"
-                   >
-                      {currentIdx < questions.length - 1 ? 'Câu tiếp theo' : 'Xem kết quả'} <ChevronRight className="w-5 h-5" />
-                   </button>
                 </div>
              )}
           </div>
        </div>
+
+       {selectedOpt && (
+          <div className="bg-white border-t border-slate-100 p-4 shrink-0 flex justify-end animate-fade-in">
+              <button
+                 onClick={nextQuestion}
+                 className="px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-black rounded-xl shadow-lg shadow-sky-500/30 transition-transform active:scale-95 flex items-center gap-2"
+              >
+                 {currentIdx < questions.length - 1 ? 'Câu tiếp theo' : 'Xem kết quả'} <ChevronRight className="w-5 h-5" />
+              </button>
+          </div>
+       )}
     </div>
   );
 }

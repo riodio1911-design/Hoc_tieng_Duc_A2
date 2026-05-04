@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+const fs = require('fs');
+
+let file = `import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2, PlayCircle, RefreshCw, Mic, Volume2, Square } from 'lucide-react';
 import { getAI } from '../ai';
 
@@ -16,7 +18,7 @@ const SCENARIOS = [
     id: 's1',
     title: 'Giao tiếp cơ bản & Gia đình (Lektion 1-3)',
     description: 'Bạn gặp một người bạn mới (AI) tại lớp học tiếng Đức. Hai người chào hỏi và trò chuyện về bản thân, gia đình và nghề nghiệp.',
-    prompt: `Bạn là một học viên tiếng Đức thân thiện đến từ Đức. Bạn đang đóng vai trò (roleplay) với một người bạn mới trình độ A2.
+    prompt: \\\`Bạn là một học viên tiếng Đức thân thiện đến từ Đức. Bạn đang đóng vai trò (roleplay) với một người bạn mới trình độ A2.
 Nhiệm vụ của bạn:
 1. Bắt đầu bằng việc chào hỏi, giới thiệu tên và hỏi tên người kia.
 2. Đợi user trả lời. Khi user trả lời, kiểm tra lỗi ngữ pháp tiếng Đức trong câu trả lời.
@@ -26,13 +28,13 @@ Nhiệm vụ của bạn:
   "feedback": "Nhận xét tiếng Việt về lỗi sai (nếu có) và khen ngợi nếu người học làm tốt.",
   "reply": "Câu tiếp theo của bạn (1-2 câu tiếng Đức)."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON, không có Markdown formatting block.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON, không có Markdown formatting block.\\\`
   },
   {
     id: 's2',
     title: 'Mua thực phẩm tại siêu thị (Lektion 4)',
     description: 'Bạn vào một siêu thị để mua đồ. Người bán hàng (AI) sẽ hỏi bạn muốn mua gì.',
-    prompt: `Bạn là giám sát/bán hàng (Verkäufer/in) tại một siêu thị. Bạn đóng vai với người học tiếng Đức A2.
+    prompt: \\\`Bạn là giám sát/bán hàng (Verkäufer/in) tại một siêu thị. Bạn đóng vai với người học tiếng Đức A2.
 Nhiệm vụ của bạn:
 1. Bắt đầu bằng: "Guten Tag, was darf es sein?"
 2. Nhận yêu cầu mua đồ của user. Hỏi xem họ cần thêm gì, số lượng, v.v.. Hội thoại diễn ra khoảng 5 lượt.
@@ -42,13 +44,13 @@ Nhiệm vụ của bạn:
   "feedback": "Nhận xét tiếng Việt về ngữ pháp/từ vựng (số đếm, đại từ, lượng từ) của người học.",
   "reply": "Câu tiếp theo của bạn (1-2 câu tiếng Đức)."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's3',
     title: 'Tại bệnh viện/Bác sĩ (Lektion 8)',
     description: 'Bạn bị ốm/tai nạn và đến gặp bác sĩ. Bác sĩ (AI) hỏi thăm bạn.',
-    prompt: `Bạn là bác sĩ (Arzt/Ärztin). User đến khám bệnh. Hội thoại diễn ra khoảng 5-6 lượt.
+    prompt: \\\`Bạn là bác sĩ (Arzt/Ärztin). User đến khám bệnh. Hội thoại diễn ra khoảng 5-6 lượt.
 Nhiệm vụ:
 1. Bắt đầu: "Guten Tag. Was fehlt Ihnen denn?"
 2. Nghe triệu chứng của user. Đặt các câu hỏi chi tiết về tình trạng bệnh (đau ở đâu, từ bao giờ) và đưa ra lời khuyên dùng động từ khuyết thiếu (sollen/müssen).
@@ -57,13 +59,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét tiếng Việt về cách dùng từ vựng sức khỏe và ngữ pháp.",
   "reply": "Câu tiếp theo của bác sĩ bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's4',
     title: 'Tại nhà hàng (Lektion 10)',
     description: 'Bạn vào một nhà hàng gọi món. Phục vụ (AI) sẽ nhận gọi món và giải quyết phàn nàn của bạn.',
-    prompt: `Bạn là người bồi bàn (Kellner/in). User là thực khách. Hội thoại kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là người bồi bàn (Kellner/in). User là thực khách. Hội thoại kéo dài khoảng 5 lượt.
 Nhiệm vụ:
 1. Đưa menu và hỏi muốn uống/ăn gì: "Guten Abend. Hier ist die Speisekarte. Möchten Sie schon etwas trinken?"
 2. Nhận món, có lúc bạn vô tình mang đồ ăn nguội/sai để khách phàn nàn và bạn phải xin lỗi hoặc đổi món.
@@ -72,13 +74,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét tiếng Việt về cách gọi món / phàn nàn của người học.",
   "reply": "Câu tiếp theo của phục vụ bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's5',
     title: 'Bưu cục và Gửi đồ (Lektion 14)',
     description: 'Bạn muốn gửi một bưu kiện. Nhân viên bưu điện (AI) sẽ hỗ trợ bạn.',
-    prompt: `Bạn là nhân viên bưu điện (Postbeamter). User muốn làm thủ tục gửi đồ. Cuộc gọi kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là nhân viên bưu điện (Postbeamter). User muốn làm thủ tục gửi đồ. Cuộc gọi kéo dài khoảng 5 lượt.
 Nhiệm vụ:
 1. Chào hỏi: "Guten Tag, wie kann ich Ihnen helfen?"
 2. Cung cấp thông tin giá cả, cách điền form (Formular ausfüllen). Yêu cầu họ cung cấp địa chỉ (Adresse).
@@ -88,13 +90,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét tiếng Việt về cấu trúc câu của học viên.",
   "reply": "Câu tiếp theo của nhân viên bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's6',
     title: 'Sự cố phòng Khách sạn (Lektion 16)',
     description: 'Bạn ở khách sạn, nhưng phòng có vấn đề (Wifi hỏng/máy lạnh...). Hãy gọi phản ánh.',
-    prompt: `Bạn là lễ tân khách sạn (Rezeptionist/in). User là khách, gọi điện phản ánh phòng. Kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là lễ tân khách sạn (Rezeptionist/in). User là khách, gọi điện phản ánh phòng. Kéo dài khoảng 5 lượt.
 Nhiệm vụ:
 1. Bắt điện thoại: "Rezeption, guten Tag. Was kann ich für Sie tun?"
 2. Nhận phàn nàn và xin lỗi, đưa ra cách khắc phục (cử người lên sửa/đổi phòng). Hỏi thêm chi tiết.
@@ -103,13 +105,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét tiếng Việt về ngữ pháp (nhất là câu hỏi gián tiếp nếu có).",
   "reply": "Câu tiếp theo của lễ tân bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's7',
     title: 'Hỏi và chỉ đường (Lektion 18)',
     description: 'Bạn bị lạc ở Đức. Hỏi đường một người địa phương (AI) tới nhà ga.',
-    prompt: `Bạn là người địa phương ở Berlin. Trông thấy user có vẻ đang tìm đường. Kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là người địa phương ở Berlin. Trông thấy user có vẻ đang tìm đường. Kéo dài khoảng 5 lượt.
 Nhiệm vụ:
 1. Bắt chuyện trước: "Entschuldigung, suchen Sie etwas? Kann ich Ihnen helfen?"
 2. Giúp chỉ đường (bằng từ geradeaus, an der Ampel rechts...). Hỏi xem user đi bằng phương tiện gì.
@@ -118,13 +120,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét tiếng Việt về cách hỏi đường, dùng giới từ (Dativ/Akkusativ).",
   "reply": "Câu tiếp theo của bạn bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
+Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.\\\`
   },
   {
     id: 's8',
     title: 'Đặt lịch và Dời lịch hẹn (Lektion 21-22)',
     description: 'Bạn gọi điện để đặt một lịch hẹn chuyên viên và sau đó dời lịch.',
-    prompt: `Bạn là lễ tân/chuyên viên y tế hoặc ngân hàng. User A2 gọi điện đặt lịch hẹn. Kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là lễ tân/chuyên viên y tế hoặc ngân hàng. User A2 gọi điện đặt lịch hẹn. Kéo dài khoảng 5 lượt.
 1. Bắt đầu bằng việc nhấc máy: "Praxis/Bank, guten Tag. Was kann ich für Sie tun?"
 2. Đợi user trả lời. Khi user trả lời, kiểm tra ngữ pháp tiếng Đức. Sau đó tạo tình huống user phải dời lịch hẹn đã đặt (hỏi ngày giờ, sau đó báo kẹt và đề xuất giờ khác).
 3. Luôn trả lời dạng JSON:
@@ -132,13 +134,13 @@ Tuyệt đối chỉ trả về dữ liệu chuẩn JSON.`
   "feedback": "Nhận xét tiếng Việt về câu tiếng Đức của user.",
   "reply": "Câu tiếp theo của bạn bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về chuẩn JSON.`
+Tuyệt đối chỉ trả về chuẩn JSON.\\\`
   },
   {
     id: 's9',
     title: 'Phỏng vấn xin việc (Lektion 23)',
     description: 'Bạn tham gia phỏng vấn xin việc. Trả lời các câu hỏi về kinh nghiệm và bản thân.',
-    prompt: `Bạn là người phỏng vấn xin việc (Personalchef). User đến phỏng vấn. Hội thoại khoảng 5-6 câu.
+    prompt: \\\`Bạn là người phỏng vấn xin việc (Personalchef). User đến phỏng vấn. Hội thoại khoảng 5-6 câu.
 Nhiệm vụ:
 1. Chào hỏi, mời ngồi: "Guten Tag, nehmen Sie bitte Platz. Erzählen Sie uns bitte ein bisschen von sich."
 2. Đặt câu hỏi về lý do ứng tuyển, kinh nghiệm việc làm (Berufserfahrung) và điểm mạnh điểm yếu.
@@ -147,13 +149,13 @@ Nhiệm vụ:
   "feedback": "Nhận xét ngắn gọn tiếng Việt (chú ý mệnh đề quan hệ Relativsatz nếu có).",
   "reply": "Câu hỏi/đáp tiếp theo của nhà tuyển dụng bằng TIẾNG ĐỨC."
 }
-Tuyệt đối chỉ trả về chuẩn JSON.`
+Tuyệt đối chỉ trả về chuẩn JSON.\\\`
   },
   {
     id: 's10',
     title: 'Cửa hải quan sân bay (Lektion 24)',
     description: 'Bạn xuống sân bay Đức. Nhân viên hải quan kiểm tra hộ chiếu và yêu cầu mở hành lý.',
-    prompt: `Bạn là một nhân viên hải quan người Đức (Zöllner) tại sân bay Frankfurt. Kéo dài khoảng 5 lượt.
+    prompt: \\\`Bạn là một nhân viên hải quan người Đức (Zöllner) tại sân bay Frankfurt. Kéo dài khoảng 5 lượt.
 Nhiệm vụ của bạn:
 1. Bắt đầu: "Guten Tag. Ihren Pass bitte. Woher kommen Sie?"
 2. Hỏi về mục đích nhập cảnh, có mang theo hàng hóa cần khai báo (đồ ăn, rượu thuốc lá) không.
@@ -162,7 +164,7 @@ Nhiệm vụ của bạn:
   "feedback": "Nhận xét ngắn gọn bằng TIẾNG VIỆT.",
   "reply": "Câu tiếp theo của nhân viên hải quan bằng TIẾNG ĐỨC."
 }
-LUÔN LUÔN trả về CHỈ JSON này, không có Markdown formatting block.`
+LUÔN LUÔN trả về CHỈ JSON này, không có Markdown formatting block.\\\`
   }
 ];
 
@@ -203,7 +205,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
         };
 
         recognition.onerror = (event: any) => {
-          console.warn("Speech recognition error", event.error);
+          console.error("Speech recognition error", event.error);
           setIsDictating(false);
         };
 
@@ -227,7 +229,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
           recognitionRef.current.start();
           setIsDictating(true);
         } catch (e) {
-          console.warn('Recognition start error', e);
+          console.error('Recognition start error', e);
         }
       } else {
         alert("Trình duyệt của bạn không hỗ trợ nhận diện giọng nói (Khuyên dùng Chrome/Edge).");
@@ -256,7 +258,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
         setMessages([{ id: Date.now().toString(), role: 'bot', text: parsed.reply }]);
         playAudio(parsed.reply, 'roleplay_bot_' + Date.now().toString(), "de-DE");
       } catch (e) {
-         const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
+         const cleaned = text.replace(/\\\`\\\`\\\`json/g, '').replace(/\\\`\\\`\\\`/g, '').trim();
          try {
              const parsed2 = JSON.parse(cleaned);
              setMessages([{ id: Date.now().toString(), role: 'bot', text: parsed2.reply }]);
@@ -267,7 +269,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
          }
       }
     } catch (error: any) {
-      console.warn(error);
+      console.error(error);
       const errMsg = error.message || '';
       if (errMsg.includes('400') || errMsg.includes('API_KEY_INVALID') || errMsg.includes('API key not valid')) {
          setMessages([{ id: Date.now().toString(), role: 'bot', text: 'API Key không hợp lệ. Vui lòng kiểm tra lại API Key.' }]);
@@ -328,7 +330,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
         const parsed = JSON.parse(text);
         processBotReply(parsed.reply, parsed.feedback);
       } catch (e) {
-         const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
+         const cleaned = text.replace(/\\\`\\\`\\\`json/g, '').replace(/\\\`\\\`\\\`/g, '').trim();
          try {
              const parsed2 = JSON.parse(cleaned);
              processBotReply(parsed2.reply, parsed2.feedback);
@@ -337,7 +339,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
          }
       }
     } catch (error: any) {
-       console.warn(error);
+       console.error(error);
        const errMsg = error.message || '';
        if (errMsg.includes('400') || errMsg.includes('API_KEY_INVALID') || errMsg.includes('API key not valid')) {
            setMessages(prev => [...prev, { id: Date.now().toString(), role: 'bot', text: 'API Key không hợp lệ. Vui lòng kiểm tra lại API Key.' }]);
@@ -414,14 +416,14 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
              <span className="bg-black/5 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest text-black/40">Cuộc hội thoại bắt đầu</span>
           </div>
           {messages.map((msg, i) => (
-             <div key={msg.id} className={`flex flex-col \${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`max-w-[80%] rounded-2xl p-4 \${
+             <div key={msg.id} className={\\\`flex flex-col \\\${msg.role === 'user' ? 'items-end' : 'items-start'}\\\`}>
+                <div className={\\\`max-w-[80%] rounded-2xl p-4 \\\${
                    msg.role === 'user' 
-                     ? 'bg-theme-secondary text-white rounded-tr-sm' 
+                     ? 'bg-theme-primary text-white rounded-tr-sm' 
                      : 'bg-white border-2 border-emerald-100 text-theme-dark rounded-tl-sm shadow-sm'
-                }`}>
+                }\\\`}>
                    
-                   <p className={`font-medium \${msg.role === 'bot' ? 'text-lg' : ''}`}>{msg.text}</p>
+                   <p className={\\\`font-medium \\\${msg.role === 'bot' ? 'text-lg' : ''}\\\`}>{msg.text}</p>
                    {msg.role === 'bot' && (
                        <button onClick={() => playAudio(msg.text, 'roleplay_man_' + msg.id, "de-DE")} className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-sm font-bold transition-colors">
                            <Volume2 size={14} /> Nghe
@@ -454,7 +456,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
           <div className="flex gap-2 relative">
              <button
                  onClick={toggleDictation}
-                 className={`\${isDictating ? 'bg-rose-500 hover:bg-rose-600 text-white animate-pulse' : 'bg-slate-200 hover:bg-slate-300 text-slate-700'} rounded-2xl px-5 flex items-center justify-center transition-colors`}
+                 className={\\\`\\\${isDictating ? 'bg-rose-500 hover:bg-rose-600 animate-pulse' : 'bg-slate-200 hover:bg-slate-300 text-slate-600'} text-white rounded-2xl px-5 flex items-center justify-center transition-colors\\\`}
                  title="Nhập bằng giọng nói (Tiếng Đức)"
              >
                  {isDictating ? <Square size={18} fill="currentColor" /> : <Mic size={20} />}
@@ -465,7 +467,7 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder={isDictating ? "Đang nghe tiếng Đức..." : "Nhập câu trả lời bằng tiếng Đức..."}
-                className="flex-1 bg-slate-100 border-2 border-transparent text-slate-800 focus:border-emerald-500 rounded-2xl px-5 py-3.5 font-medium outline-none transition-all placeholder:text-slate-400"
+                className="flex-1 bg-slate-100 border-2 border-transparent focus:border-emerald-500 rounded-2xl px-5 py-3.5 font-medium outline-none transition-all placeholder:text-slate-400"
              />
              <button
                 onClick={sendMessage}
@@ -480,3 +482,6 @@ export default function ReviewAIRoleplay({ playAudio }: ReviewAIRoleplayProps) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('src/components/ReviewAIRoleplay.tsx', file);

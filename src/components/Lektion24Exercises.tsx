@@ -502,7 +502,7 @@ Evaluate strictly and return JSON with this EXACT structure:
       setFeedback(result);
       if (result.score >= 60) onComplete();
     } catch (err) {
-      console.error(err);
+      console.warn(err);
     } finally {
       setIsEvaluating(false);
     }

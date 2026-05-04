@@ -21,10 +21,10 @@ if (!fs.existsSync(TTS_CACHE_DIR)) {
 let aiClient: GoogleGenAI | null = null;
 let currentKey: string | null = null;
 function getAI() {
-  const rawKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
+  const rawKey = process.env.API_KEY || process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
   const key = rawKey?.trim();
   console.log("Using API key starting with: ", key?.substring(0, 4));
-  if (!key) throw new Error("Missing GEMINI_API_KEY environment variable. Please make sure VITE_GEMINI_API_KEY is defined in AI Studio config or .env");
+  if (!key || key === "MY_GEMINI_API_KEY") throw new Error("API_KEY_INVALID: Missing or placeholder GEMINI_API_KEY environment variable. Please make sure to enter a valid VITE_GEMINI_API_KEY in the AI Studio config / Secrets.");
   if (!aiClient || currentKey !== key) {
     aiClient = new GoogleGenAI({ apiKey: key });
     currentKey = key;
@@ -96,9 +96,26 @@ app.post("/api/tts", async (req, res) => {
       res.status(500).json({ error: "No audio generated from AI" });
     }
   } catch (error: any) {
-    console.error("TTS API Error:", error);
-    const status = error.status || (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') ? 429 : 500);
-    res.status(status).json({ error: error.message });
+    let errorDetails = "";
+    if (error instanceof Error) {
+      errorDetails = error.message;
+    } else {
+      errorDetails = typeof error === 'object' ? JSON.stringify(error) : String(error);
+    }
+    let status = 500;
+    const msg = errorDetails;
+    if (error.status) status = error.status;
+    else if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) status = 429;
+    else if (msg.includes('503') || msg.includes('UNAVAILABLE') || msg.includes('high demand')) status = 503;
+    else if (msg.includes('400') || msg.includes('API_KEY_INVALID') || msg.includes('API key not valid')) status = 400;
+
+    if (status >= 500 && status !== 503) {
+      console.error("TTS API Error:", errorDetails);
+    } else {
+      console.warn(`TTS API Warning (${status}):`, errorDetails.substring(0, 200) + "...");
+    }
+    
+    res.status(status).json({ error: msg });
   }
 });
 
@@ -119,9 +136,26 @@ app.post("/api/evaluate", async (req, res) => {
     });
     return res.json({ result: response.text });
   } catch (error: any) {
-    console.error("Evaluate API Error:", error);
-    const status = error.status || (error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED') ? 429 : 500);
-    res.status(status).json({ error: error.message });
+    let errorDetails = "";
+    if (error instanceof Error) {
+      errorDetails = error.message;
+    } else {
+      errorDetails = typeof error === 'object' ? JSON.stringify(error) : String(error);
+    }
+    let status = 500;
+    const msg = errorDetails;
+    if (error.status) status = error.status;
+    else if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED')) status = 429;
+    else if (msg.includes('503') || msg.includes('UNAVAILABLE') || msg.includes('high demand')) status = 503;
+    else if (msg.includes('400') || msg.includes('API_KEY_INVALID') || msg.includes('API key not valid')) status = 400;
+
+    if (status >= 500 && status !== 503) {
+      console.error("Evaluate API Error:", errorDetails);
+    } else {
+      console.warn(`Evaluate API Warning (${status}):`, errorDetails.substring(0, 200) + "...");
+    }
+    
+    res.status(status).json({ error: msg });
   }
 });
 

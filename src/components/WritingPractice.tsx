@@ -357,7 +357,7 @@ export default function WritingPractice({ lessonId }: { lessonId: string }) {
       };
       
       recognition.onerror = (event: any) => {
-        console.error('Speech recognition error', event.error);
+        console.warn('Speech recognition error', event.error);
         setIsDictating(false);
         if (event.error !== 'no-speech') {
            setError('Lỗi nhận diện giọng nói: ' + event.error);
@@ -390,7 +390,7 @@ export default function WritingPractice({ lessonId }: { lessonId: string }) {
              setError('Vui lòng cấp quyền sử dụng Microphone cho trình duyệt.');
          } else {
              // If already started, just ignore or restart
-             console.error(err);
+             console.warn(err);
          }
       }
     }
@@ -428,8 +428,8 @@ Student's text: "${text}"`;
       const result = JSON.parse(response.text || '{}');
       setFeedback(result);
     } catch (err: any) {
-      console.error(err);
-      setError('Có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.');
+      console.warn(err);
+      if (err?.message?.includes('503') || err?.message?.includes('UNAVAILABLE')) { setError('Máy chủ AI đang quá tải (503). Vui lòng thử lại sau.'); } else if (err?.message?.includes('429') || err?.message?.includes('RESOURCE_EXHAUSTED')) { setError('Hệ thống AI đã hết lượt xử lý miễn phí. Vui lòng thử lại sau hoặc nhập API Key.'); } else { setError('Có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.'); }
     } finally {
       setIsEvaluating(false);
     }

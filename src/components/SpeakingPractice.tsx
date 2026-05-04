@@ -194,7 +194,7 @@ export default function SpeakingPractice({ lessonId, playAudio, playingId }: Spe
       mediaRecorder.start();
       setCurrentFeedback('');
     } catch (e) {
-      console.error(e);
+      console.warn(e);
       alert('Không thể truy cập Microphone.');
     }
   };
@@ -314,7 +314,7 @@ Format: {"Intonation":80,"Pausing":70,"SentenceStress":60,"Pronunciation":85,"Fl
           applyResult(result);
           
         } catch (err) {
-          console.error(err);
+          console.warn(err);
           executeFastLocalGrading();
         }
       };

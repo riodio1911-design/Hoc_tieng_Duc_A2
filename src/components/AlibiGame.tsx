@@ -166,7 +166,7 @@ export default function AlibiGame({ onBack, playAudio, playingId }: AlibiGamePro
         });
         resultText = response.text || '{"answer":"Ich kann mich nicht erinnern.","answerTranslation":"Tôi không nhớ."}';
       } catch (error: any) {
-        console.error('Interview failed:', error);
+        console.warn('Interview failed:', error);
         const errorMsg = error.message || '';
         if (errorMsg.includes('503') || errorMsg.includes('high demand') || errorMsg.includes('UNAVAILABLE')) {
           alert('Máy chủ AI đang quá tải (503). Hệ thống đang tiếp nhận quá nhiều yêu cầu, vui lòng thử lại sau vài giây hoặc thiết lập API Key của riêng bạn trong Cài đặt.');
@@ -198,7 +198,7 @@ export default function AlibiGame({ onBack, playAudio, playingId }: AlibiGamePro
       }));
 
     } catch (error: any) {
-      console.error('Interview internal processing failed:', error);
+      console.warn('Interview internal processing failed:', error);
     } finally {
       setIsLoading(false);
     }
@@ -246,7 +246,7 @@ export default function AlibiGame({ onBack, playAudio, playingId }: AlibiGamePro
       setExplanation(result.explanation);
       setGameState('result');
     } catch (error: any) {
-      console.error('Accusation failed:', error);
+      console.warn('Accusation failed:', error);
       const errorMsg = error.message || '';
       if (errorMsg.includes('503') || errorMsg.includes('high demand') || errorMsg.includes('UNAVAILABLE')) {
         alert('Máy chủ AI đang quá tải (503). Vui lòng thử lại sau vài giây hoặc thiết lập API Key riêng trong Cài đặt.');

@@ -21,7 +21,6 @@ import {
   Menu,
   Hand,
 } from "lucide-react";
-import { GoogleGenAI, Modality } from "@google/genai";
 import {
   VOCABULARY_DATA,
   Lesson,
@@ -297,6 +296,7 @@ export default function App() {
     "theory",
   );
   const [playingId, setPlayingId] = useState<string | null>(null);
+
   const [isDownloadingL21, setIsDownloadingL21] = useState(false);
   const [isDownloadingL23, setIsDownloadingL23] = useState(false);
   const [isDownloadingL24, setIsDownloadingL24] = useState(false);
@@ -347,7 +347,7 @@ export default function App() {
         model: "gemini-3.1-flash-tts-preview",
         contents: [{ parts: [{ text: promptText }] }],
         config: {
-          responseModalities: [Modality.AUDIO],
+          responseModalities: ["AUDIO"] as any,
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: { voiceName: voiceName as any },
@@ -434,7 +434,7 @@ export default function App() {
           },
         ],
         config: {
-          responseModalities: [Modality.AUDIO],
+          responseModalities: ["AUDIO"] as any,
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: { voiceName: voiceName as any },
@@ -506,7 +506,7 @@ export default function App() {
     if (isDownloadingL24) return;
     setIsDownloadingL24(true);
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) throw new Error("Missing Gemini API Key");
 
       const effectPrompt =
@@ -615,7 +615,7 @@ export default function App() {
 
       // Unlock SpeechSynthesis synchronously
       try {
-        if (window.speechSynthesis.paused) {
+        if (window.speechSynthesis && window.speechSynthesis.paused) {
           window.speechSynthesis.resume();
         }
       } catch (e) {}
@@ -736,18 +736,20 @@ export default function App() {
               pcmData = new Int16Array(bytes.buffer);
             }
           } catch (e: any) {
-            console.error("Error calling /api/tts:", e);
-            const errorString = e.message || String(e);
+            const errorString = String(e) + " " + (typeof e === 'object' ? JSON.stringify(e, Object.getOwnPropertyNames(e)) : '');
             if (
-              errorString.includes("429") ||
-              errorString.includes("RESOURCE_EXHAUSTED") ||
+              errorString.includes("429") || errorString.includes("RESOURCE_EXHAUSTED") || errorString.includes("503") || errorString.includes("UNAVAILABLE") || errorString.includes("high demand") ||
               errorString.includes("400") ||
               errorString.includes("API key not valid") ||
               errorString.includes("API_KEY_INVALID") ||
               errorString.includes("Unexpected token")
             ) {
+              if (errorString.includes("400") || errorString.includes("Unexpected token")) {
+                 console.warn("API configuration or parse error, fallback to system tts");
+              }
               throw e; // pass to outer catch for quota or key handling
             }
+            console.warn("Error calling AI TTS:", e);
             // For aborts or fetch failures, warn the user we're falling back
             setQuotaWarning(
               "AI đang quá tải hoặc phản hồi chậm. Tạm thời dùng giọng đọc máy dự phòng (chất lượng sẽ kém tự nhiên hơn)...",
@@ -782,60 +784,83 @@ export default function App() {
         }
 
         if (pcmData) {
-          if (!audioContextRef.current) {
-            try {
-              audioContextRef.current = new (
-                window.AudioContext || (window as any).webkitAudioContext
-              )({ sampleRate: 24000 });
-            } catch(e) {}
-          }
-
-          const audioContext = audioContextRef.current;
-          if (audioContext && audioContext.state === "suspended") {
-            await audioContext.resume();
-          }
-
-          if (audioContext) {
-            const audioBuffer = audioContext.createBuffer(
-              1,
-              pcmData.length,
-              24000,
-            );
-            const channelData = audioBuffer.getChannelData(0);
-            for (let i = 0; i < pcmData.length; i++) {
-              channelData[i] = pcmData[i] / 32768;
+          const numChannels = 1;
+          const sampleRate = 24000;
+          const bitsPerSample = 16;
+          const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
+          const blockAlign = numChannels * (bitsPerSample / 8);
+          const dataSize = pcmData.length * 2;
+          
+          const buffer = new ArrayBuffer(44 + dataSize);
+          const view = new DataView(buffer);
+          
+          const writeString = (v, offset, string) => {
+            for (let i = 0; i < string.length; i++) {
+              v.setUint8(offset + i, string.charCodeAt(i));
             }
-
-            const source = audioContext.createBufferSource();
-            source.buffer = audioBuffer;
-            source.connect(audioContext.destination);
-            source.onended = () => {
-              setPlayingId(null);
-              source.disconnect();
-            };
-            source.start(0);
-          } else {
-            useSystemTTS();
-          }
+          };
+          
+          writeString(view, 0, 'RIFF');
+          view.setUint32(4, 36 + dataSize, true);
+          writeString(view, 8, 'WAVE');
+          writeString(view, 12, 'fmt ');
+          view.setUint32(16, 16, true);
+          view.setUint16(20, 1, true);
+          view.setUint16(22, numChannels, true);
+          view.setUint32(24, sampleRate, true);
+          view.setUint32(28, byteRate, true);
+          view.setUint16(32, blockAlign, true);
+          view.setUint16(34, bitsPerSample, true);
+          writeString(view, 36, 'data');
+          view.setUint32(40, dataSize, true);
+          
+          const dataView = new Int16Array(buffer, 44);
+          dataView.set(pcmData);
+          
+          const blob = new Blob([buffer], { type: 'audio/wav' });
+          const url = URL.createObjectURL(blob);
+          
+          const audioElem = new Audio(url);
+          audioElem.onended = () => {
+             setPlayingId(null);
+             URL.revokeObjectURL(url);
+          };
+          audioElem.onerror = () => {
+             setPlayingId(null);
+             URL.revokeObjectURL(url);
+             useSystemTTS();
+          };
+          audioElem.play().catch((e) => {
+             console.warn("Audio tag play failed, trying system TTS", e);
+             useSystemTTS();
+          });
         } else {
           useSystemTTS();
         }
       } catch (err: any) {
         isFetchingAudio.current = false;
-        const errorString = typeof err === "string" ? err : JSON.stringify(err);
+        const errorString = String(err) + " " + (typeof err === 'object' ? JSON.stringify(err, Object.getOwnPropertyNames(err)) : '');
 
         if (
-          errorString.includes("429") ||
-          errorString.includes("RESOURCE_EXHAUSTED")
+          errorString.includes("503") || errorString.includes("UNAVAILABLE") || errorString.includes("high demand")
+        ) {
+          console.warn("Gemini TTS high demand, falling back to System TTS");
+          const resetTime = Date.now() + 60000; // Wait 1 minute for 503
+          setIsQuotaLimited(true);
+          setQuotaResetTime(resetTime);
+          setQuotaWarning("Hệ thống AI đang quá tải. Đang dùng tạm giọng máy trong 1 phút...");
+          useSystemTTS();
+        } else if (
+          errorString.includes("429") || errorString.includes("RESOURCE_EXHAUSTED")
         ) {
           console.warn(
             "Gemini TTS quota exhausted, falling back to System TTS",
           );
-          const resetTime = Date.now() + 60000; // Wait 1 minute
+          const resetTime = Date.now() + 3600000 * 24; // Wait 24 hours assuming daily quota limit
           setIsQuotaLimited(true);
           setQuotaResetTime(resetTime);
           setQuotaWarning(
-            "Hệ thống AI đang tạm nghỉ (hết hạn mức). Đang dùng giọng đọc máy thay thế...",
+            "Hạn mức AI hệ thống đã hết. Hãy chọn API Key cá nhân của bạn để tiếp tục sử dụng giọng đọc AI thực tế.",
           );
           useSystemTTS();
         } else if (
@@ -844,26 +869,19 @@ export default function App() {
           errorString.includes("API key not valid") ||
           errorString.includes("Unexpected token")
         ) {
-          console.error("API Key error or Server issue");
+          console.warn("API Key error or Server issue");
           setQuotaWarning(
             "Lỗi kết nối máy chủ hoặc API Key không hợp lệ. Đang dùng giọng máy.",
           );
           useSystemTTS();
         } else {
-          console.error("Error playing audio:", err);
-          setPlayingId(null);
+          console.warn("PlayAudio Error:", err);
+          setQuotaWarning("Có lỗi xảy ra khi phát âm thanh. Đang dùng giọng máy.");
+          useSystemTTS();
         }
       }
     },
-    [
-      playingId,
-      voiceName,
-      voiceGender,
-      voiceEffect,
-      isQuotaLimited,
-      quotaResetTime,
-      ai.models,
-    ],
+    [voiceName, isQuotaLimited, playingId, voiceEffect],
   );
 
   const [micState, setMicState] = useState<
@@ -999,7 +1017,7 @@ export default function App() {
       } catch (e) {
         console.log("Error caching item", i, e);
         // if quota blocked, stop gracefully
-        if (JSON.stringify(e).includes("429")) {
+        if (JSON.stringify(e).includes("429") || JSON.stringify(e).includes("503") || JSON.stringify(e).includes("UNAVAILABLE") || JSON.stringify(e).includes("RESOURCE_EXHAUSTED") || JSON.stringify(e).includes("high demand")) {
           break;
         }
       }
@@ -1249,34 +1267,41 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
           }
           const result = JSON.parse(data.result || "{}");
           setFeedback((prev) => ({ ...prev, [id]: result }));
-        } catch (error: any) {
-          console.error("Evaluation API error:", error);
-          if (
-            error.message?.includes("429") ||
-            error.message?.includes("RESOURCE_EXHAUSTED")
-          ) {
-            const resetTime = Date.now() + 30000;
-            setIsQuotaLimited(true);
-            setQuotaResetTime(resetTime);
-            setQuotaWarning(
-              "Hệ thống AI đang lỗi mạng hoặc quá tải. Đã tự động chuyển sang chế độ bảo trì Offline để tiếp tục chấm điểm.",
-            );
-            executeFastLocalGrading();
-          } else if (
-            error.message?.includes("400") ||
-            error.message?.includes("API_KEY_INVALID") ||
-            error.message?.includes("API key not valid")
-          ) {
-            setMicError(
-              `Lỗi API Key không hợp lệ. Vui lòng cập nhật API Key mới.`,
-            );
-            executeFastLocalGrading(); // also fallback to offline grading so they can still see it
-          } else {
-            setMicError(`Có lỗi xảy ra khi chấm điểm: ${error.message}`);
-            setIsEvaluating(false);
+          } catch (error: any) {
+            console.warn("Evaluation API error:", error);
+            if (
+              error.message?.includes("503") || error.message?.includes("UNAVAILABLE") || error.message?.includes("high demand")
+            ) {
+              const resetTime = Date.now() + 60000;
+              setIsQuotaLimited(true);
+              setQuotaResetTime(resetTime);
+              setQuotaWarning("Hệ thống AI đang quá tải. Tạm thời chuyển sang chấm điểm offline.");
+              executeFastLocalGrading();
+            } else if (
+              error.message?.includes("429") || error.message?.includes("RESOURCE_EXHAUSTED")
+            ) {
+              const resetTime = Date.now() + 3600000 * 24;
+              setIsQuotaLimited(true);
+              setQuotaResetTime(resetTime);
+              setQuotaWarning(
+                "Hạn mức AI hệ thống đã hết. Hãy chọn API Key cá nhân của bạn để tiếp tục 100% tính năng AI.",
+              );
+              executeFastLocalGrading();
+            } else if (
+              error.message?.includes("400") ||
+              error.message?.includes("API_KEY_INVALID") ||
+              error.message?.includes("API key not valid")
+            ) {
+              setMicError(
+                `Lỗi API Key không hợp lệ. Vui lòng cập nhật API Key mới.`,
+              );
+              executeFastLocalGrading(); // also fallback to offline grading so they can still see it
+            } else {
+              setMicError(`Có lỗi xảy ra khi chấm điểm: ${error.message}`);
+              setIsEvaluating(false);
+            }
           }
-        }
-      };
+        };
     } catch (error) {
       console.error("File reader error:", error);
       setIsEvaluating(false);
@@ -1835,7 +1860,7 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
                 <Suspense fallback={<div className="p-8 text-center text-theme-dark/50 animate-pulse">Đang tải nội dung...</div>}>
                   {selectedLesson.id === "review" || activeTab === "review" ? (
                   activeSubTab === "ai_roleplay" ? (
-                    <ReviewAIRoleplay />
+                    <ReviewAIRoleplay playAudio={playAudio} />
                   ) : activeSubTab === "modul_tests" ? (
                     <ReviewModulTests />
                   ) : (
@@ -3247,30 +3272,6 @@ Return ONLY JSON: {"score": 85, "transcription": "...", "suggestion": "precise t
       </AnimatePresence>
 
       {/* Quota Warning Toast */}
-      <AnimatePresence>
-        {quotaWarning && (
-          <motion.div
-            initial={{ y: -100, x: "-50%", opacity: 0 }}
-            animate={{ y: 20, x: "-50%", opacity: 1 }}
-            exit={{ y: -100, x: "-50%", opacity: 0 }}
-            className="fixed top-20 left-1/2 bg-amber-500 text-white px-6 py-4 rounded-2xl flex items-center gap-3 shadow-2xl z-50 border border-amber-400"
-          >
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <AlertCircle size={18} />
-                <span className="text-sm font-bold">{quotaWarning}</span>
-              </div>
-              {isQuotaLimited && (
-                <div className="text-[10px] mt-1 opacity-90 font-medium">
-                  AI sẽ khôi phục sau:{" "}
-                  {Math.max(0, Math.ceil((quotaResetTime - Date.now()) / 1000))}{" "}
-                  giây
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
